@@ -31,7 +31,7 @@ WPF is a WordPress Framework to make yout creating of theme easy.
         }
     }
     ```
-4. Run `composer init`
+4. Run `composer install`
 5. Create your **app.config.json** into theme base directory.
 6. Open your **functions.php** and create your App:
     ```php
