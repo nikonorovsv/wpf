@@ -1,0 +1,29 @@
+{
+  "app_dir" : "app",
+  "actions_dir" : "/app/actions",
+  "entities_dir" : "/app/entities",
+  "ajax_handlers_dir" : "/app/ajax_handlers",
+  "views_dir" : "app/views",
+  "observers": [
+    "\\wpf\\app\\observers\\AdminAssetsDefiner",
+    "\\wpf\\app\\observers\\OptionsPagesDefiner",
+    "\\wpf\\app\\observers\\LocalFieldGroupDefiner",
+    "\\wpf\\app\\observers\\ConstantsDefiner",
+    "\\wpf\\app\\observers\\EntityDefiner",
+    "\\wpf\\app\\observers\\GoogleMapsDefiner",
+    "\\wpf\\app\\observers\\ThemeSupportsDefiner",
+    "\\wpf\\app\\observers\\ImageSizesDefiner",
+    "\\wpf\\app\\observers\\MenuDefiner",
+    "\\wpf\\app\\observers\\SidebarsDefiner",
+    "\\wpf\\app\\observers\\ActionRemover",
+    "\\wpf\\app\\observers\\AssetsDefiner",
+    "\\wpf\\app\\observers\\RendererSetter",
+    "\\wpf\\app\\observers\\AjaxHandlers",
+    "\\wpf\\app\\observers\\AddRewriteRules"
+  ],
+  "menu": {
+    "item_id": "menu-item-%s",
+    "active_class": "active",
+    "dropdown_class": "ui dropdown"
+  }
+}
