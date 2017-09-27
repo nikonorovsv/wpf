@@ -9,13 +9,19 @@ use \Closure;
  * @package wpf\helpers
  */
 trait Cache {
+
 	/**
+	 * This method is save your code result in Cache
+	 * and will return result from Cache if that exists.
+	 * It's final method because we get information about
+	 * call chain from debug_backtrace() PHP function.
+	 * 
 	 * @param string $key
 	 * @param Closure $fallback
 	 *
 	 * @return mixed
 	 */
-	protected static function cache( Closure $fallback, string $key = 'single' ) {
+	protected final static function cache( Closure $fallback, string $key = 'single' ) {
 		global $wp_object_cache;
 
 		$d_bt  = debug_backtrace()[1];
