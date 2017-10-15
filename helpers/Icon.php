@@ -19,7 +19,8 @@ class Icon {
 		= [
 			'fa' => 'fa fa-',
 			'gi' => 'glyphicon glyphicon-',
-			'ui' => 'icon '
+			'ui' => 'icon ',
+			'wp' => 'dashicons dashicons-'
 		];
 	
 	/**

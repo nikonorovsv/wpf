@@ -43,4 +43,12 @@ trait QueryBuilder {
 
 		return;
 	}
+
+
+	/**
+	 * @return array
+	 */
+	final public function posts(): array {
+		return $this->query()->posts;
+	}
 }
