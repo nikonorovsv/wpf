@@ -14,9 +14,9 @@ trait CommentsBuilder {
 	use Cache;
 
 	/**
-	 * @return WP_Comment_Query
+	 * @return array
 	 */
-	final public function commentsQuery(): WP_Comment_Query {
+	final public function commentsQuery(): array {
 		$args     = $this->commentsArgs();
 		$fallback = function () use ( $args ) {
 			return new WP_Comment_Query( $args );

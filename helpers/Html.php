@@ -391,24 +391,16 @@ class Html {
 		$formatter   = ArrayHelper::remove( $options, 'item' );
 		$separator   = ArrayHelper::remove( $options, 'separator', "\n" );
 		$itemOptions = ArrayHelper::remove( $options, 'itemOptions', [] );
-		$active      = ArrayHelper::remove( $options, 'active', null );
-		$activeClass = ArrayHelper::remove( $itemOptions, 'activeClass', 'active' );
-
 		if ( empty( $items ) ) {
 			return static::tag( $tag, '', $options );
 		}
 		$results = [];
-		$i = 0;
 		foreach ( $items as $index => $item ) {
 			if ( $formatter !== NULL ) {
 				$results[] = call_user_func( $formatter, $item, $index );
 			} else {
-				if ( ! is_null( $active ) && ( $i == $active ) ) {
-					static::addCssClass( $itemOptions, $activeClass );
-				}
 				$results[] = static::tag( 'li', $encode ? static::encode( $item ) : $item, $itemOptions );
 			}
-			$i++;
 		}
 		
 		return static::tag( $tag, $separator . join( $separator, $results ) . $separator, $options );

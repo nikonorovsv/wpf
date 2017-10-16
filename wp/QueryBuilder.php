@@ -43,7 +43,8 @@ trait QueryBuilder {
 
 		return;
 	}
-	
+
+
 	/**
 	 * @return array
 	 */
