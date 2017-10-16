@@ -378,7 +378,7 @@ class Html {
 		
 		return static::tag( 'img', NULL, $options );
 	}
-	
+
 	/**
 	 * @param $items
 	 * @param array $options
@@ -391,18 +391,27 @@ class Html {
 		$formatter   = ArrayHelper::remove( $options, 'item' );
 		$separator   = ArrayHelper::remove( $options, 'separator', "\n" );
 		$itemOptions = ArrayHelper::remove( $options, 'itemOptions', [] );
+		$classFor    = ArrayHelper::remove( $itemOptions, 'class_for', null );
+
 		if ( empty( $items ) ) {
 			return static::tag( $tag, '', $options );
 		}
 		$results = [];
+		$i = 0;
 		foreach ( $items as $index => $item ) {
 			if ( $formatter !== NULL ) {
 				$results[] = call_user_func( $formatter, $item, $index );
 			} else {
-				$results[] = static::tag( 'li', $encode ? static::encode( $item ) : $item, $itemOptions );
+				$_itemOptions = $itemOptions;
+				if ( isset( $classFor ) && array_key_exists( $i, $classFor ) ) {
+					static::addCssClass( $_itemOptions, $classFor[ $i ] );
+				}
+
+				$results[] = static::tag( 'li', $encode ? static::encode( $item ) : $item, $_itemOptions );
 			}
+			$i++;
 		}
-		
+
 		return static::tag( $tag, $separator . join( $separator, $results ) . $separator, $options );
 	}
 	
