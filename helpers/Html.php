@@ -351,7 +351,7 @@ class Html {
 	}
 	
 	/**
-	 * @param $text
+	 * @param string $text
 	 * @param null $url
 	 * @param array $options
 	 *
@@ -364,9 +364,20 @@ class Html {
 		
 		return static::tag( 'a', $text, $options );
 	}
+
+	/**
+	 * @param string $text
+	 * @param string $email
+	 * @param array $options
+	 *
+	 * @return string
+	 */
+	public static function mailto( $text, $email, $options = [] ) {
+		return static::a( $text, "mailto: {$email}", $options );
+	}
 	
 	/**
-	 * @param $src
+	 * @param string $src
 	 * @param array $options
 	 *
 	 * @return string
@@ -380,7 +391,7 @@ class Html {
 	}
 
 	/**
-	 * @param $items
+	 * @param array $items
 	 * @param array $options
 	 *
 	 * @return string
