@@ -32,9 +32,9 @@ class Menu
 	/**
 	 * @return array
 	 */
-	public function items():array {
+	public function items(): array {
 		$fallback = function () {
-			return $this->walk( $this->_items[0] );
+			return $this->_items ? $this->walk( $this->_items[0] ) : [];
 		};
 
 		return static::cache( $fallback, $this->_name );
