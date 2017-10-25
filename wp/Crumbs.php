@@ -4,32 +4,22 @@ namespace wpf\wp;
 
 use \wpf\helpers\ArrayHelper;
 use \wpf\helpers\Html;
+use \wpf\helpers\IfTTT;
+use \wpf\helpers\Cache;
 
 /**
  * Class Crumbs
  * @package wpf\wp
  */
-class Crumbs {
+class Crumbs
+
+{
+	use Cache;
 
 	const PREFIX = 'wpf-crumbs';
 
 	private $_post;
 	private $_items = [];
-	private $_faq = [
-		//'home'            => 'home',
-		'404'               => 'notFound',
-		'search'            => 'search',
-		'tax'               => 'tax',
-		'attachment'        => 'attachment',
-		'singular'          => 'singular',
-		'category'          => 'category',
-		'tag'               => 'tag',
-		'author'            => 'author',
-		'day'               => 'day',
-		'month'             => 'month',
-		'year'              => 'year',
-		'post_type_archive' => 'postTypeArchive',
-	];
 
 	/**
 	 * Crumbs constructor.
@@ -37,23 +27,43 @@ class Crumbs {
 	public function __construct() {
 		global $post;
 		$this->_post = $post;
+	}
 
-		// Generate crumbs array
+	/**
+	 * Initialize items
+	 */
+	private function init() {
 		$this->home();
 		$this->applyRules();
-		foreach ( $this->_faq as $condition => $method ) {
-			$condition = "is_{$condition}";
-			if ( function_exists( $condition ) && call_user_func( $condition ) ) {
-				$this->{$method}();
-			}
-		}
+		IfTTT::runArray([
+			'is_404'               => [ $this, 'notFound'],
+			'is_search'            => [ $this, 'search'],
+			'is_tax'               => [ $this, 'tax'],
+			'is_attachment'        => [ $this, 'attachment'],
+			'is_singular'          => [ $this, 'singular'],
+			'is_category'          => [ $this, 'category'],
+			'is_tag'               => [ $this, 'tag'],
+			'is_author'            => [ $this, 'author'],
+			'is_day'               => [ $this, 'day'],
+			'is_month'             => [ $this, 'month'],
+			'is_year'              => [ $this, 'year'],
+			'is_post_type_archive' => [ $this, 'postTypeArchive']
+		]);
 	}
 
 	/**
 	 * @return array
 	 */
 	public function items(): array {
-		return $this->_items;
+
+		$fallback = function () {
+			// Generate crumbs array
+			$this->init();
+
+			return $this->_items;
+		};
+
+		return static::cache( $fallback );
 	}
 
 	/**
@@ -94,28 +104,28 @@ class Crumbs {
 	/**
 	 * Add Home Crumb
 	 */
-	private function home() {
+	public function home() {
 		$this->addCrumb( $this->label( 'home' ), home_url( '/' ) );
 	}
 
 	/**
 	 * Add 404 Crumb
 	 */
-	private function notFound() {
+	public function notFound() {
 		$this->addCrumb( $this->label( '404' ) );
 	}
 
 	/**
 	 * Add Search Result Crumb
 	 */
-	private function search() {
+	public function search() {
 		$this->addCrumb( $this->label( 'search', get_search_query() ) );
 	}
 
 	/**
 	 * Add Tax Crumb
 	 */
-	private function tax() {
+	public function tax() {
 		$tax  = get_query_var( 'taxonomy' );
 		$term = get_term_by( 'slug', get_query_var( 'term' ), $tax );
 		if ( is_taxonomy_hierarchical( $tax ) && $term->parent != 0 ) {
@@ -134,7 +144,7 @@ class Crumbs {
 	/**
 	 * Add Attachment Crumbs
 	 */
-	private function attachment() {
+	public function attachment() {
 		if ( $this->_post->post_parent ) {
 			if ( $parent_post = get_post( $this->_post->post_parent ) ) {
 				$this->addHierarchyOfSingularCrumbs( $parent_post );
@@ -153,7 +163,7 @@ class Crumbs {
 	/**
 	 * Add Singular Crumbs
 	 */
-	private function singular() {
+	public function singular() {
 		if ( is_front_page() ) {
 			return;
 		}
@@ -167,7 +177,7 @@ class Crumbs {
 	/**
 	 * Add Category Crumb
 	 */
-	private function category() {
+	public function category() {
 		global $cat;
 
 		$category = get_category( $cat );
@@ -184,7 +194,7 @@ class Crumbs {
 	/**
 	 * Add Tag Crumb
 	 */
-	private function tag() {
+	public function tag() {
 		global $tag_id;
 		$tag = get_tag( $tag_id );
 
@@ -197,7 +207,7 @@ class Crumbs {
 	/**
 	 * Add Author Crumb
 	 */
-	private function author() {
+	public function author() {
 		$author      = get_query_var( 'author' );
 		$author_name = get_the_author_meta( 'display_name', $author );
 
@@ -210,7 +220,7 @@ class Crumbs {
 	/**
 	 * Add Day Crumb
 	 */
-	private function day() {
+	public function day() {
 		if ( $m = get_query_var( 'm' ) ) {
 			$year  = substr( $m, 0, 4 );
 			$month = substr( $m, 4, 2 );
@@ -230,7 +240,7 @@ class Crumbs {
 	/**
 	 * Add Month Crumb
 	 */
-	private function month() {
+	public function month() {
 		if ( $m = get_query_var( 'm' ) ) {
 			$year  = substr( $m, 0, 4 );
 			$month = substr( $m, 4, 2 );
@@ -247,7 +257,7 @@ class Crumbs {
 	/**
 	 * ADd Year Crumb
 	 */
-	private function year() {
+	public function year() {
 		if ( $m = get_query_var( 'm' ) ) {
 			$year = substr( $m, 0, 4 );
 		} else {
@@ -259,7 +269,7 @@ class Crumbs {
 	/**
 	 * Add Post Type Archive Crumb
 	 */
-	private function postTypeArchive() {
+	public function postTypeArchive() {
 		$post_type = get_post_type_object( get_query_var( 'post_type' ) );
 
 		$this->addCrumb(
