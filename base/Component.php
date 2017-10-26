@@ -23,13 +23,7 @@ class Component
 	 */
 	public function __construct( array $conf = [] ) {
 		$this->loadAttributes( $conf );
-		$this->init();
 	}
-	
-	/**
-	 *
-	 */
-	public function init() { }
 	
 	/**
 	 * @param $name
@@ -61,7 +55,7 @@ class Component
 	 * @param $name
 	 */
 	public function __unset( string $name ) {
-		if ( $this->_attributes[ $name ] ) {
+		if ( isset( $this->_attributes[ $name ] ) ) {
 			unset( $this->_attributes[ $name ] );
 		}
 	}
@@ -86,7 +80,7 @@ class Component
 	 * @return Generator
 	 */
 	public function getIterator() {
-		foreach ($this->_attributes as $name => $value) {
+		foreach ( $this->_attributes as $name => $value ) {
 			yield $name => $value;
 		}
 	}

@@ -3,7 +3,6 @@
 namespace wpf\helpers;
 
 use \InvalidArgumentException;
-use \Closure;
 
 /**
  * Class Safe

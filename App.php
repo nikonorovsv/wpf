@@ -44,7 +44,7 @@ class App
 		if ( ! self::$_instance ) {
 			self::$_instance = new self();
 		}
-		
+
 		return self::$_instance;
 	}
 	
@@ -232,41 +232,16 @@ class App
 	/**
 	 * @return string
 	 */
-	public static function uri() {
-		$url  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://'.$_SERVER["SERVER_NAME"] :  'https://'.$_SERVER["SERVER_NAME"];
-		$url .= ( $_SERVER["SERVER_PORT"] != 80 ) ? ":".$_SERVER["SERVER_PORT"] : "";
-		$url .= $_SERVER["REQUEST_URI"];
+	public static function uri():string {
+		$server = repo('server');
 
-		return $url;
+		$url = [
+			@( $server->HTTPS != 'on' ) ? 'http://' :  'https://',
+			$server->SERVER_NAME,
+			( $server->SERVER_PORT != 80 ) ? ":{$server->SERVER_PORT}" : '',
+			$server->REQUEST_URI
+		];
+
+		return join( '', $url );
 	}
-	
-	/**
-	 * Adds a route to the collection.
-	 *
-	 * The syntax used in the $route string depends on the used route parser.
-	 *
-	 * @param string|string[] $httpMethod
-	 * @param string $route
-	 * @param mixed $handler
-	 */
-//	public function addRoute( $httpMethod, $route, $handler ) {
-//		$this->_route_collector->addRoute( $httpMethod, $route, $handler );
-//	}
-	
-	/**
-	 * @return mixed
-	 */
-//	public function getRoute() {
-//		$dispatcher = new GroupCountDispatcher( $this->_route_collector->getData() );
-//		// Fetch method and URI from somewhere
-//		$httpMethod = $_SERVER[ 'REQUEST_METHOD' ];
-//		$uri        = $_SERVER[ 'REQUEST_URI' ];
-//		// Strip query string (?foo=bar) and decode URI
-//		if ( FALSE !== $pos = strpos( $uri, '?' ) ) {
-//			$uri = substr( $uri, 0, $pos );
-//		}
-//		$uri = rawurldecode( $uri );
-//
-//		return $dispatcher->dispatch( $httpMethod, $uri );
-//	}
 }

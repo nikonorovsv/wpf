@@ -2,7 +2,6 @@
 
 namespace wpf\base;
 
-use \wpf\base\Request;
 use \wpf\wp\QueryBuilder;
 
 /**
@@ -15,15 +14,9 @@ abstract class AjaxHandler
 	const ACTION_NAME = NULL;
 
 	/**
-	 * @var \wpf\base\Request
-	 */
-	protected $request;
-
-	/**
 	 * AjaxHandler constructor.
 	 */
 	public function __construct() {
-		$this->request = new Request();
 		check_ajax_referer( THEME_NONCE_KEY, static::NONCE_FIELD );
 	}
 

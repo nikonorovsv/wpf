@@ -1,6 +1,7 @@
 <?php
 use \wpf\helpers\WP;
 use \wpf\helpers\Debug;
+use \wpf\helpers\Repo;
 
 /**
  * @param $object
@@ -118,6 +119,17 @@ if ( ! function_exists( 'render' ) ) {
 if ( ! function_exists( 'get_component' ) ) {
 	function get_component( array $conf = [] ) {
 		return new \wpf\base\Component( $conf );
+	}
+}
+
+/**
+ * @param string $name
+ *
+ * @return array
+ */
+if ( ! function_exists( 'repo' ) ) {
+	function repo( string $name, array $args = [] ) {
+		return Repo::$name( $args );
 	}
 }
 

@@ -6,11 +6,9 @@
   "views_dir" : "app/views",
   "observers": [
     "\\wpf\\app\\observers\\AdminAssetsDefiner",
-    "\\wpf\\app\\observers\\OptionsPagesDefiner",
     "\\wpf\\app\\observers\\LocalFieldGroupDefiner",
     "\\wpf\\app\\observers\\ConstantsDefiner",
     "\\wpf\\app\\observers\\EntityDefiner",
-    "\\wpf\\app\\observers\\GoogleMapsDefiner",
     "\\wpf\\app\\observers\\ThemeSupportsDefiner",
     "\\wpf\\app\\observers\\ImageSizesDefiner",
     "\\wpf\\app\\observers\\MenuDefiner",
