@@ -18,8 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "wpf\\": "vendor/nikonorovsv/wpf/",
-      "app\\": "app/"
+      "wpf\\": "vendor/nikonorovsv/wpf/"
     }
   }
 }
