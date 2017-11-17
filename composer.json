@@ -1,5 +1,14 @@
 {
   "name": "nikonorovsv/wpf",
+  "author": "Sergey Nikonorov",
   "description": "WPF is a WordPress Framework to make yout creating of theme easy.",
-  "version": "dev"
+  "version": "dev",
+  "license": "MIT",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "wpf\\": "vendor/nikonorovsv/wpf/",
+      "app\\": "app/"
+    }
+  }
 }

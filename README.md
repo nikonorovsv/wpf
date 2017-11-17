@@ -1,5 +1,5 @@
 # WPF
-WPF is a WordPress Framework to make yout creating of theme easy.
+WPF is a WordPress Framework to make your creating of theme easy.
 
 ## Requires
 * PHP v7.*
