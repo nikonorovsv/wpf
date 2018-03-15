@@ -2,8 +2,6 @@
 
 namespace wpf\wp;
 
-use \wpf\helpers\Html;
-
 /**
  * Class Pagination
  * @package app\widgets
@@ -68,7 +66,7 @@ final class Pagination
 
         // Save to the WPF Store
         if ( function_exists('app') ) {
-            app()->max_page = $this->_max;
+            app()->pagination_state = [ $this->current(), $this->_max ];
         }
     }
 
