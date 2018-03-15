@@ -8,126 +8,143 @@ use \wpf\helpers\Html;
  * Class Pagination
  * @package app\widgets
  */
-class Pagination
+final class Pagination
 {
-    public $per_page  = 10;
-    public $query_key = 'gp';
-    public $quantity  = 5;
+    /**
+     * Query param name
+     */
+    private $_query_key = 'pg';
 
-    private $_items = [];
+    /**
+     * Count of paginate links. It has a setter.
+     *
+     * @var int
+     */
+    private $_count = 5;
+
+    /**
+     * Max quantity of pages.
+     *
+     * @var float|int
+     */
+    private $_max = 1;
+
+    /**
+     * It's True when the subject is WP_Query object;
+     *
+     * @var bool
+     */
+    private $_is_wp = false;
+
+    /**
+     * By default $_per_page parameter equally 10.
+     * It can be modified with constructor.
+     * Does not affect when the subject is WP_Query object
+     *
+     * @var int
+     */
+    private $_per_page;
 
     /**
      * Pagination constructor.
+     * Create this class before get_title() calling for correct counter working.
      *
-     * @param $subject \WP_Query int array
+     * @param mixed $subject It can be WP_Query object, array, or int
+     * @param int $per_page | Not working with WP_Query subject
      */
-    public function __construct( $subject ) {
-        $count = 1;
-        $items = [];
-        if ( $subject ) {
-            if ( is_array( $subject ) ) {
-                $subject = count( $subject );
-            }
-            if ( is_a( $subject, '\WP_Query' ) ) {
-                $count = $subject->max_num_pages;
-                $items = $this->forQuery( $count );
-            } elseif ( is_int( $subject ) ) {
-                $count = ceil( $subject / $this->per_page );
-                $items = $this->forCount( $count );
-            }
+    public function __construct( $subject, int $per_page = 10 ) {
+        $this->_per_page = $per_page;
+        if ( is_array( $subject ) ) {
+            $subject = count( $subject );
         }
-        app()->max_page = $count;
-        $this->_items   = $items;
+        if ( is_a( $subject, '\WP_Query' ) ) {
+            $this->_is_wp = true;
+            // Takes values from WordPress
+            $this->_max = $subject->max_num_pages;
+            $this->_per_page = $subject->post_count;
+        } elseif ( is_int( $subject ) ) {
+            $this->_max = ceil( $subject / $this->_per_page );
+        }
+
+        // Save to the WPF Store
+        if ( function_exists('app') ) {
+            app()->max_page = $this->_max;
+        }
     }
 
     /**
-     * @return array
+     * This function creates links and save them to $this->_items array.
+     * Each of links is array like [$link, $isActive]
      */
     public function items() {
-        return $this->_items;
-    }
-
-    /**
-     * Call this function before get_title() for correct counter working,
-     *
-     * @param int $count
-     *
-     * @return array
-     */
-    public function forQuery( int $count ) {
-        if ( $count <= 1 ) {
-            return [];
-        }
-        $pages = paginate_links( [
-            'base'      => str_replace( 999999999, '%#%', get_pagenum_link( 999999999 ) ),
-            'format'    => '?page=%#%',
-            'current'   => max( 1, get_query_var( 'paged' ) ),
-            'total'     => $count,
-            'end_size'  => 3,
-            'type'      => 'array',
-            'prev_next' => TRUE,
-            'prev_text' => '< Предыдущая',
-            'next_text' => 'Следующая >'
-        ] );
         $items = [];
-        foreach ( (array) $pages as $item ) {
-            $items[] = [ $item, strpos( $item, 'current' ) ];
+        if ( $this->_max <= 1 ) {
+            return $items;
         }
-
-        return $items;
-    }
-
-    /**
-     * Call this function before get_title() for correct counter working,
-     *
-     * @param int $count
-     *
-     * @return array
-     */
-    public function forCount( int $count ) {
-        if ( $count <= 1 ) {
-            return [];
-        }
-        $request = home_url( $_SERVER[ 'REQUEST_URI' ] );
-        $current = $_GET[ $this->query_key ] ? absint( $_GET[ $this->query_key ] ) : 1;
-        $end     = min( $count, $current + floor( $this->quantity / 2 ) );
-        $start   = max( 1, $end - $this->quantity + 1 );
-        $item_options = [];
-        $items   = [];
+        $current = $this->current();
+        $end = min( $this->_max, $current + floor( $this->_count / 2 ) );
+        $start = max( 1, $end - $this->_count + 1 );
         if ( $start != 1 ) {
-            $items[] = (array) Html::a(
-                'В начало',
-                add_query_arg( $this->query_key, 1, $request )
-            );
+            $items[] = [
+                'anchor'   => 'В начало',
+                'url'      => $this->url( 1 ),
+                'isActive' => false
+            ];
         }
         for ( $i = $start; $i <= $end; $i ++ ) {
-            $items[] = [ Html::a(
-                $i,
-                add_query_arg( $this->query_key, $i, $request )
-            ), $i == $current ];
+            $items[] = [
+                'anchor'   => $i,
+                'url'      => $this->url( $i ),
+                'isActive' => $i == $current
+            ];
         }
-        if ( $current != $count ) {
-            $items[] = (array) Html::a(
-                'Следующая >',
-                add_query_arg( $this->query_key, $current + 1, $request )
-            );
+        if ( $current != $this->_max ) {
+            $items[] = [
+                'anchor'   => 'Следующая >',
+                'url'      => $this->url( $current + 1 ),
+                'isActive' => false
+            ];
         }
 
         return $items;
     }
 
     /**
-     * @return int
+     *
+     *
+     * @param int $page_number
+     * @return string
      */
-    public static function max(): int {
-        return app()->max_page;
+    private function url( int $page_number ): string {
+        $url = home_url( $_SERVER['REQUEST_URI'] );
+        if ( $page_number == 1 ) {
+            return $url;
+        } elseif ( $this->_is_wp ) {
+            return preg_replace('/page\/(\d+)/', "page/{$page_number}", $url );
+        }
+        return add_query_arg( $this->_query_key, $page_number, $url );
     }
 
     /**
-     * @param string $key
+     * It's know about current page number.
+     *
      * @return int
      */
-    public static function current( string $key = 'gp' ): int {
-        return max( $_GET[ $key ] ? absint( $_GET[ $key ] ) : 1, get_query_var( 'paged' ) );
+    public function current(): int {
+        return max( absint( $_GET[ $this->_query_key ] ?? 1 ), get_query_var( 'paged' ) );
+    }
+
+    /**
+     * @param int $value
+     */
+    public function setCount( int $value ) {
+        $this->_count = $value;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setQueryKey( string $value ) {
+        $this->_query_key = $value;
     }
 }
