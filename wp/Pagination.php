@@ -110,8 +110,6 @@ final class Pagination
     }
 
     /**
-     *
-     *
      * @param int $page_number
      * @return string
      */
