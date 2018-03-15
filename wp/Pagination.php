@@ -113,10 +113,11 @@ final class Pagination
      */
     private function url( int $page_number ): string {
         $url = home_url( $_SERVER['REQUEST_URI'] );
-        if ( $page_number == 1 ) {
-            return $url;
-        } elseif ( $this->_is_wp ) {
+        if ( $this->_is_wp ) {
             return preg_replace('/page\/(\d+)/', "page/{$page_number}", $url );
+        }
+        if ( $page_number === 1 ) {
+            return remove_query_arg( $this->_query_key, $url );
         }
         return add_query_arg( $this->_query_key, $page_number, $url );
     }
