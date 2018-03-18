@@ -1,7 +1,5 @@
 <?php
-
 namespace wpf\wp;
-
 /**
  * Class Pagination
  * @package app\widgets
@@ -12,28 +10,24 @@ final class Pagination
      * Query param name
      */
     private $_query_key = 'pg';
-
     /**
      * Count of paginate links. It has a setter.
      *
      * @var int
      */
     private $_count = 5;
-
     /**
      * Max quantity of pages.
      *
      * @var float|int
      */
     private $_max = 1;
-
     /**
      * It's True when the subject is WP_Query object;
      *
      * @var bool
      */
     private $_is_wp = false;
-
     /**
      * By default $_per_page parameter equally 10.
      * It can be modified with constructor.
@@ -42,7 +36,6 @@ final class Pagination
      * @var int
      */
     private $_per_page;
-
     /**
      * Pagination constructor.
      * Create this class before get_title() calling for correct counter working.
@@ -60,16 +53,14 @@ final class Pagination
             // Takes values from WordPress
             $this->_max = $subject->max_num_pages;
             $this->_per_page = $subject->post_count;
-        } elseif ( is_int( $subject ) ) {
+        } elseif ( is_int( $subject ) || is_string( $subject ) ) {
             $this->_max = ceil( $subject / $this->_per_page );
         }
-
         // Save to the WPF Store
         if ( function_exists('app') ) {
             app()->pagination_state = [ $this->current(), $this->_max ];
         }
     }
-
     /**
      * This function creates links and save them to $this->_items array.
      * Each of links is array like [$link, $isActive]
@@ -103,25 +94,19 @@ final class Pagination
                 'isActive' => false
             ];
         }
-
         return $items;
     }
-
     /**
      * @param int $page_number
      * @return string
      */
     private function url( int $page_number ): string {
         $url = home_url( $_SERVER['REQUEST_URI'] );
-        if ( $this->_is_wp ) {
-            return preg_replace('/page\/(\d+)/', "page/{$page_number}", $url );
-        }
-        if ( $page_number === 1 ) {
+        if ( ! $page_number == 1 ) {
             return remove_query_arg( $this->_query_key, $url );
         }
-        return add_query_arg( $this->_query_key, $page_number, $url );
+        return add_query_arg( $this->_is_wp ? 'paged' : $this->_query_key, $page_number, $url );
     }
-
     /**
      * It's know about current page number.
      *
@@ -130,14 +115,12 @@ final class Pagination
     public function current(): int {
         return max( absint( $_GET[ $this->_query_key ] ?? 1 ), get_query_var( 'paged' ) );
     }
-
     /**
      * @param int $value
      */
     public function setCount( int $value ) {
         $this->_count = $value;
     }
-
     /**
      * @param string $value
      */
