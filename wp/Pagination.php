@@ -74,28 +74,31 @@ final class Pagination
         $end = min( $this->_max, $current + floor( $this->_count / 2 ) );
         $start = max( 1, $end - $this->_count + 1 );
         if ( $start != 1 ) {
-            $items[] = [
-                'anchor'   => 'В начало',
-                'url'      => $this->url( 1 ),
-                'isActive' => false
-            ];
+            $items[] = $this->item('В начало', 1);
         }
         for ( $i = $start; $i <= $end; $i ++ ) {
-            $items[] = [
-                'anchor'   => $i,
-                'url'      => $this->url( $i ),
-                'isActive' => $i == $current
-            ];
+            $items[] = $this->item( $i, $i, ($i == $current) );
         }
         if ( $current != $this->_max ) {
-            $items[] = [
-                'anchor'   => 'Следующая >',
-                'url'      => $this->url( $current + 1 ),
-                'isActive' => false
-            ];
+            $items[] = $this->item('Следующая >', ($current + 1) );
         }
         return $items;
     }
+
+    /**
+     * @param $anchor
+     * @param $page_number
+     * @param bool $is_active
+     * @return array
+     */
+    private function item( $anchor, $page_number, bool $is_active = false ): array {
+        return [
+            'anchor'   => $anchor,
+            'url'      => $this->url( $page_number ),
+            'isActive' => $is_active
+        ];
+    }
+
     /**
      * @param int $page_number
      * @return string
