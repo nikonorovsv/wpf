@@ -102,7 +102,7 @@ final class Pagination
      */
     private function url( int $page_number ): string {
         $url = home_url( $_SERVER['REQUEST_URI'] );
-        if ( ! $page_number == 1 ) {
+        if ( $page_number == 1 && ! $this->_is_wp ) {
             return remove_query_arg( $this->_query_key, $url );
         }
         return add_query_arg( $this->_is_wp ? 'paged' : $this->_query_key, $page_number, $url );
