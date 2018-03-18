@@ -36,6 +36,14 @@ final class Pagination
      * @var int
      */
     private $_per_page;
+
+    /**
+     * Current page nubmer
+     *
+     * @var
+     */
+    private $_current;
+
     /**
      * Pagination constructor.
      * Create this class before get_title() calling for correct counter working.
@@ -56,6 +64,7 @@ final class Pagination
         } elseif ( is_int( $subject ) || is_string( $subject ) ) {
             $this->_max = ceil( $subject / $this->_per_page );
         }
+        $this->_current = $this->current();
         // Save to the WPF Store
         if ( function_exists('app') ) {
             app()->pagination_state = [ $this->current(), $this->_max ];
@@ -66,23 +75,34 @@ final class Pagination
      * Each of links is array like [$link, $isActive]
      */
     public function items() {
-        $items = [];
         if ( $this->_max <= 1 ) {
-            return $items;
+            return [];
         }
-        $current = $this->current();
-        $end = min( $this->_max, $current + floor( $this->_count / 2 ) );
+        $end = min( $this->_max, $this->_current + floor( $this->_count / 2 ) );
         $start = max( 1, $end - $this->_count + 1 );
+        $items = [];
         if ( $start != 1 ) {
-            $items[] = $this->item('В начало', 1);
+            $items[] = $this->item(__('В начало'), 1);
         }
         for ( $i = $start; $i <= $end; $i ++ ) {
-            $items[] = $this->item( $i, $i, ($i == $current) );
+            $items[] = $this->item( $i, $i, ($i == $this->_current) );
         }
-        if ( $current != $this->_max ) {
-            $items[] = $this->item('Следующая >', ($current + 1) );
+        if ( $this->_current != $this->_max ) {
+            $items[] = $this->item(__('Следующая >'), ($this->_current + 1) );
         }
         return $items;
+    }
+
+    /**
+     * Returns prev and next urls.
+     * 
+     * @return array
+     */
+    public function pager() {
+        $prev = ( $this->_current > 1 ) ? $this->url( $this->_current - 1 ) : false;
+        $next = ( $this->_current >= $this->_max ) ? false : $this->url( $this->_current + 1 );
+        
+        return compact('prev', 'next');
     }
 
     /**
