@@ -92,11 +92,9 @@ final class Pagination
      * @return array
      */
     private function item( $anchor, $page_number, bool $is_active = false ): array {
-        return [
-            'anchor'   => $anchor,
-            'url'      => $this->url( $page_number ),
-            'isActive' => $is_active
-        ];
+        $values = [ $anchor, $this->url( $page_number ), $is_active ];
+
+        return array_combine( ['anchor', 'url', 'isActive'], $values );
     }
 
     /**
