@@ -1,5 +1,7 @@
 <?php
+
 namespace wpf\wp;
+
 /**
  * Class Pagination
  * @package app\widgets
