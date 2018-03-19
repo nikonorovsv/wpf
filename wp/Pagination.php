@@ -10,24 +10,28 @@ final class Pagination
      * Query param name
      */
     private $_query_key = 'pg';
+    
     /**
      * Count of paginate links. It has a setter.
      *
      * @var int
      */
     private $_count = 5;
+    
     /**
      * Max quantity of pages.
      *
      * @var float|int
      */
     private $_max = 1;
+    
     /**
      * It's True when the subject is WP_Query object;
      *
      * @var bool
      */
     private $_is_wp = false;
+    
     /**
      * By default $_per_page parameter equally 10.
      * It can be modified with constructor.
@@ -70,6 +74,7 @@ final class Pagination
             app()->pagination_state = [ $this->current(), $this->_max ];
         }
     }
+    
     /**
      * This function creates links and save them to $this->_items array.
      * Each of links is array like [$link, $isActive]
@@ -128,6 +133,7 @@ final class Pagination
         }
         return add_query_arg( $this->_is_wp ? 'paged' : $this->_query_key, $page_number, $url );
     }
+    
     /**
      * It's know about current page number.
      *
@@ -136,12 +142,14 @@ final class Pagination
     public function current(): int {
         return max( absint( $_GET[ $this->_query_key ] ?? 1 ), get_query_var( 'paged' ) );
     }
+    
     /**
      * @param int $value
      */
     public function setCount( int $value ) {
         $this->_count = $value;
     }
+    
     /**
      * @param string $value
      */
