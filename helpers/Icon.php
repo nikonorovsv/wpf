@@ -32,7 +32,7 @@ class Icon
      * @param array $options
      * @return mixed
      */
-    public static function familyIcon(string $family, string $name, array $options = [])
+    public static function familyIcon(string $family, string $name, array $options = []): string
     {
         $class = self::getPrefix($family);
         // It's Material spike-nail :)
