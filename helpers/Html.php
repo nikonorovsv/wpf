@@ -76,6 +76,7 @@ class Html {
 			'time',
 			'strong',
 			'em',
+			'i',
 			'p',
 			'option',
 			'li',
