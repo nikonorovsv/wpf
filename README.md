@@ -146,6 +146,16 @@ class SomeWidget extends Widget {
 }
 ```
 
+Next, you simply call the widget in the right place. The passed parameters will be available as class properties after the parent constructor is called. Then you can do with them whatever you want.
+```php
+use \app\widgets\SomeWidget;
+
+echo (string) SomeWidget([
+    'title'   => 'Some title',
+    'content' => 'Some text'
+]);
+```
+
 ## About
 Hey! Do you have any ideas how to do WPF better? 
 [Send me a letter](mailto:nikonorovsv@gmail.com).
