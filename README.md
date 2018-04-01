@@ -43,12 +43,6 @@ Observers is middleware classes to execute your own code before template will be
         "\\wpf\\app\\observers\\LocalFieldGroupDefiner",
         "\\wpf\\app\\observers\\ConstantsDefiner",
         "\\wpf\\app\\observers\\EntityDefiner",
-        "\\wpf\\app\\observers\\ThemeSupportsDefiner",
-        "\\wpf\\app\\observers\\ImageSizesDefiner",
-        "\\wpf\\app\\observers\\MenuDefiner",
-        "\\wpf\\app\\observers\\ActionRemover",
-        "\\wpf\\app\\observers\\AllowCORS",
-        "\\wpf\\app\\observers\\PostStatusDefiner",
         "\\app\\observers\\QuerySetter"
       ],
 }
@@ -61,23 +55,11 @@ use \wpf\app\Observer;
 use \wpf\App;
 use \WP_Query;
 
-/**
- * Class QuerySetter
- * @package \app\observers
- */
 class QuerySetter
     extends Observer {
 
-    /**
-     * @param App $app
-     */
     public function doUpdate( App $app ) {
 
-        /**
-         * @param WP_Query $query
-         *
-         * @return bool
-         */
         $update = function ( WP_Query $query ) use ( $app ) {
             if ( is_admin() || ! $query->is_main_query() ) {
                 return FALSE;
@@ -97,22 +79,11 @@ All parts in the VFF that you want to display on the page are recommended to be 
 namespace app\widgets;
 
 use \wpf\base\Widget;
-use \wpf\helpers\Html;
-use \wpf\helpers\Icon;
 
-/**
- * Class SomeWidget
- * @package app\widgets
- */
 class SomeWidget extends Widget {
 
     public $template = 'widget';
 
-    /**
-     * SomeWidget constructor.
-     *
-     * @param array $conf
-     */
     public function __construct( array $conf = [] ) {
         parent::__construct( $conf );
 
@@ -120,9 +91,6 @@ class SomeWidget extends Widget {
         $this->content = 'Some text';
     }
 
-    /**
-     * @return string
-     */   
     public function render():string {
         return parent::render();
     }
@@ -131,29 +99,20 @@ class SomeWidget extends Widget {
 
 Templates should be located in `/app/views` folder and look like this:
 ```php
-use \wpf\helpers\Html;
 
 // Declare defaults. They will be replace with values defined by widget.
 extract( [
     'title'           => '',
-    'content'         => '',
-    'title_options'   => [],
-    'content_options' => [],
-    'options'         => []
-], EXTR_SKIP );
+    'content'         => ''
+], EXTR_SKIP ); ?>
 
-Html::addCssClass( $options, 'widget');
-
-?>
-
-<div <?= Html::renderTagAttributes( $options ) ?>>
-    <?php
-    if ( $title ) {
-        Html::addCssClass( $title_options, 'title');
-        echo Html::div( $title, $title_options );
-    }
-    Html::addCssClass( $content_options, 'content');
-    echo Html::div( $content, $content_options ); ?>
+<div class="widget">
+    <div class="widget-title">
+        <?= $title ?>
+    </div>
+    <div class="widget-content">
+        <?= $content ?>
+    </div>
 </div>
 ```
     
@@ -164,31 +123,19 @@ namespace app\widgets;
 use \wpf\base\Widget;
 use \wpf\wp\QueryBuilder;
 
-/**
- * Class SomeWidget
- * @package app\widgets
- */
 class SomeWidget extends Widget {
 
     use QueryBuilder;
 
     public $template = 'widget';
 
-    /**
-     * SomeWidget constructor.
-     *
-     * @param array $conf
-     */
     public function __construct( array $conf = [] ) {
         parent::__construct( $conf );
 
         $this->items = $this->query()->posts;
     }
 
-    /**
-     * @return array
-     */
-    public function queryArgs():array {
+    public function queryArgs(): array {
         return [
             'post_type'      => 'custom_post_type',
             'post_status'    => 'publish',
