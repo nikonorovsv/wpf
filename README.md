@@ -150,7 +150,7 @@ Next, you simply call the widget in the right place. The passed parameters will 
 ```php
 use \app\widgets\SomeWidget;
 
-echo (string) SomeWidget([
+echo (string) new SomeWidget([
     'title'   => 'Some title',
     'content' => 'Some text'
 ]);
