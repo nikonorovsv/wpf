@@ -72,9 +72,10 @@ class QuerySetter
     }
 }
 ```
+The code into `doUpdate()` method will be executed at runtime.
 
 ## Widgets
-All parts in the VFF that you want to display on the page are recommended to be formatted as widgets. A widget is an object of a class inherited from the `\wpf\base\Widget` class. Widget classes should be located in the `/app/widgets` folder. Widgets can generate their own html, or use templates. You can override `$this->render()` method to return html without using of templete. Let's look at the code.
+All parts in the WPF that you want to display on the page are recommended to be formatted as widgets. A widget is an object of a class inherited from the `\wpf\base\Widget` class. Widget classes should be located in the `/app/widgets` folder. Widgets can generate their own html, or use templates. You can override `$this->render()` method to return html without using of templete. Let's look at the code.
 ```php
 namespace app\widgets;
 
