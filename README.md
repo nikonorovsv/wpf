@@ -36,172 +36,167 @@ WPF is a WordPress Framework to make your creating of theme easy.
     
 ## Observers
 Observers is middleware classes to execute your own code before template will be loaded. You can specify your own observers as child for `\wpf\app\Observer` class. Each of observers needed must to be include in your `app.config.json` file into `observers` option. Also you can use the observers included in the framework. They are located in the folder `/app/observers`. See example:
-    ```json
-    {
-        "observers": [
-            "\\wpf\\app\\observers\\OptionsPagesDefiner",
-            "\\wpf\\app\\observers\\LocalFieldGroupDefiner",
-            "\\wpf\\app\\observers\\ConstantsDefiner",
-            "\\wpf\\app\\observers\\EntityDefiner",
-            "\\wpf\\app\\observers\\ThemeSupportsDefiner",
-            "\\wpf\\app\\observers\\ImageSizesDefiner",
-            "\\wpf\\app\\observers\\MenuDefiner",
-            "\\wpf\\app\\observers\\ActionRemover",
-            "\\wpf\\app\\observers\\AllowCORS",
-            "\\wpf\\app\\observers\\PostStatusDefiner",
-            "\\app\\observers\\QuerySetter"
-          ],
-    }
-    ```
+```json
+{
+    "observers": [
+        "\\wpf\\app\\observers\\OptionsPagesDefiner",
+        "\\wpf\\app\\observers\\LocalFieldGroupDefiner",
+        "\\wpf\\app\\observers\\ConstantsDefiner",
+        "\\wpf\\app\\observers\\EntityDefiner",
+        "\\wpf\\app\\observers\\ThemeSupportsDefiner",
+        "\\wpf\\app\\observers\\ImageSizesDefiner",
+        "\\wpf\\app\\observers\\MenuDefiner",
+        "\\wpf\\app\\observers\\ActionRemover",
+        "\\wpf\\app\\observers\\AllowCORS",
+        "\\wpf\\app\\observers\\PostStatusDefiner",
+        "\\app\\observers\\QuerySetter"
+      ],
+}
+```
 It's convenient to create observer classes, as in the following example:
-    ```php
-    <?php
-    namespace app\observers;
+```php
+namespace app\observers;
 
-    use \wpf\app\Observer;
-    use \wpf\App;
-    use \WP_Query;
+use \wpf\app\Observer;
+use \wpf\App;
+use \WP_Query;
+
+/**
+ * Class QuerySetter
+ * @package \app\observers
+ */
+class QuerySetter
+    extends Observer {
 
     /**
-     * Class QuerySetter
-     * @package \app\observers
+     * @param App $app
      */
-    class QuerySetter
-        extends Observer {
+    public function doUpdate( App $app ) {
 
         /**
-         * @param App $app
+         * @param WP_Query $query
+         *
+         * @return bool
          */
-        public function doUpdate( App $app ) {
+        $update = function ( WP_Query $query ) use ( $app ) {
+            if ( is_admin() || ! $query->is_main_query() ) {
+                return FALSE;
+            }
 
-            /**
-             * @param WP_Query $query
-             *
-             * @return bool
-             */
-            $update = function ( WP_Query $query ) use ( $app ) {
-                if ( is_admin() || ! $query->is_main_query() ) {
-                    return FALSE;
-                }
+            // Your rules...
+        };
 
-                // Your rules...
-            };
-
-            add_action( 'pre_get_posts', $update );
-        }
+        add_action( 'pre_get_posts', $update );
     }
-    ```
+}
+```
 
 ## Widgets
 All parts in the VFF that you want to display on the page are recommended to be formatted as widgets. A widget is an object of a class inherited from the `\wpf\base\Widget` class. Widget classes should be located in the `/app/widgets` folder. Widgets can generate their own html, or use templates. You can override `$this->render()` method to return html without using of templete. Let's look at the code.
-    ```php
-    <?php
+```php
+namespace app\widgets;
 
-    namespace app\widgets;
+use \wpf\base\Widget;
+use \wpf\helpers\Html;
+use \wpf\helpers\Icon;
 
-    use \wpf\base\Widget;
-    use \wpf\helpers\Html;
-    use \wpf\helpers\Icon;
+/**
+ * Class SomeWidget
+ * @package app\widgets
+ */
+class SomeWidget extends Widget {
+
+    public $template = 'widget';
 
     /**
-     * Class SomeWidget
-     * @package app\widgets
+     * SomeWidget constructor.
+     *
+     * @param array $conf
      */
-    class SomeWidget extends Widget {
+    public function __construct( array $conf = [] ) {
+        parent::__construct( $conf );
 
-        public $template = 'widget';
-
-        /**
-         * SomeWidget constructor.
-         *
-         * @param array $conf
-         */
-        public function __construct( array $conf = [] ) {
-            parent::__construct( $conf );
-
-            $this->title = 'Some title';
-            $this->content = 'Some text';
-        }
-
-        /**
-         * @return string
-         */   
-        public function render():string {
-            return parent::render();
-        }
+        $this->title = 'Some title';
+        $this->content = 'Some text';
     }
-    ```
+
+    /**
+     * @return string
+     */   
+    public function render():string {
+        return parent::render();
+    }
+}
+```
 
 Templates should be located in `/app/views` folder and look like this:
-    ```php
+```php
+use \wpf\helpers\Html;
+
+// Declare defaults. They will be replace with values defined by widget.
+extract( [
+    'title'           => '',
+    'content'         => '',
+    'title_options'   => [],
+    'content_options' => [],
+    'options'         => []
+], EXTR_SKIP );
+
+Html::addCssClass( $options, 'widget');
+
+?>
+
+<div <?= Html::renderTagAttributes( $options ) ?>>
     <?php
-    use \wpf\helpers\Html;
-
-    // Declare defaults. They will be replace with values defined by widget.
-    extract( [
-        'title'           => '',
-        'content'         => '',
-        'title_options'   => [],
-        'content_options' => [],
-        'options'         => []
-    ], EXTR_SKIP );
-
-    Html::addCssClass( $options, 'widget');
-
-    ?>
-
-    <div <?= Html::renderTagAttributes( $options ) ?>>
-        <?php
-        if ( $title ) {
-            Html::addCssClass( $title_options, 'title');
-            echo Html::div( $title, $title_options );
-        }
-        Html::addCssClass( $content_options, 'content');
-        echo Html::div( $content, $content_options ); ?>
-    </div>
-    ```
+    if ( $title ) {
+        Html::addCssClass( $title_options, 'title');
+        echo Html::div( $title, $title_options );
+    }
+    Html::addCssClass( $content_options, 'content');
+    echo Html::div( $content, $content_options ); ?>
+</div>
+```
     
 Widgets can use `\wpf\wp\QueryBuilder` trait for easy way to include some query to DB.
-    ```php
-    <?php
-    namespace app\widgets;
+```php
+namespace app\widgets;
 
-    use \wpf\base\Widget;
-    use \wpf\wp\QueryBuilder;
+use \wpf\base\Widget;
+use \wpf\wp\QueryBuilder;
+
+/**
+ * Class SomeWidget
+ * @package app\widgets
+ */
+class SomeWidget extends Widget {
+
+    use QueryBuilder;
+
+    public $template = 'widget';
 
     /**
-     * Class SomeWidget
-     * @package app\widgets
+     * SomeWidget constructor.
+     *
+     * @param array $conf
      */
-    class SomeWidget extends Widget {
+    public function __construct( array $conf = [] ) {
+        parent::__construct( $conf );
 
-        use QueryBuilder;
-
-        public $template = 'widget';
-
-        /**
-         * SomeWidget constructor.
-         *
-         * @param array $conf
-         */
-        public function __construct( array $conf = [] ) {
-            parent::__construct( $conf );
-
-            $this->items = $this->query()->posts;
-        }
-
-        /**
-         * @return array
-         */
-        public function queryArgs():array {
-            return [
-                'post_type'      => 'custom_post_type',
-                'post_status'    => 'publish',
-                'posts_per_page' => 10
-            ];
-        }
+        $this->items = $this->query()->posts;
     }
-    ```
+
+    /**
+     * @return array
+     */
+    public function queryArgs():array {
+        return [
+            'post_type'      => 'custom_post_type',
+            'post_status'    => 'publish',
+            'posts_per_page' => 10
+        ];
+    }
+}
+```
 
 ## About
 Hey! Do you have any ideas how to do WPF better? 
