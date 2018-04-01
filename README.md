@@ -36,7 +36,7 @@ WPF is a WordPress Framework to make your creating of theme easy.
     
 ## Observers
 Observers is middleware classes to execute your own code before template will be loaded. You can specify your own observers as child for `\wpf\app\Observer` class. Each of observers needed must to be include in your `app.config.json` file into `observers` option. Also you can use the observers included in the framework. They are located in the folder `/app/observers`. See example:
-    ```
+    ```json
     {
         "observers": [
             "\\wpf\\app\\observers\\OptionsPagesDefiner",
@@ -54,7 +54,7 @@ Observers is middleware classes to execute your own code before template will be
     }
     ```
 It's convenient to create observer classes, as in the following example:
-    ```
+    ```php
     <?php
     namespace app\observers;
 
@@ -94,7 +94,7 @@ It's convenient to create observer classes, as in the following example:
 
 ## Widgets
 All parts in the VFF that you want to display on the page are recommended to be formatted as widgets. A widget is an object of a class inherited from the `\wpf\base\Widget` class. Widget classes should be located in the `/app/widgets` folder. Widgets can generate their own html, or use templates. You can override `$this->render()` method to return html without using of templete. Let's look at the code.
-    ```
+    ```php
     <?php
 
     namespace app\widgets;
@@ -133,7 +133,7 @@ All parts in the VFF that you want to display on the page are recommended to be 
     ```
 
 Templates should be located in `/app/views` folder and look like this:
-    ```
+    ```php
     <?php
     use \wpf\helpers\Html;
 
@@ -162,8 +162,7 @@ Templates should be located in `/app/views` folder and look like this:
     ```
     
 Widgets can use `\wpf\wp\QueryBuilder` trait for easy way to include some query to DB.
-    ```
-
+    ```php
     <?php
     namespace app\widgets;
 
