@@ -102,8 +102,8 @@ Templates should be located in `/app/views` folder and look like this:
 
 // Declare defaults. They will be replace with values defined by widget.
 extract( [
-    'title'           => '',
-    'content'         => ''
+    'title'   => '',
+    'content' => ''
 ], EXTR_SKIP ); ?>
 
 <div class="widget">
