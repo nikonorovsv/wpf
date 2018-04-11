@@ -44,8 +44,8 @@ class RESTHandlers
             if ( ! $reflect->isSubclassOf( RESTHandler::getName() ) ) {
                 throw new ConfigException( __( "Class '{$reflect->getName()}' must be inherited of RESTHandler class." ) );
             }
-            add_action('rest_api_init', function () use ( $class ) {
-                register_rest_route( $class::API_NAMESPACE, $class::ROUTE, [
+            add_action('rest_api_init', function () use ( $class, $app ) {
+                register_rest_route( $app->rest_namespace, $class::ROUTE, [
                     'methods'  => $class::methods(),
                     'callback' => [ $class, 'response' ],
                     'args'     => $class::validateRules(),
