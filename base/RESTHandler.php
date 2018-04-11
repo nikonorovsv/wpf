@@ -15,7 +15,6 @@ use \WP_Error as Error;
  */
 abstract class RESTHandler extends Controller
 {
-    const API_NAMESPACE = 'wpf/v1';
     const OVERRIDE = false;
     const ROUTE = NULL;
 
