@@ -3,6 +3,9 @@
   "actions_dir" : "/app/actions",
   "entities_dir" : "/app/entities",
   "ajax_handlers_dir" : "/app/ajax_handlers",
+  "rest_handlers_dir" : "/app/rest_handlers",
+  "rest_namespace" : "wpf",
+  "rest_api_version" : "v1",
   "views_dir" : "app/views",
   "observers": [
     "\\wpf\\app\\observers\\AdminAssetsDefiner",
