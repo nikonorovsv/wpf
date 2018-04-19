@@ -71,7 +71,7 @@ class AssetsDefiner
                 // Enqueue scripts
                 array_map(function ($item) {
                     wp_enqueue_script($item['name']);
-                    if ($item['localize']) {
+                    if (! empty($item['localize'])) {
                         if (defined('THEME_NONCE_KEY')) {
                             $item['localize']['nonce'] = wp_create_nonce(THEME_NONCE_KEY);
                         }
