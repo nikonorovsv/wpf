@@ -50,11 +50,9 @@ final class Pagination extends Component
         parent::__construct( $conf );
         if ( ! isset( $this->subject ) ) {
             throw new InvalidArgumentException('The "subject" parameter must be set.');
-        }
-        if ( is_array( $this->subject ) ) {
+        } elseif ( is_array( $this->subject ) ) {
             $this->subject = count( $this->subject );
-        }
-        if ( is_a( $this->subject, '\WP_Query') ) {
+        } elseif ( is_a( $this->subject, '\WP_Query') ) {
             $this->_is_wp = true;
             // Takes values from WordPress
             $this->_max = $this->subject->max_num_pages;
