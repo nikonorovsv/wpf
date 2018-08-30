@@ -201,6 +201,13 @@ class Post
 		
 		return $src;
 	}
+
+       /**
+         * @return bool
+         */
+	public function hasThumb() {
+	        return has_post_thumbnail( $this->ID );
+        }
 	
 	/**
 	 * @return false|string
