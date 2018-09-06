@@ -16,11 +16,10 @@ use \wpf\helpers\WP;
 class EntityDefiner
 	extends Observer {
 	/**
-	 * @param App $app
-	 *
-	 * @return bool
-	 * @throws ConfigException
-	 */
+         * @param App $app
+         * @return bool
+         * @throws \ReflectionException
+         */
 	public function doUpdate( App $app ) {
 		if ( ! $app->entities ) {
 			return FALSE;
