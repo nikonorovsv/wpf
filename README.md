@@ -10,49 +10,49 @@ WPF is a WordPress Framework to make your creating of theme easy.
 1. [Install Composer](https://getcomposer.org/download/).
 2. Move to the theme folder: `cd {WP_path}/wp-config/themes/{theme_name}`
 3. Create **composer.json** file and add WPF requires like this:
-    ```json
-    {
-      "autoload": {
-        "psr-4": {
-          "wpf\\": "vendor/nikonorovsv/wpf/",
-          "app\\": "app/"
-        }
-      },
-      "require": {
-        "nikonorovsv/wpf": "dev"
-      },
-      "repositories":[
-        {
-          "type":"package",
-          "package":{
-            "name":"nikonorovsv/wpf",
-            "version":"dev",
-            "source":{
-              "type":"git",
-              "url":"http://github.com/nikonorovsv/wpf",
-              "reference":"master"
-            }
-          }
-        }
-      ]
+```json
+{
+  "autoload": {
+    "psr-4": {
+      "wpf\\": "vendor/nikonorovsv/wpf/",
+      "app\\": "app/"
     }
-    ```
+  },
+  "require": {
+    "nikonorovsv/wpf": "dev"
+  },
+  "repositories":[
+    {
+      "type":"package",
+      "package":{
+        "name":"nikonorovsv/wpf",
+        "version":"dev",
+        "source":{
+          "type":"git",
+          "url":"http://github.com/nikonorovsv/wpf",
+          "reference":"master"
+        }
+      }
+    }
+  ]
+}
+```
 4. Run `composer install`
 5. Create your **app.config.json** into theme base directory.
 6. Open your **functions.php** and create your App:
-    ```php
-    get_template_part( 'vendor/autoload' );
-    get_template_part( 'vendor/nikonorovsv/wpf/functions' );
- 
-    $conf = [
-    	'vendor/nikonorovsv/wpf/wpf.config.json',
-    	'app.config.json'
-    ];
-    
-    $app = app();
-    $app->loadAttributes( $app::readJsonConf( $conf ) );
-    $app->applyObservers();
-    ```
+```php
+get_template_part( 'vendor/autoload' );
+get_template_part( 'vendor/nikonorovsv/wpf/functions' );
+
+$conf = [
+    'vendor/nikonorovsv/wpf/wpf.config.json',
+    'app.config.json'
+];
+
+$app = app();
+$app->loadAttributes( $app::readJsonConf( $conf ) );
+$app->applyObservers();
+```
     
 ## Observers
 Observers is middleware classes to execute your own code before template will be loaded. You can specify your own observers as child for `\wpf\app\Observer` class. Each of observers needed must to be include in your `app.config.json` file into `observers` option. Also you can use the observers included in the framework. They are located in the folder `/app/observers`. See example:
@@ -174,6 +174,48 @@ echo (string) new SomeWidget([
     'title'   => 'Some title',
     'content' => 'Some text'
 ]);
+```
+
+## Entities
+Using Entities is a way to create your own post types and taonomies in WPF. There are implements of IEntities interface and should to be located at `/app/entities` directory. As example: 
+```php
+namespace app\entities;
+
+use wpf\wp\Taxonomy;
+
+class Genre extends Taxonomy
+{
+	const NAME = 'genre';
+
+	public function __construct() {
+		$this->args = [
+			'labels'            => self::getLabels(),
+			'hierarchical'      => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => array( 'slug' => 'genres' ),
+		];
+
+		$this->deps = ['book'];
+	}
+
+	public static function getLabels() {
+		return [
+			'name'              => _x( 'Genres', 'taxonomy general name', 'textdomain' ),
+		    'singular_name'     => _x( 'Genre', 'taxonomy singular name', 'textdomain' ),
+		    'search_items'      => __( 'Search Genres', 'textdomain' ),
+		    'all_items'         => __( 'All Genres', 'textdomain' ),
+		    'parent_item'       => __( 'Parent Genre', 'textdomain' ),
+		    'parent_item_colon' => __( 'Parent Genre:', 'textdomain' ),
+		    'edit_item'         => __( 'Edit Genre', 'textdomain' ),
+		    'update_item'       => __( 'Update Genre', 'textdomain' ),
+		    'add_new_item'      => __( 'Add New Genre', 'textdomain' ),
+		    'new_item_name'     => __( 'New Genre Name', 'textdomain' ),
+		    'menu_name'         => __( 'Genre', 'textdomain' )
+		];
+	}
+}
 ```
 
 ## About
