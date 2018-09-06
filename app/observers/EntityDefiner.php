@@ -5,6 +5,8 @@ use \ReflectionClass;
 use \wpf\App;
 use \wpf\app\Observer;
 use \wpf\base\ConfigException;
+use \wpf\base\FileNotFoundException;
+use \wpf\base\InvalidArgumentException;
 use \wpf\helpers\WP;
 
 /**
