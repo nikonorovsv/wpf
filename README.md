@@ -177,7 +177,7 @@ echo (string) new SomeWidget([
 ```
 
 ## Entities
-Using Entities is a way to create your own post types and taxonomies in WPF. Created Entities implements of IEntities interface and should to be located at `/app/entities` directory. They will be processed by the EntitoDefiner observer. It's enabled by default. They As example:
+Using Entities is a way to create your own post types and taxonomies in WPF. Created Entities implements of IEntities interface and should to be located at `/app/entities` directory. They will be processed by the EntityDefiner observer. It's enabled by default. They As example:
 ```php
 namespace app\entities;
 
