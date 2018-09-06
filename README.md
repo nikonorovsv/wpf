@@ -12,9 +12,29 @@ WPF is a WordPress Framework to make your creating of theme easy.
 3. Create **composer.json** file and add WPF requires like this:
     ```json
     {
-        "require": {
-            "nikonorovsv/wpf": "dev-master"
+      "autoload": {
+        "psr-4": {
+          "wpf\\": "vendor/nikonorovsv/wpf/",
+          "app\\": "app/"
         }
+      },
+      "require": {
+        "nikonorovsv/wpf": "dev"
+      },
+      "repositories":[
+        {
+          "type":"package",
+          "package":{
+            "name":"nikonorovsv/wpf",
+            "version":"dev",
+            "source":{
+              "type":"git",
+              "url":"http://github.com/nikonorovsv/wpf",
+              "reference":"master"
+            }
+          }
+        }
+      ]
     }
     ```
 4. Run `composer install`
