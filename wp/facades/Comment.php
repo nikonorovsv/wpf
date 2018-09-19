@@ -161,10 +161,10 @@ class Comment
      */
     public function children( array $args = [] ) {
         $args = wp_parse_args( $args, [
-            'comment_parent' => $this->ID,
-            'fields'         => 'ids',
-            'orderby'        => 'comment_date_gmt',
-            'order'          => 'ASC'
+            'parent'  => $this->ID,
+            'fields'  => 'ids',
+            'orderby' => 'comment_date_gmt',
+            'order'   => 'ASC'
         ] );
 
         $query = new WP_Comment_Query;
