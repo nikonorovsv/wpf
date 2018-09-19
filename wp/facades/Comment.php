@@ -2,12 +2,8 @@
 
 namespace wpf\wp\facades;
 
-use \WP_Post;
-use \WP_Error;
 use \WP_Comment_Query;
-use \wpf\helpers\Html;
 use \wpf\helpers\Date;
-use \wpf\helpers\WP;
 
 /**
  * Class Comment
