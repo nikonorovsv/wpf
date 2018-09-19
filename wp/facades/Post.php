@@ -80,7 +80,7 @@ class Post
 	 * @return \DateTime|false
 	 */
 	public function pubDate() {
-		return new Date( get_the_time( 'Y-m-d', $this->ID ) );
+		return new Date( $this->post_date );
 	}
 	
 	/**
