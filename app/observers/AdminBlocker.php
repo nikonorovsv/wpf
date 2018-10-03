@@ -1,6 +1,6 @@
 <?php
 
-namespace app\observers;
+namespace wpf\app\observers;
 
 use \wpf\app\Observer;
 use \wpf\App;
