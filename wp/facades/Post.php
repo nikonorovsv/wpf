@@ -184,6 +184,16 @@ class Post
 	}
 	
 	/**
+         * @return bool|string
+         */
+	public function thumbCaption() {
+            if ( post_password_required( $this->ID ) ) {
+                return FALSE;
+            }
+            return get_the_post_thumbnail_caption( $this->ID );
+        }
+	
+	/**
 	 * @param string $size
 	 * @param bool $placeholder
 	 *
