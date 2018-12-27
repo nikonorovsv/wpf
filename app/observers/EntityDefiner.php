@@ -29,14 +29,18 @@ class EntityDefiner
 			throw new FileNotFoundException( __( "Parameter 'entities_dir' in '/wpf/wpf.config.json' file must be correct path to folder." ) );
 		}
 		
-		foreach ( $app->entities as $entity ) {
-			$class   = str_replace( '/', '\\', "{$app->entities_dir}/{$entity}" );
-			$reflect = new ReflectionClass( $class );
-			if ( ! $reflect->implementsInterface( '\wpf\base\IEntity' ) ) {
-				throw new ConfigException( __( "Class '{$reflect->getName()}' must implement IEntity interface." ) );
+		$update = function () use ( $app ) {
+			foreach ( $app->entities as $entity ) {
+				$class   = str_replace( '/', '\\', "{$app->entities_dir}/{$entity}" );
+				$reflect = new ReflectionClass( $class );
+				if ( ! $reflect->implementsInterface( '\wpf\base\IEntity' ) ) {
+					throw new ConfigException( __( "Class '{$reflect->getName()}' must implement IEntity interface." ) );
+				}
+				$entity = new $class();
+				$entity->register();
 			}
-			$entity = new $class();
-			$entity->register();
-		}
+		};
+		
+		add_action('init', $update );
 	}
 }
