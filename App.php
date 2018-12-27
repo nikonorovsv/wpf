@@ -114,12 +114,12 @@ class App
 			$this->$name = $value;
 		}
 	}
-	
+
 	/**
 	 * @param $object
-	 * @param $atts
-	 *
+	 * @param array $atts
 	 * @return mixed
+	 * @throws \ReflectionException
 	 */
 	public static function configure( $object, array $atts ) {
 		$class = new ReflectionClass( $object );
@@ -135,8 +135,8 @@ class App
 
 	/**
 	 * @param array $observers
-	 *
 	 * @throws ConfigException
+	 * @throws \ReflectionException
 	 */
 	public function applyObservers( array $observers = [] ) {
 		// Only one instance
@@ -153,9 +153,10 @@ class App
 		//
 		$this->_notified = TRUE;
 	}
-	
+
 	/**
 	 * @param array $observers
+	 * @throws \ReflectionException
 	 */
 	public function attachArray( array $observers ) {
 		foreach ( $observers as $observer ) {
@@ -205,8 +206,7 @@ class App
 	 */
 	public static function readJsonConf( $conf ) {
 		$result = [];
-		foreach ( (array) $conf as $item ) {
-			$file = WP::path( $item );
+		foreach ( (array) $conf as $file ) {
 			if ( ! file_exists( $file ) ) {
 				throw new FileNotFoundException( "File '{$file}' not found." );
 			}
