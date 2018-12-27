@@ -26,6 +26,8 @@ class AddRewriteRules
 		}
 
 		$update = function() use ( $app ) {
+			global $wp_rewrite;
+			
 			foreach ( $app->rewrite_rules as $regexp => $matches ) {
 				$i = (int) ArrayHelper::remove( $matches, 'matches_position', 1 );
 				$query_string = ArrayHelper::remove( $matches, 'query_string', 'index.php?' );
@@ -51,11 +53,10 @@ class AddRewriteRules
 
 				add_rewrite_rule( $regexp, $query, $priority );
 			}
+			
+			$wp_rewrite->flush_rules();
 		};
 
 		add_action('init', $update );
-
-		global $wp_rewrite;
-		$wp_rewrite->flush_rules();
 	}
 }
