@@ -15,12 +15,12 @@ class Date extends DateTime {
 
 	private $_locale;
 
-	/**
-	 * Date constructor.
-	 *
-	 * @param string $time
-	 * @param DateTimeZone|NULL $timezone
-	 */
+    /**
+     * Date constructor.
+     * @param string $time
+     * @param DateTimeZone|NULL $timezone
+     * @throws \Exception
+     */
 	public function __construct( $time = 'now', DateTimeZone $timezone = NULL ) {
 		$timezone = $timezone ?? new DateTimeZone( $this->timezone() );
 		parent::__construct( $time, $timezone );
@@ -101,25 +101,25 @@ class Date extends DateTime {
 	 */
 	public static function timezoneString() {
 		// if site timezone string exists, return it
-		if ( $timezone = get_option( 'timezone_string' ) ) {
+		if ( $timezone = get_option('timezone_string') ) {
 			return $timezone;
 		}
 		// get UTC offset, if it isn't set then return UTC
-		if ( ! $utc_offset = get_option( 'gmt_offset', 0 ) ) {
+		if ( ! $utc_offset = get_option('gmt_offset', 0) ) {
 			return 'UTC';
 		}
 		// adjust UTC offset from hours to seconds
 		$utc_offset *= 3600;
 		// attempt to guess the timezone string from the UTC offset
-		if ( $timezone = timezone_name_from_abbr( '', $utc_offset, 0 ) ) {
+		if ( $timezone = timezone_name_from_abbr('', $utc_offset, 0 ) ) {
 			return $timezone;
 		}
 		// last try, guess timezone string manually
-		$is_dst = date( 'I' );
+		$is_dst = date('I');
 		foreach ( timezone_abbreviations_list() as $abbr ) {
 			foreach ( $abbr as $city ) {
-				if ( $city[ 'dst' ] == $is_dst && $city[ 'offset' ] == $utc_offset ) {
-					return $city[ 'timezone_id' ];
+				if ( $city['dst'] == $is_dst && $city['offset'] == $utc_offset ) {
+					return $city['timezone_id'];
 				}
 			}
 		}
@@ -134,8 +134,8 @@ class Date extends DateTime {
 	 * @return mixed|string
 	 */
 	public static function rd( string $datetime ) {
-		if ( substr_count( $datetime, '--' ) > 0 ) {
-			return str_replace( '--', '', $datetime );
+		if ( substr_count( $datetime, '--') > 0) {
+			return str_replace('--', '', $datetime );
 		}
 		$rus_date_array = [
 			"Январь"    => "января",

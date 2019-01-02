@@ -6,6 +6,7 @@ namespace wpf\base;
  * @package wpf\base
  */
 interface IBuilder {
+    
 	/**
 	 * @return null,object
 	 */

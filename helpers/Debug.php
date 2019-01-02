@@ -11,7 +11,7 @@ class Debug {
 	 * @return bool
 	 */
 	public static function isDebug() {
-		return defined( 'WP_DEBUG' ) && WP_DEBUG;
+		return defined('WP_DEBUG') && WP_DEBUG;
 	}
 
 	/**
@@ -48,19 +48,18 @@ class Debug {
 		echo '</pre>';
 	}
 
-	/**
-	 * @param string $msg
-	 * @param string $title
-	 * @param string $file
-	 *
-	 * @return bool
-	 */
-	public static function logIt( string $msg, string $title = '', string $file ) {
+    /**
+     * @param string $msg
+     * @param string $title
+     * @param string $file
+     * @return bool
+     */
+	public static function logIt( string $msg, string $title, string $file ) {
 		if ( ! self::isDebug() ) {
 			return FALSE;
 		}
-		error_log( join( ' | ', [
-			current_time( 'd.m.Y h:i:s' ),
+		error_log( join(' | ', [
+			current_time('d.m.Y h:i:s'),
 			$title,
 			print_r( $msg, TRUE ) . "\n"
 		] ), 3, WP::path( $file ) );

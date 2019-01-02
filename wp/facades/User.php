@@ -23,7 +23,7 @@ class User
 	 */
 	public function __construct( int $user = NULL ) {
 		$user = $user ?? get_current_user_id();
-		$this->user = get_user_by( 'id', $user );
+		$this->user = get_user_by('id', $user );
 		$this->key  = "user_{$user}";
 	}
 	
@@ -56,7 +56,7 @@ class User
 	 * @return bool
 	 */
 	public function label( string $name ) {
-		return $this->$name ? get_field_object( $name, $this->key )[ 'label' ] : FALSE;
+		return $this->$name ? get_field_object( $name, $this->key )['label'] : FALSE;
 	}
 
 	/**
@@ -78,7 +78,7 @@ class User
 	 *
 	 * @return false|string
 	 */
-	public function thumbUrl( string $size = 'thumbnail' ) {
+	public function thumbUrl( string $size = 'thumbnail') {
 		$size = WP::getImageSize( $size );
 		
 		return get_avatar_url( $this->ID, ['size' => $size['width'] ] );

@@ -10,6 +10,7 @@ use \WP_Error;
  */
 class Term
 	implements IFacade {
+
 	/**
 	 * @var WP_Term object
 	 */
@@ -54,7 +55,7 @@ class Term
 	 * @return bool
 	 */
 	public function label( string $name ) {
-		return $this->$name ? get_field_object( $name, $this->term )[ 'label' ] : FALSE;
+		return $this->$name ? get_field_object( $name, $this->term )['label'] : FALSE;
 	}
 
 	/**
@@ -69,7 +70,7 @@ class Term
 	 *
 	 * @return mixed
 	 */
-	public function url( array $args = [] ) {
+	public function url( array $args = []) {
 		$url = get_term_link( $this->term );
 		if ( $args ) {
 			$url = add_query_arg( $args, $url );
@@ -107,6 +108,6 @@ class Term
 	 * @return array
 	 */
 	public function parents() {
-		return get_ancestors( $this->term_id, $this->taxonomy, 'taxonomy' );
+		return get_ancestors( $this->term_id, $this->taxonomy, 'taxonomy');
 	}
 }

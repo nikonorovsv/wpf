@@ -11,6 +11,7 @@ use \wpf\base\ConfigException;
  */
 class ActionRemover
 	extends Observer {
+    
 	/**
 	 * @param App $app
 	 *
@@ -23,11 +24,11 @@ class ActionRemover
 			}
 			foreach ( $app->remove_actions as $args ) {
 				if ( ! is_array( $args ) ) {
-					throw new ConfigException( __( "All elements of 'remove_actions' property in '*.config.json' must be arrays too." ) );
+					throw new ConfigException( __("All elements of 'remove_actions' property in '*.config.json' must be arrays too.") );
 				}
 				remove_action( ...$args );
 			}
 		};
-		add_action( 'after_setup_theme', $update );
+		add_action('after_setup_theme', $update );
 	}
 }

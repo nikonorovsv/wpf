@@ -35,7 +35,7 @@ class Blog
 			return $this->blog->$name;
 		elseif ( $value = get_bloginfo( $name ) ) :
 		elseif ( $value = get_option( $name ) ) :
-		elseif ( $value = get_field( $name, 'option' ) ) :
+		elseif ( $value = get_field( $name, 'option') ) :
 		endif;
 		
 		return $value;
@@ -79,7 +79,7 @@ class Blog
 	 *
 	 * @return mixed
 	 */
-	public function editUrl( $path = '', $scheme = 'admin' ) {
+	public function editUrl( $path = '', $scheme = 'admin') {
 		return get_admin_url( $this->id, $path, $scheme );
 	}
 	
@@ -90,8 +90,8 @@ class Blog
 	 * @return bool|int|WP_Error
 	 */
 	public function update( string $name, $value ) {
-		if ( get_field( $name, 'option' ) ) {
-			return update_field( $name, $value, 'option' );
+		if ( get_field( $name, 'option') ) {
+			return update_field( $name, $value, 'option');
 		} elseif ( get_option( $name ) ) {
 			return update_option( $name, $value );
 		}

@@ -19,13 +19,13 @@ class AdminAssetsDefiner
 			if ( $app->register_admin_styles ) {
 				$enqueue_styles = [];
 				foreach ( $app->register_admin_styles as $style ) {
-					wp_register_style( $style[ 'name' ], $style[ 'src' ],
-						$style[ 'deps' ] ?? [],
-						$style[ 'ver' ] ?? FALSE,
-						$style[ 'media' ] ?? 'all'
+					wp_register_style( $style['name'], $style[ 'src' ],
+						$style['deps'] ?? [],
+						$style['ver'] ?? FALSE,
+						$style['media'] ?? 'all'
 					);
-					if ( ! empty( $style[ 'enqueue' ] ) ) {
-						$enqueue_styles[] = $style[ 'name' ];
+					if ( ! empty( $style['enqueue'] ) ) {
+						$enqueue_styles[] = $style['name'];
 					}
 				}
 				array_map( function ( $item ) {
@@ -33,7 +33,7 @@ class AdminAssetsDefiner
 				}, $enqueue_styles );
 			}
 		};
-		add_action( 'admin_head', $update );
+		add_action('admin_head', $update );
 	}
 }
 

@@ -19,6 +19,6 @@ class RemoveRedirects
             // Redirect all requests to index.php so the Vue app is loaded and 404s aren't thrown
             add_rewrite_rule('^/(.+)/?', 'index.php', 'top');
         };
-        add_action( 'init', $update );
+        add_action('init', $update );
     }
 }

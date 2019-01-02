@@ -20,7 +20,7 @@ abstract class ViewContext
 	 *
 	 * @param array $conf
 	 */
-	public function __construct( array $conf = [] ) {
+	public function __construct( array $conf = []) {
 		parent::__construct( $conf );
 
 		// TODO Нужно ли избавляться от вложенного View объекта, или убрать
@@ -34,7 +34,7 @@ abstract class ViewContext
 		if ( ! $this->template ) {
 			$class = static::class;
 			throw new InvalidArgumentException(
-				__( "Template is not defined in '$class'. If you want to render context without template, you need to redefine render() method in your child class without parent method calling." ) );
+				__("Template is not defined in '$class'. If you want to render context without template, you need to redefine render() method in your child class without parent method calling.") );
 		}
 		$html = $this->before();
 		$html .= render( $this->template, $this->getAttributes() );

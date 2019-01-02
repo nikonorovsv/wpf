@@ -25,7 +25,7 @@ class Repo implements IConfigurable, IteratorAggregate
 	 * @param array $args
 	 */
 	private function __construct( string $name, array $args ) {
-		$glob = strtoupper( "_{$name}" );
+		$glob = strtoupper("_{$name}");
 		global $$glob;
 		if ( isset( $$glob ) ) {
 			self::$_current = &$$glob;

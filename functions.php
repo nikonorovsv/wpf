@@ -6,7 +6,7 @@ use \wpf\helpers\Repo;
 /**
  * @param $object
  */
-if ( ! function_exists( 'vd' ) ) {
+if ( ! function_exists('vd') ) {
 	function vd( ...$object ) {
 		Debug::varDump( $object );
 	}
@@ -14,7 +14,7 @@ if ( ! function_exists( 'vd' ) ) {
 /**
  * @param $object
  */
-if ( ! function_exists( 've' ) ) {
+if ( ! function_exists('ve') ) {
 	function ve( $object ) {
 		Debug::varExport( $object );
 	}
@@ -25,9 +25,9 @@ if ( ! function_exists( 've' ) ) {
  *
  * @return bool
  */
-if ( ! function_exists( 'log_it' ) ) {
+if ( ! function_exists('log_it') ) {
 	function log_it( $msg, $title = '' ) {
-		return Debug::logIt( $msg, $title, 'debug.log' );
+		return Debug::logIt( $msg, $title, 'debug.log');
 	}
 }
 /**
@@ -35,7 +35,7 @@ if ( ! function_exists( 'log_it' ) ) {
  *
  * @return string
  */
-if ( ! function_exists( 'clear_string' ) ) {
+if ( ! function_exists('clear_string') ) {
 	function clear_string( $string ) {
 		return WP::clearString( $string );
 	}
@@ -47,7 +47,7 @@ if ( ! function_exists( 'clear_string' ) ) {
  *
  * @return mixed
  */
-if ( ! function_exists( 'run_on_blog' ) ) {
+if ( ! function_exists('run_on_blog') ) {
 	function run_on_blog( int $blog_id, callable $callback, ...$args ) {
 		return WP::runOnBlog( $blog_id, $callback, ...$args );
 	}
@@ -57,7 +57,7 @@ if ( ! function_exists( 'run_on_blog' ) ) {
  *
  * @return mixed
  */
-if ( ! function_exists( 'icon' ) ) {
+if ( ! function_exists('icon') ) {
 	function icon( ...$args ) {
 		return \wpf\helpers\Icon::ui( ...$args );
 	}
@@ -68,7 +68,7 @@ if ( ! function_exists( 'icon' ) ) {
  *
  * @return mixed|string
  */
-if ( ! function_exists( '__rd' ) ) {
+if ( ! function_exists('__rd') ) {
 	function __rd( string $datetime ) {
 		return \wpf\helpers\Date::rd( $datetime );
 	}
@@ -77,7 +77,7 @@ if ( ! function_exists( '__rd' ) ) {
 /**
  * @return mixed
  */
-if ( ! function_exists( 'app' ) ) {
+if ( ! function_exists('app') ) {
 	function app() {
 		return \wpf\App::instance();
 	}
@@ -88,7 +88,7 @@ if ( ! function_exists( 'app' ) ) {
  *
  * @return \wpf\base\View
  */
-if ( ! function_exists( 'view' ) ) {
+if ( ! function_exists('view') ) {
 	function view( string $dir = NULL ) {
 		if ( $dir ) {
 			return new \wpf\base\View( $dir );
@@ -105,7 +105,7 @@ if ( ! function_exists( 'view' ) ) {
  *
  * @return string
  */
-if ( ! function_exists( 'render' ) ) {
+if ( ! function_exists('render') ) {
 	function render( $tpl, array $vars = [], string $dir = NULL ) {
 		return view( $dir )->render( $tpl, $vars );
 	}
@@ -116,8 +116,8 @@ if ( ! function_exists( 'render' ) ) {
  *
  * @return \wpf\base\Component
  */
-if ( ! function_exists( 'get_component' ) ) {
-	function get_component( array $conf = [] ) {
+if ( ! function_exists('get_component') ) {
+	function get_component( array $conf = []) {
 		return new \wpf\base\Component( $conf );
 	}
 }
@@ -127,8 +127,8 @@ if ( ! function_exists( 'get_component' ) ) {
  *
  * @return array
  */
-if ( ! function_exists( 'repo' ) ) {
-	function repo( string $name, array $args = [] ) {
+if ( ! function_exists('repo') ) {
+	function repo( string $name, array $args = []) {
 		return Repo::$name( $args );
 	}
 }
@@ -138,7 +138,7 @@ if ( ! function_exists( 'repo' ) ) {
  *
  * @return array
  */
-if ( ! function_exists( 'wp_menu_items' ) ) {
+if ( ! function_exists('wp_menu_items') ) {
 	function wp_menu_items( string $name ) {
 		return ( new \wpf\wp\Menu( $name ) )->items();
 	}

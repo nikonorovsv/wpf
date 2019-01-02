@@ -36,7 +36,7 @@ abstract class RESTHandler extends Controller
      * @return Error
      */
     protected static function error( string $key, string $message, int $status = 404 ): Error {
-        return new Error( $key, __( $message ),  compact( 'status' ) );
+        return new Error( $key, __( $message ),  compact('status') );
     }
 
     /**

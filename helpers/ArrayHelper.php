@@ -67,7 +67,7 @@ class ArrayHelper {
 		} elseif ( is_object( $object ) ) {
 			if ( ! empty( $properties ) ) {
 				$className = get_class( $object );
-				if ( ! empty( $properties[ $className ] ) ) {
+				if ( ! empty( $properties[ $className ]) ) {
 					$result = [];
 					foreach ( $properties[ $className ] as $key => $name ) {
 						if ( is_int( $key ) ) {
@@ -119,12 +119,12 @@ class ArrayHelper {
 				} elseif ( $v instanceof ReplaceArrayValue ) {
 					$res[ $k ] = $v->value;
 				} elseif ( is_int( $k ) ) {
-					if ( isset( $res[ $k ] ) ) {
+					if ( isset( $res[ $k ]) ) {
 						$res[] = $v;
 					} else {
 						$res[ $k ] = $v;
 					}
-				} elseif ( is_array( $v ) && isset( $res[ $k ] ) && is_array( $res[ $k ] ) ) {
+				} elseif ( is_array( $v ) && isset( $res[ $k ]) && is_array( $res[ $k ]) ) {
 					$res[ $k ] = self::merge( $res[ $k ], $v );
 				} else {
 					$res[ $k ] = $v;
@@ -186,19 +186,19 @@ class ArrayHelper {
 			}
 			$key = $lastKey;
 		}
-		if ( is_array( $array ) && ( isset( $array[ $key ] ) || array_key_exists( $key, $array ) ) ) {
+		if ( is_array( $array ) && ( isset( $array[ $key ]) || array_key_exists( $key, $array ) ) ) {
 			return $array[ $key ];
 		}
-		if ( ( $pos = strrpos( $key, '.' ) ) !== FALSE ) {
+		if ( ( $pos = strrpos( $key, '.') ) !== FALSE ) {
 			$array = static::getValue( $array, substr( $key, 0, $pos ), $default );
-			$key   = substr( $key, $pos + 1 );
+			$key   = substr( $key, $pos + 1);
 		}
 		if ( is_object( $array ) ) {
 			// this is expected to fail if the property does not exist, or __get() is not implemented
 			// it is not reliably possible to check whether a property is accessable beforehand
 			return $array->$key;
 		} elseif ( is_array( $array ) ) {
-			return ( isset( $array[ $key ] ) || array_key_exists( $key, $array ) ) ? $array[ $key ] : $default;
+			return ( isset( $array[ $key ]) || array_key_exists( $key, $array ) ) ? $array[ $key ] : $default;
 		} else {
 			return $default;
 		}
@@ -225,9 +225,9 @@ class ArrayHelper {
 	 * @return mixed|null the value of the element if found, default value otherwise
 	 */
 	public static function remove( &$array, $key, $default = NULL ) {
-		if ( is_array( $array ) && ( isset( $array[ $key ] ) || array_key_exists( $key, $array ) ) ) {
+		if ( is_array( $array ) && ( isset( $array[ $key ]) || array_key_exists( $key, $array ) ) ) {
 			$value = $array[ $key ];
-			unset( $array[ $key ] );
+			unset( $array[ $key ]);
 			
 			return $value;
 		}
@@ -483,10 +483,10 @@ class ArrayHelper {
 		if ( $caseSensitive ) {
 			// Function `isset` checks key faster but skips `null`, `array_key_exists` handles this case
 			// http://php.net/manual/en/function.array-key-exists.php#107786
-			return isset( $array[ $key ] ) || array_key_exists( $key, $array );
+			return isset( $array[ $key ]) || array_key_exists( $key, $array );
 		} else {
 			foreach ( array_keys( $array ) as $k ) {
-				if ( strcasecmp( $key, $k ) === 0 ) {
+				if ( strcasecmp( $key, $k ) === 0) {
 					return TRUE;
 				}
 			}
@@ -542,7 +542,7 @@ class ArrayHelper {
 		$args[] = SORT_ASC;
 		$args[] = SORT_NUMERIC;
 		$args[] = &$array;
-		call_user_func_array( 'array_multisort', $args );
+		call_user_func_array('array_multisort', $args );
 	}
 	
 	/**
@@ -671,7 +671,7 @@ class ArrayHelper {
 			return TRUE;
 		}
 		if ( $consecutive ) {
-			return array_keys( $array ) === range( 0, count( $array ) - 1 );
+			return array_keys( $array ) === range( 0, count( $array ) - 1);
 		} else {
 			foreach ( $array as $key => $value ) {
 				if ( ! is_int( $key ) ) {
@@ -708,7 +708,7 @@ class ArrayHelper {
 		} elseif ( is_array( $haystack ) ) {
 			return in_array( $needle, $haystack, $strict );
 		} else {
-			throw new Exception( 'Argument $haystack must be an array or implement Traversable' );
+			throw new Exception('Argument $haystack must be an array or implement Traversable');
 		}
 		
 		return FALSE;
@@ -754,7 +754,7 @@ class ArrayHelper {
 			
 			return TRUE;
 		} else {
-			throw new Exception( 'Argument $needles must be an array or implement Traversable' );
+			throw new Exception('Argument $needles must be an array or implement Traversable');
 		}
 	}
 	
@@ -807,12 +807,12 @@ class ArrayHelper {
 		$result        = [];
 		$forbiddenVars = [];
 		foreach ( $filters as $var ) {
-			$keys      = explode( '.', $var );
-			$globalKey = $keys[ 0 ];
-			$localKey  = isset( $keys[ 1 ] ) ? $keys[ 1 ] : NULL;
-			if ( $globalKey[ 0 ] === '!' ) {
+			$keys      = explode('.', $var );
+			$globalKey = $keys[0];
+			$localKey  = isset( $keys[1] ) ? $keys[1] : NULL;
+			if ( $globalKey[0] === '!') {
 				$forbiddenVars[] = [
-					substr( $globalKey, 1 ),
+					substr( $globalKey, 1),
 					$localKey,
 				];
 				continue;

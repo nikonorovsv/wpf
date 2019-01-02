@@ -11,11 +11,11 @@ use \wpf\base\ConfigException;
  */
 class SidebarsDefiner
 	extends Observer {
-	/**
-	 * @param App $app
-	 *
-	 * @throws ConfigException
-	 */
+
+    /**
+     * @param App $app
+     * @return mixed|void
+     */
 	public function doUpdate( App $app ) {
 		$update = function () use ( $app ) {
 			if ( ! $app->sidebars ) {
@@ -23,11 +23,11 @@ class SidebarsDefiner
 			}
 			foreach ( $app->sidebars as $args ) {
 				if ( ! is_array( $args ) ) {
-					throw new ConfigException( __( "All elements of 'sidebars' array in '*.config.json' must be objects." ) );
+					throw new ConfigException( __("All elements of 'sidebars' array in '*.config.json' must be objects.") );
 				}
 				register_sidebar( $args );
 			}
 		};
-		add_action( 'after_setup_theme', $update );
+		add_action('after_setup_theme', $update );
 	}
 }

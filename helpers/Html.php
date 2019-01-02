@@ -170,7 +170,7 @@ class Html {
 	 * in a tag. If there is no attribute, an empty string will be returned.
 	 */
 	public static function renderTagAttributes( $attributes ) {
-		if ( count( $attributes ) > 1 ) {
+		if ( count( $attributes ) > 1) {
 			$sorted = [];
 			foreach ( static::$attributeOrder as $name ) {
 				if ( isset( $attributes[ $name ] ) ) {
@@ -194,12 +194,12 @@ class Html {
 							$html .= " $name-$n=\"" . static::encode( $v ) . '"';
 						}
 					}
-				} elseif ( $name === 'class' ) {
+				} elseif ( $name === 'class') {
 					if ( empty( $value ) ) {
 						continue;
 					}
 					$html .= " $name=\"" . static::encode( implode( ' ', $value ) ) . '"';
-				} elseif ( $name === 'style' ) {
+				} elseif ( $name === 'style') {
 					if ( empty( $value ) ) {
 						continue;
 					}
@@ -257,15 +257,15 @@ class Html {
 	 * @param string|array $class the CSS class(es) to be added
 	 */
 	public static function addCssClass( &$options, $class ) {
-		if ( isset( $options[ 'class' ] ) ) {
-			if ( is_array( $options[ 'class' ] ) ) {
-				$options[ 'class' ] = self::mergeCssClasses( $options[ 'class' ], (array) $class );
+		if ( isset( $options['class'] ) ) {
+			if ( is_array( $options['class'] ) ) {
+				$options['class'] = self::mergeCssClasses( $options['class'], (array) $class );
 			} else {
-				$classes            = preg_split( '/\s+/', $options[ 'class' ], - 1, PREG_SPLIT_NO_EMPTY );
-				$options[ 'class' ] = implode( ' ', self::mergeCssClasses( $classes, (array) $class ) );
+				$classes            = preg_split('/\s+/', $options['class'], - 1, PREG_SPLIT_NO_EMPTY );
+				$options['class'] = implode( ' ', self::mergeCssClasses( $classes, (array) $class ) );
 			}
 		} else {
-			$options[ 'class' ] = $class;
+			$options['class'] = $class;
 		}
 	}
 	
@@ -297,21 +297,21 @@ class Html {
 	 * @param string|array $class the CSS class(es) to be removed
 	 */
 	public static function removeCssClass( &$options, $class ) {
-		if ( isset( $options[ 'class' ] ) ) {
-			if ( is_array( $options[ 'class' ] ) ) {
-				$classes = array_diff( $options[ 'class' ], (array) $class );
+		if ( isset( $options['class'] ) ) {
+			if ( is_array( $options['class'] ) ) {
+				$classes = array_diff( $options['class'], (array) $class );
 				if ( empty( $classes ) ) {
-					unset( $options[ 'class' ] );
+					unset( $options['class'] );
 				} else {
-					$options[ 'class' ] = $classes;
+					$options['class'] = $classes;
 				}
 			} else {
-				$classes = preg_split( '/\s+/', $options[ 'class' ], - 1, PREG_SPLIT_NO_EMPTY );
+				$classes = preg_split('/\s+/', $options['class'], - 1, PREG_SPLIT_NO_EMPTY );
 				$classes = array_diff( $classes, (array) $class );
 				if ( empty( $classes ) ) {
-					unset( $options[ 'class' ] );
+					unset( $options['class'] );
 				} else {
-					$options[ 'class' ] = implode( ' ', $classes );
+					$options['class'] = implode(' ', $classes );
 				}
 			}
 		}
@@ -324,12 +324,12 @@ class Html {
 	 * @return bool
 	 */
 	public static function hasCssClass( $options, $class ) {
-		if ( isset( $options[ 'class' ] ) ) {
-			if ( is_array( $options[ 'class' ] ) ) {
+		if ( isset( $options['class'] ) ) {
+			if ( is_array( $options['class'] ) ) {
 				if ( in_array( $class, $options['class'] ) ) {
 					return TRUE;
 				}
-			} elseif ( strpos( $options[ 'class' ], $class ) ) {
+			} elseif ( strpos( $options['class'], $class ) ) {
 				return TRUE;
 			}
 		}
@@ -360,10 +360,10 @@ class Html {
 	 */
 	public static function a( $text, $url = NULL, $options = [] ) {
 		if ( ! is_null( $url ) ) {
-			$options[ 'href' ] = $url;
+			$options['href'] = $url;
 		}
 		
-		return static::tag( 'a', $text, $options );
+		return static::tag('a', $text, $options );
 	}
 
 	/**
@@ -385,10 +385,10 @@ class Html {
 	 */
 	public static function img( $src = NULL, $options = [] ) {
 		if ( ! is_null( $src ) ) {
-			$options[ 'src' ] = $src;
+			$options['src'] = $src;
 		}
 		
-		return static::tag( 'img', NULL, $options );
+		return static::tag('img', NULL, $options );
 	}
 
 	/**
@@ -398,11 +398,11 @@ class Html {
 	 * @return string
 	 */
 	public static function ul( $items, $options = [] ) {
-		$tag         = ArrayHelper::remove( $options, 'tag', 'ul' );
+		$tag         = ArrayHelper::remove( $options, 'tag', 'ul');
 		$encode      = ArrayHelper::remove( $options, 'encode', FALSE );
-		$formatter   = ArrayHelper::remove( $options, 'item' );
-		$separator   = ArrayHelper::remove( $options, 'separator', "\n" );
-		$itemOptions = ArrayHelper::remove( $options, 'itemOptions', [] );
+		$formatter   = ArrayHelper::remove( $options, 'item');
+		$separator   = ArrayHelper::remove( $options, 'separator', "\n");
+		$itemOptions = ArrayHelper::remove( $options, 'itemOptions', []);
 		$classFor    = ArrayHelper::remove( $itemOptions, 'class_for', null );
 
 		if ( empty( $items ) ) {
@@ -419,7 +419,7 @@ class Html {
 					static::addCssClass( $_itemOptions, $classFor[ $i ] );
 				}
 
-				$results[] = static::tag( 'li', $encode ? static::encode( $item ) : $item, $_itemOptions );
+				$results[] = static::tag('li', $encode ? static::encode( $item ) : $item, $_itemOptions );
 			}
 			$i++;
 		}
@@ -434,7 +434,7 @@ class Html {
 	 * @return string
 	 */
 	public static function ol( $items, $options = [] ) {
-		$options[ 'tag' ] = 'ol';
+		$options['tag'] = 'ol';
 		
 		return static::ul( $items, $options );
 	}
@@ -446,8 +446,8 @@ class Html {
 	 * @return string
 	 */
 	public static function select( $items, $options = [] ) {
-		$options[ 'tag' ] = 'select';
-		$options[ 'item' ] = function ( $item, $index ) {
+		$options['tag'] = 'select';
+		$options['item'] = function ( $item, $index ) {
 			$label = '';
 			$itemOptions = [];
 			if ( is_array( $item ) ) {
@@ -461,7 +461,7 @@ class Html {
 				$itemOptions['value'] = $item;
 			}
 
-			return static::tag( 'option', $label, $itemOptions );
+			return static::tag('option', $label, $itemOptions );
 		};
 
 		return static::ul( $items, $options );

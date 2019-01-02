@@ -11,6 +11,7 @@ use \wpf\base\ConfigException;
  */
 class ImageSizesDefiner
 	extends Observer {
+
 	/**
 	 * @param App $app
 	 *
@@ -23,14 +24,14 @@ class ImageSizesDefiner
 			}
 			foreach ( $app->image_sizes as $name => $args ) {
 				if ( ! is_array( $args ) ) {
-					throw new ConfigException( __( "All elements of 'image_sizes' property in '*.config.json' must be arrays." ) );
-				} elseif ( $name == 'default' ) {
+					throw new ConfigException( __("All elements of 'image_sizes' property in '*.config.json' must be arrays.") );
+				} elseif ( $name == 'default') {
 					set_post_thumbnail_size( ...$args );
 					continue;
 				}
 				add_image_size( $name, ...$args );
 			}
 		};
-		add_action( 'after_setup_theme', $update );
+		add_action('after_setup_theme', $update );
 	}
 }

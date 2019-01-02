@@ -15,26 +15,27 @@ use \wpf\helpers\WP;
  */
 class EntityDefiner
 	extends Observer {
-	/**
-         * @param App $app
-         * @return bool
-         * @throws \ReflectionException
-         */
+
+    /**
+     * @param App $app
+     * @return bool|mixed
+     * @throws FileNotFoundException
+     */
 	public function doUpdate( App $app ) {
 		if ( ! $app->entities ) {
 			return FALSE;
 		} elseif ( ! $app->entities_dir ) {
-			throw new InvalidArgumentException( __( "Parameter 'entities_dir' must have been defined in '/wpf/wpf.config.json' file." ) );
+			throw new InvalidArgumentException( __("Parameter 'entities_dir' must have been defined in '/wpf/wpf.config.json' file.") );
 		} elseif ( ! is_dir( WP::path( $app->entities_dir ) ) ) {
-			throw new FileNotFoundException( __( "Parameter 'entities_dir' in '/wpf/wpf.config.json' file must be correct path to folder." ) );
+			throw new FileNotFoundException( __("Parameter 'entities_dir' in '/wpf/wpf.config.json' file must be correct path to folder.") );
 		}
 		
 		$update = function () use ( $app ) {
 			foreach ( $app->entities as $entity ) {
-				$class   = str_replace( '/', '\\', "{$app->entities_dir}/{$entity}" );
+				$class   = str_replace('/', '\\', "{$app->entities_dir}/{$entity}");
 				$reflect = new ReflectionClass( $class );
-				if ( ! $reflect->implementsInterface( '\wpf\base\IEntity' ) ) {
-					throw new ConfigException( __( "Class '{$reflect->getName()}' must implement IEntity interface." ) );
+				if ( ! $reflect->implementsInterface('\wpf\base\IEntity') ) {
+					throw new ConfigException( __("Class '{$reflect->getName()}' must implement IEntity interface.") );
 				}
 				$entity = new $class();
 				$entity->register();

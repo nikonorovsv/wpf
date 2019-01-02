@@ -29,14 +29,14 @@ class AddRewriteRules
 			global $wp_rewrite;
 			
 			foreach ( $app->rewrite_rules as $regexp => $matches ) {
-				$i = (int) ArrayHelper::remove( $matches, 'matches_position', 1 );
-				$query_string = ArrayHelper::remove( $matches, 'query_string', 'index.php?' );
-				$priority = ArrayHelper::remove( $matches, 'priority', 'top' );
+				$i = (int) ArrayHelper::remove( $matches, 'matches_position', 1);
+				$query_string = ArrayHelper::remove( $matches, 'query_string', 'index.php?');
+				$priority = ArrayHelper::remove( $matches, 'priority', 'top');
 				if ( ! in_array( $priority, ['top', 'bottom'] ) ) {
 					$priority = 'top';
 				}
 
-				add_filter( 'query_vars', function( $vars ) use ( $matches ) {
+				add_filter('query_vars', function( $vars ) use ( $matches ) {
 					return array_merge( $vars, array_keys( $matches ) );
 				} );
 

@@ -1,8 +1,6 @@
 <?php
 namespace wpf\base;
 
-use \wpf\helpers\WP;
-
 /**
  * Class Entity
  * @package wpf\wp

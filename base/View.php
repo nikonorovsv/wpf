@@ -14,15 +14,13 @@ use \ReflectionClass;
 class View
 	implements IView {
 	public $dir;
-	/**
-	 * View constructor.
-	 */
+
 	/**
 	 * View constructor.
 	 *
 	 * @param string $dir
 	 */
-	public function __construct( $dir = '' ) {
+	public function __construct( $dir = '') {
 		$this->dir = $dir;
 	}
 
@@ -86,7 +84,7 @@ class View
 	public function template( string $slug, array $files = [] ) {
 		$files = $files ?: (array) "{$slug}.php";
 		
-		return apply_filters( "{$slug}_template", $this->locate( $files ) );
+		return apply_filters("{$slug}_template", $this->locate( $files ) );
 	}
 	
 	/**
@@ -136,9 +134,9 @@ class View
 	 * @return string
 	 */
 	private function path( string $file_name ) {
-		$file_name = ltrim( $file_name, '/' );
+		$file_name = ltrim( $file_name, '/');
 
-		return WP::path( "{$this->dir}/{$file_name}" );
+		return WP::path("{$this->dir}/{$file_name}");
 	}
 	
 	/**
@@ -147,9 +145,9 @@ class View
 	 *
 	 * @return string
 	 */
-	public function renderChunk( $chunk, $data = [] ) {
+	public function renderChunk( $chunk, $data = []) {
 		foreach ( $data as $key => $value ) {
-			$data[ '{' . strtoupper( $key ) . '}' ] = $value;
+			$data['{' . strtoupper( $key ) . '}'] = $value;
 		}
 		
 		return strtr( $chunk, $data );

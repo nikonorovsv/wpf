@@ -32,11 +32,11 @@ class Filters {
 	 * @param array $args
 	 */
 	public static function __callStatic( string $name, $args ) {
-		if ( ! function_exists( "{$name}_filter" ) || ! function_exists( "{$name}_action" ) ) {
+		if ( ! function_exists("{$name}_filter") || ! function_exists("{$name}_action") ) {
 			$class = self::class;
-			throw new InvalidArgumentException( __( "Method '$class'::'$name' not found." ) );
+			throw new InvalidArgumentException( __("Method '$class'::'$name' not found.", PREFIX ) );
 		}
-		call_user_func( "{$name}_filter", ...$args );
+		call_user_func("{$name}_filter", ...$args );
 	}
 	
 	/**

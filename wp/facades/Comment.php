@@ -59,7 +59,7 @@ class Comment
      * @return bool
      */
     public function label( string $name ) {
-        return $this->$name ? get_field_object( $name, $this->comment )[ 'label' ] : FALSE;
+        return $this->$name ? get_field_object( $name, $this->comment )['label'] : FALSE;
     }
 
     /**
@@ -67,7 +67,7 @@ class Comment
      *
      * @return mixed
      */
-    public function url( array $args = [] ) {
+    public function url( array $args = []) {
         $url = get_comments_link( $this->post_ID );
         if ( $args ) {
             $url = add_query_arg( $args, $url );
@@ -137,7 +137,7 @@ class Comment
      * @return bool|false|string
      */
     public function avatarUrl( int $size = 96 ) {
-        return get_avatar_url( $this->author_email, ['size' => $size]);
+        return get_avatar_url( $this->author_email, ['size' => $size ]);
     }
 
     /**
@@ -159,7 +159,7 @@ class Comment
      *
      * @return array
      */
-    public function children( array $args = [] ) {
+    public function children( array $args = []) {
         $args = wp_parse_args( $args, [
             'parent'  => $this->ID,
             'fields'  => 'ids',

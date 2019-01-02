@@ -123,8 +123,8 @@ class App
 	 */
 	public static function configure( $object, array $atts ) {
 		$class = new ReflectionClass( $object );
-		if ( ! $class->implementsInterface( '\wpf\base\IConfigurable' ) ) {
-			throw new InvalidArgumentException( __( "Class '{$class->getName()}' must implement IConfigurable interface." ) );
+		if ( ! $class->implementsInterface('\wpf\base\IConfigurable') ) {
+			throw new InvalidArgumentException( __("Class '{$class->getName()}' must implement IConfigurable interface.") );
 		}
 		foreach ( $atts as $name => $value ) {
 			$object->$name = $value;
@@ -141,7 +141,7 @@ class App
 	public function applyObservers( array $observers = [] ) {
 		// Only one instance
 		if ( $this->_notified ) {
-			throw new ConfigException( __( "Method 'App::applyObservers' had already been called. It is only possible one time." ) );
+			throw new ConfigException( __("Method 'App::applyObservers' had already been called. It is only possible one time.") );
 		}
 		// Add Default Observers
 		if ( $this->observers ) {
@@ -161,8 +161,8 @@ class App
 	public function attachArray( array $observers ) {
 		foreach ( $observers as $observer ) {
 			$class = new ReflectionClass( $observer );
-			if ( ! $class->implementsInterface( '\SplObserver' ) ) {
-				throw new InvalidArgumentException( __( "Class '{$class->getName()}' must implement SplObserver interface." ) );
+			if ( ! $class->implementsInterface('\SplObserver') ) {
+				throw new InvalidArgumentException( __("Class '{$class->getName()}' must implement SplObserver interface.") );
 			}
 			new $observer( $this );
 		}
@@ -208,7 +208,7 @@ class App
 		$result = [];
 		foreach ( (array) $conf as $file ) {
 			if ( ! file_exists( $file ) ) {
-				throw new FileNotFoundException( "File '{$file}' not found." );
+				throw new FileNotFoundException("File '{$file}' not found.");
 			}
 			$result = ArrayHelper::merge( $result, json_decode( file_get_contents( $file ), TRUE ) );
 		}
@@ -220,10 +220,10 @@ class App
 	 * @return string
 	 */
 	public static function requestUri() {
-		$current_url = trim( esc_url_raw( add_query_arg( [] ) ), '/' );
-		$home_path   = trim( parse_url( home_url(), PHP_URL_PATH ), '/' );
-		if ( $home_path && strpos( $current_url, $home_path ) === 0 ) {
-			$current_url = trim( substr( $current_url, strlen( $home_path ) ), '/' );
+		$current_url = trim( esc_url_raw( add_query_arg( [] ) ), '/');
+		$home_path   = trim( parse_url( home_url(), PHP_URL_PATH ), '/');
+		if ( $home_path && strpos( $current_url, $home_path ) === 0) {
+			$current_url = trim( substr( $current_url, strlen( $home_path ) ), '/');
 		}
 		
 		return $current_url;
@@ -236,7 +236,7 @@ class App
 		$server = repo('server');
 
 		$url = [
-			@( $server->HTTPS != 'on' ) ? 'http://' :  'https://',
+			@( $server->HTTPS != 'on') ? 'http://' :  'https://',
 			$server->SERVER_NAME,
 			( $server->SERVER_PORT != 80 ) ? ":{$server->SERVER_PORT}" : '',
 			$server->REQUEST_URI

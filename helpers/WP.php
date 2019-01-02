@@ -20,7 +20,7 @@ class WP {
 	 * @return bool
 	 */
 	public static function isAjax() {
-		return ( defined( 'DOING_AJAX' ) && DOING_AJAX );
+		return ( defined('DOING_AJAX') && DOING_AJAX );
 	}
 
 	/**
@@ -71,7 +71,7 @@ class WP {
 	 *
 	 * @return mixed
 	 */
-	public static function getImageSize( string $size = 'thumbnail' ) {
+	public static function getImageSize( string $size = 'thumbnail') {
 		$sizes = self::getImageSizes();
 		$size  = key_exists( $size, $sizes ) ? $size : 'thumbnail';
 
@@ -87,11 +87,11 @@ class WP {
 		$wais  = &$GLOBALS['_wp_additional_image_sizes'];
 		$sizes = [];
 		foreach ( get_intermediate_image_sizes() as $_size ) {
-			if ( in_array( $_size, [ 'thumbnail', 'medium', 'medium_large', 'large' ] ) ) {
+			if ( in_array( $_size, ['thumbnail', 'medium', 'medium_large', 'large'] ) ) {
 				$sizes[ $_size ] = [
-					'width'  => get_option( "{$_size}_size_w" ),
-					'height' => get_option( "{$_size}_size_h" ),
-					'crop'   => (bool) get_option( "{$_size}_crop" ),
+					'width'  => get_option("{$_size}_size_w"),
+					'height' => get_option("{$_size}_size_h"),
+					'crop'   => (bool) get_option("{$_size}_crop"),
 				];
 			} elseif ( $wais[ $_size ] ) {
 				$sizes[ $_size ] = [
@@ -145,6 +145,6 @@ class WP {
 			return false;
 		}
 
-		return wp_get_attachment_image_url( get_theme_mod( 'custom_logo' ), 'full' );
+		return wp_get_attachment_image_url( get_theme_mod('custom_logo'), 'full');
 	}
 }

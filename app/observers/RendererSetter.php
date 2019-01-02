@@ -23,9 +23,9 @@ class RendererSetter
 	public function doUpdate( App $app ) {
 		// Init App View Component
 		if ( ! $app->views_dir ) {
-			throw new InvalidArgumentException( __( "Parameter 'views_dir' must have been defined in '/wpf/config.json' file." ) );
+			throw new InvalidArgumentException( __("Parameter 'views_dir' must have been defined in '/wpf/config.json' file.") );
 		} elseif ( ! is_dir( WP::path( $app->views_dir ) ) ) {
-			throw new FileNotFoundException( __( "Parameter 'views_dir' in '/wpf/config.json' file must be correct path to folder." ) );
+			throw new FileNotFoundException( __("Parameter 'views_dir' in '/wpf/config.json' file must be correct path to folder.") );
 		}
 		$app->setRenderer( new View( $app->views_dir ) );
 	}

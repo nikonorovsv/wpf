@@ -21,6 +21,6 @@ class SessionStart
 			}
 		};
 
-		add_action( 'init', $update );
+		add_action('init', $update );
 	}
 }

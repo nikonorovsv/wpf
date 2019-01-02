@@ -55,7 +55,7 @@ abstract class CompositeWidget
 	 * @param string $template
 	 * @param array $excludes Comma separated serial numbers of widgets. [0,..]
 	 */
-	public function wrapWidgets( string $template, array $excludes = [] ) {
+	public function wrapWidgets( string $template, array $excludes = []) {
 		$i = 0;
 		foreach ( $this->_widgets as $widget ) {
 			if ( ! in_array( $i, $excludes ) ) {

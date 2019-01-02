@@ -58,7 +58,7 @@ class Post
 	 * @return bool
 	 */
 	public function label( string $name ) {
-		return $this->$name ? get_field_object( $name, $this->ID )[ 'label' ] : FALSE;
+		return $this->$name ? get_field_object( $name, $this->ID )['label'] : FALSE;
 	}
 
 	/**
@@ -96,12 +96,12 @@ class Post
 	 *
 	 * @return array|string
 	 */
-	public function excerpt( int $length = 0, string $more = '...' ) {
+	public function excerpt( int $length = 0, string $more = '...') {
 		$excerpt = get_the_excerpt( $this->ID );
 		if ( $length ) {
 			$arr = explode(' ', $excerpt );
 			$arr = array_slice( $arr, 0, $length );
-			return join( ' ', $arr ) . $more;
+			return join(' ', $arr ) . $more;
 		}
 		
 		return $excerpt;
@@ -111,7 +111,7 @@ class Post
 	 * @return mixed
 	 */
 	public function content() {
-		return apply_filters( 'the_content', $this->post_content );
+		return apply_filters('the_content', $this->post_content );
 	}
 	
 	/**
@@ -160,10 +160,10 @@ class Post
 	 *
 	 * @return array|WP_Error
 	 */
-	public function terms( $taxonomies, array $args = [] ) {
+	public function terms( $taxonomies, array $args = []) {
 		return wp_get_object_terms( $this->ID, $taxonomies, wp_parse_args( $args, [
 			'fields' => 'all'
-		] ) );
+		]) );
 	}
 	
 	/**
@@ -184,14 +184,14 @@ class Post
 	}
 	
 	/**
-         * @return bool|string
-         */
+     * @return bool|string
+     */
 	public function thumbCaption() {
-            if ( post_password_required( $this->ID ) ) {
-                return FALSE;
-            }
-            return get_the_post_thumbnail_caption( $this->ID );
+        if ( post_password_required( $this->ID ) ) {
+            return FALSE;
         }
+        return get_the_post_thumbnail_caption( $this->ID );
+    }
 	
 	/**
 	 * @param string $size
@@ -212,12 +212,12 @@ class Post
 		return $src;
 	}
 
-       /**
-         * @return bool
-         */
+    /**
+     * @return bool
+     */
 	public function hasThumb() {
-	        return has_post_thumbnail( $this->ID );
-        }
+        return has_post_thumbnail( $this->ID );
+    }
 	
 	/**
 	 * @return false|string
@@ -231,7 +231,7 @@ class Post
 	 *
 	 * @return mixed
 	 */
-	public function postTypeLabel( string $name = 'singular_name' ) {
+	public function postTypeLabel( string $name = 'singular_name') {
 		$obj = get_post_type_object( $this->postType() );
 		
 		return $obj->labels->$name ?? '';
@@ -249,7 +249,7 @@ class Post
 	 *
 	 * @return array
 	 */
-	public function children( array $args = [] ) {
+	public function children( array $args = []) {
 		$args = wp_parse_args( $args, [
 			'post_parent' => $this->ID,
 		    'fields'      => 'ids',

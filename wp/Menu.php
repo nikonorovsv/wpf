@@ -53,7 +53,7 @@ class Menu
 			return [];
 		}
 		$menu  = wp_get_nav_menu_object( $locations[ $this->_name ] );
-		$items = (array) wp_get_nav_menu_items( $menu, [ 'update_post_term_cache' => false ] );
+		$items = (array) wp_get_nav_menu_items( $menu, ['update_post_term_cache' => false ] );
 		unset( $locations, $menu );
 		if ( ! $items ) {
 			return [];

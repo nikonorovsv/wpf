@@ -21,7 +21,7 @@ class Component
 	 *
 	 * @param array $conf
 	 */
-	public function __construct( array $conf = [] ) {
+	public function __construct( array $conf = []) {
 		$this->loadAttributes( $conf );
 	}
 	
@@ -55,8 +55,8 @@ class Component
 	 * @param $name
 	 */
 	public function __unset( string $name ) {
-		if ( isset( $this->_attributes[ $name ] ) ) {
-			unset( $this->_attributes[ $name ] );
+		if ( isset( $this->_attributes[ $name ]) ) {
+			unset( $this->_attributes[ $name ]);
 		}
 	}
 	
