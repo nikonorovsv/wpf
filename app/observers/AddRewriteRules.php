@@ -26,8 +26,13 @@ class AddRewriteRules
 		}
 
 		$update = function() use ( $app ) {
+<<<<<<< HEAD
+            global $wp_rewrite;
+            
+=======
 			global $wp_rewrite;
 			
+>>>>>>> 531b9511917f0adb16dc9d9a6c3b8d82bd43a0c3
 			foreach ( $app->rewrite_rules as $regexp => $matches ) {
 				$i = (int) ArrayHelper::remove( $matches, 'matches_position', 1);
 				$query_string = ArrayHelper::remove( $matches, 'query_string', 'index.php?');
@@ -53,8 +58,13 @@ class AddRewriteRules
 
 				add_rewrite_rule( $regexp, $query, $priority );
 			}
+<<<<<<< HEAD
+
+            $wp_rewrite->flush_rules();
+=======
 			
 			$wp_rewrite->flush_rules();
+>>>>>>> 531b9511917f0adb16dc9d9a6c3b8d82bd43a0c3
 		};
 
 		add_action('init', $update );
