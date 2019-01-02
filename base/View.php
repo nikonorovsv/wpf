@@ -1,12 +1,6 @@
 <?php
 namespace wpf\base;
 
-use \wpf\App;
-use \wpf\helpers\ArrayHelper;
-use \wpf\helpers\WP;
-use \InvalidArgumentException;
-use \ReflectionClass;
-
 /**
  * Class View
  * @package wpf\base
@@ -30,7 +24,7 @@ class View
 	 *
 	 * @return string
 	 */
-	public function render( $tpl, array $vars = [] ) {
+	public function render( $tpl, array $vars = []) {
 		$name = NULL;
 		$slug = $tpl;
 		if ( is_array( $tpl ) ) {
@@ -65,7 +59,7 @@ class View
 	 * @param string|null $name
 	 * @param array $vars
 	 */
-	public function part( string $slug, string $name = NULL, array $vars = [] ) {
+	public function part( string $slug, string $name = NULL, array $vars = []) {
 		$templates = [];
 		if ( $name ) {
 			$templates[] = "$slug-$name.php";
@@ -81,7 +75,7 @@ class View
 	 *
 	 * @return mixed
 	 */
-	public function template( string $slug, array $files = [] ) {
+	public function template( string $slug, array $files = []) {
 		$files = $files ?: (array) "{$slug}.php";
 		
 		return apply_filters("{$slug}_template", $this->locate( $files ) );
@@ -136,7 +130,7 @@ class View
 	private function path( string $file_name ) {
 		$file_name = ltrim( $file_name, '/');
 
-		return WP::path("{$this->dir}/{$file_name}");
+        return "{$this->dir}/{$file_name}";
 	}
 	
 	/**

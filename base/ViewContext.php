@@ -2,9 +2,6 @@
 namespace wpf\base;
 
 use \InvalidArgumentException;
-use \wpf\base\FileNotFoundException;
-use \wpf\App;
-use \wpf\wp\QueryBuilder;
 
 /**
  * Class ViewContext
@@ -34,10 +31,10 @@ abstract class ViewContext
 		if ( ! $this->template ) {
 			$class = static::class;
 			throw new InvalidArgumentException(
-				__("Template is not defined in '$class'. If you want to render context without template, you need to redefine render() method in your child class without parent method calling.") );
+				__("Template is not defined in '$class'. If you want to render context without template, you need to redefine render() method in your child class without parent method calling.", PREFIX ) );
 		}
 		$html = $this->before();
-		$html .= render( $this->template, $this->getAttributes() );
+		$html .= render( $this->template, $this->getAttributes(), $this->views_dir ?? NULL );
 		$html .= $this->after();
 
 		return $html;

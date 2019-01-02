@@ -26,46 +26,34 @@ class AddRewriteRules
 		}
 
 		$update = function() use ( $app ) {
-<<<<<<< HEAD
             global $wp_rewrite;
-            
-=======
-			global $wp_rewrite;
-			
->>>>>>> 531b9511917f0adb16dc9d9a6c3b8d82bd43a0c3
-			foreach ( $app->rewrite_rules as $regexp => $matches ) {
-				$i = (int) ArrayHelper::remove( $matches, 'matches_position', 1);
-				$query_string = ArrayHelper::remove( $matches, 'query_string', 'index.php?');
-				$priority = ArrayHelper::remove( $matches, 'priority', 'top');
-				if ( ! in_array( $priority, ['top', 'bottom'] ) ) {
-					$priority = 'top';
-				}
+            foreach ( $app->rewrite_rules as $regexp => $matches ) {
+                $i = (int) ArrayHelper::remove( $matches, 'matches_position', 1);
+                $query_string = ArrayHelper::remove( $matches, 'query_string', 'index.php?');
+                $priority = ArrayHelper::remove( $matches, 'priority', 'top');
+                if ( ! in_array( $priority, ['top', 'bottom'] ) ) {
+                    $priority = 'top';
+                }
 
-				add_filter('query_vars', function( $vars ) use ( $matches ) {
-					return array_merge( $vars, array_keys( $matches ) );
-				} );
+                add_filter('query_vars', function( $vars ) use ( $matches ) {
+                    return array_merge( $vars, array_keys( $matches ) );
+                } );
 
-				$_regexp = [ $regexp ];
-				$_query = [];
-				foreach ( $matches as $name => $match ) {
-					$_regexp[] = $match;
-					$_query[] = $name . '=$matches[' . $i . ']';
-					$i++;
-				}
+                $_regexp = [ $regexp ];
+                $_query = [];
+                foreach ( $matches as $name => $match ) {
+                    $_regexp[] = $match;
+                    $_query[] = $name . '=$matches[' . $i . ']';
+                    $i++;
+                }
 
-				$regexp = join("/", $_regexp ) . '/?$';
-				$query  = $query_string . join("&", $_query );
+                $regexp = join("/", $_regexp ) . '/?$';
+                $query  = $query_string . join("&", $_query );
 
-				add_rewrite_rule( $regexp, $query, $priority );
-			}
-<<<<<<< HEAD
-
+                add_rewrite_rule( $regexp, $query, $priority );
+            }
             $wp_rewrite->flush_rules();
-=======
-			
-			$wp_rewrite->flush_rules();
->>>>>>> 531b9511917f0adb16dc9d9a6c3b8d82bd43a0c3
-		};
+        };
 
 		add_action('init', $update );
 	}

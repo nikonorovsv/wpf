@@ -115,21 +115,12 @@ class App
 		}
 	}
 
-<<<<<<< HEAD
     /**
      * @param $object
      * @param array $atts
      * @return mixed
      * @throws \ReflectionException
      */
-=======
-	/**
-	 * @param $object
-	 * @param array $atts
-	 * @return mixed
-	 * @throws \ReflectionException
-	 */
->>>>>>> 531b9511917f0adb16dc9d9a6c3b8d82bd43a0c3
 	public static function configure( $object, array $atts ) {
 		$class = new ReflectionClass( $object );
 		if ( ! $class->implementsInterface('\wpf\base\IConfigurable') ) {
@@ -142,19 +133,11 @@ class App
 		return $object;
 	}
 
-<<<<<<< HEAD
     /**
      * @param array $observers
      * @throws ConfigException
      * @throws \ReflectionException
      */
-=======
-	/**
-	 * @param array $observers
-	 * @throws ConfigException
-	 * @throws \ReflectionException
-	 */
->>>>>>> 531b9511917f0adb16dc9d9a6c3b8d82bd43a0c3
 	public function applyObservers( array $observers = [] ) {
 		// Only one instance
 		if ( $this->_notified ) {
@@ -171,17 +154,10 @@ class App
 		$this->_notified = TRUE;
 	}
 
-<<<<<<< HEAD
     /**
      * @param array $observers
      * @throws \ReflectionException
      */
-=======
-	/**
-	 * @param array $observers
-	 * @throws \ReflectionException
-	 */
->>>>>>> 531b9511917f0adb16dc9d9a6c3b8d82bd43a0c3
 	public function attachArray( array $observers ) {
 		foreach ( $observers as $observer ) {
 			$class = new ReflectionClass( $observer );
