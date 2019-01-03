@@ -409,19 +409,16 @@ class Html {
 			return static::tag( $tag, '', $options );
 		}
 		$results = [];
-		$i = 0;
-		foreach ( $items as $index => $item ) {
+		foreach ( $items as $i => $item ) {
 			if ( $formatter !== NULL ) {
-				$results[] = call_user_func( $formatter, $item, $index );
+				$results[] = call_user_func( $formatter, $item, $i );
 			} else {
 				$_itemOptions = $itemOptions;
 				if ( isset( $classFor ) && array_key_exists( $i, $classFor ) ) {
 					static::addCssClass( $_itemOptions, $classFor[ $i ] );
 				}
-
 				$results[] = static::tag('li', $encode ? static::encode( $item ) : $item, $_itemOptions );
 			}
-			$i++;
 		}
 
 		return static::tag( $tag, $separator . join( $separator, $results ) . $separator, $options );
@@ -448,14 +445,13 @@ class Html {
 	public static function select( $items, $options = [] ) {
 		$options['tag'] = 'select';
 		$options['item'] = function ( $item, $index ) {
-			$label = '';
 			$itemOptions = [];
 			if ( is_array( $item ) ) {
 				$label = $item['label'];
-				$itemOptions['value'] = $item['value'];
-				if ( ! empty( $item['selected'] ) ) {
-					$itemOptions['selected'] = 'true';
-				}
+                $itemOptions['value'] = $item['value'];
+				if ( ! empty( $item['options'] ) && ArrayHelper::isAssociative( $item['options'] ) ) {
+                    $itemOptions = array_merge( $itemOptions, $item['options'] );
+                }
 			} else {
 				$label = $item;
 				$itemOptions['value'] = $item;
