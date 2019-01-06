@@ -143,3 +143,12 @@ if ( ! function_exists('wp_menu_items') ) {
 		return ( new \wpf\wp\Menu( $name ) )->items();
 	}
 }
+
+/**
+ * @return array
+ */
+if ( ! function_exists('wp_breadcrumbs') ) {
+    function wp_breadcrumbs() {
+        return ( new \wpf\wp\Crumbs() )->items();
+    }
+}
