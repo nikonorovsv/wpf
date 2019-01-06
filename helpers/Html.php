@@ -69,32 +69,15 @@ class Html {
 		];
 	public static $callStaticOrder
 		= [
-			'div',
-			'span',
-			'small',
-			'abbr',
-			'time',
-			'strong',
-			'em',
-			'i',
-			'p',
-			'option',
-			'li',
-			'th',
-			'tr',
-			'td',
-			'section',
-			'footer',
-			'header',
-			'aside',
-			'nav',
-			'main',
-			'h1',
-			'h2',
-			'h3',
-			'h4',
-			'h5',
-			'h6'
+            'section', 'footer', 'header', 'aside', 'nav', 'main', 'article',
+            'h1', 'h2',	'h3', 'h4', 'h5', 'h6',
+			'div', 'p', 'label', 'address', 'blockquote',
+            'dl', 'dt', 'dd', 'hr', 'br',
+            'abbr', 'acronym', 'cite', 'code', 'del', 'em', 'dfn', 'ins', 'kbd', 'mark',
+            'strong', 'i', 'sub', 'sup', 's', 'samp', 'span', 'small', 'time', 'u', 'var',
+			'option', 'li',
+			'thead', 'tbody', 'tfoot', 'th', 'tr', 'td', 'caption',
+            'audio', 'canvas', 'svg', 'video',
 		];
 	
 	/**
