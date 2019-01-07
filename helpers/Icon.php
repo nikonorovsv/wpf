@@ -23,7 +23,8 @@ class Icon
             'gi' => 'glyphicon glyphicon-',
             'ui' => 'icon ',
             'wp' => 'dashicons dashicons-',
-            'mi' => 'material-icons'
+            'md' => 'material-icons',
+            'uk' => 'icon: '
         ];
 
     /**
@@ -35,12 +36,22 @@ class Icon
     public static function familyIcon(string $family, string $name, array $options = []): string
     {
         $class = self::getPrefix($family);
-        // It's Material spike-nail :)
-        if (!self::isMaterial($family)) {
-            $class .= $name;
-            $name = '';
+        switch ( $family ) {
+            case 'md':
+                break;
+            case 'uk':
+                $options['uk-icon'] = $class . $name;
+                $name = '';
+                break;
+            case 'fa':
+            case 'gi':
+            case 'ui':
+            case 'wp':
+            default:
+                Html::addCssClass( $options, $class . $name );
+                $name = '';
+                break;
         }
-        Html::addCssClass($options, $class);
 
         return Html::tag(self::$tag_name, $name, $options);
     }
@@ -52,15 +63,6 @@ class Icon
     private static function getPrefix(string $name): string
     {
         return self::$prefixes[$name] ?? '';
-    }
-
-    /**
-     * @param string $family
-     * @return bool
-     */
-    private static function isMaterial(string $family): bool
-    {
-        return ($family == 'mi');
     }
 
     /**
