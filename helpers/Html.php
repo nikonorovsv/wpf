@@ -67,18 +67,8 @@ class Html {
 			'ng',
 			'aria'
 		];
-	public static $callStaticOrder
-		= [
-            'section', 'footer', 'header', 'aside', 'nav', 'main', 'article',
-            'h1', 'h2',	'h3', 'h4', 'h5', 'h6',
-			'div', 'p', 'label', 'address', 'blockquote',
-            'dl', 'dt', 'dd', 'hr', 'br',
-            'abbr', 'acronym', 'cite', 'code', 'del', 'em', 'dfn', 'ins', 'kbd', 'mark',
-            'strong', 'i', 'sub', 'sup', 's', 'samp', 'span', 'small', 'time', 'u', 'var',
-			'option', 'li',
-			'thead', 'tbody', 'tfoot', 'th', 'tr', 'td', 'caption',
-            'audio', 'canvas', 'svg', 'video',
-		];
+	public static $callStaticOrder = ['ul','ol', 'select', 'a', 'img'];
+
 	
 	/**
 	 * Encodes special characters into HTML entities.
@@ -327,7 +317,7 @@ class Html {
 	 * @return string
 	 */
 	public static function __callStatic( $name, $args ) {
-		if ( in_array( $name, self::$callStaticOrder ) ) {
+		if ( ! in_array( $name, self::$callStaticOrder ) ) {
 			return self::tag( $name, ...$args );
 		}
 		
