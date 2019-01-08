@@ -30,9 +30,7 @@ class Repo implements IConfigurable, IteratorAggregate
 		if ( isset( $$glob ) ) {
 			self::$_current = &$$glob;
 		} else {
-			if ( ! isset( self::$_data[ $name ] ) ) {
-				self::$_data[ $name ] = [];
-			}
+            self::$_data[ $name ] = self::$_data[ $name ] ?? [];
 			self::$_current = &self::$_data[ $name ];
 		}
 		self::$_instance_name = $name;

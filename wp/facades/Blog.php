@@ -2,7 +2,7 @@
 namespace app\wp\facades;
 
 use \WP_Site;
-use \WP_Error;
+use \wpf\helpers\WP;
 
 /**
  * Class Blog
@@ -105,21 +105,17 @@ class Blog
      * @return int|WP_Error
      */
 	public static function create( array $data ) {
-        if ( empty( $data['domain'] ) ) {
-            return new WP_Error('missing_domain',
-                __("The 'domain' parameter can't sent.", PREFIX ) );
+        if ( ! isset( $data['domain'] ) ) {
+            return WP::error('missing_domain', "The 'domain' parameter can't sent.");
         }
-        if ( empty( $data['path'] ) ) {
-            return new WP_Error('missing_path',
-                __("The 'path' parameter can't sent.", PREFIX ) );
+        if ( ! isset( $data['path'] ) ) {
+            return WP::error('missing_path', "The 'path' parameter can't sent.");
         }
-        if ( empty( $data['title'] ) ) {
-            return new WP_Error('missing_title',
-                __("The 'title' parameter can't sent.", PREFIX ) );
+        if ( ! isset( $data['title'] ) ) {
+            return WP::error('missing_title', "The 'title' parameter can't sent.");
         }
-        if ( empty( $data['user_id'] ) ) {
-            return new WP_Error('missing_user_id',
-                __("The 'user_id' parameter can't sent.", PREFIX ) );
+        if ( ! isset( $data['user_id'] ) ) {
+            return WP::error('missing_user_id', "The 'user_id' parameter can't sent.");
         }
 
 	    return wpmu_create_blog(

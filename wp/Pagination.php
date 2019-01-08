@@ -3,7 +3,9 @@
 namespace wpf\wp;
 
 use \wpf\base\Component;
+use \wpf\helpers\WP;
 use \InvalidArgumentException;
+
 
 /**
  * Class Pagination
@@ -49,7 +51,7 @@ final class Pagination extends Component
         ] );
         parent::__construct( $conf );
         if ( ! isset( $this->subject ) ) {
-            throw new InvalidArgumentException('The "subject" parameter must be set.');
+            throw new InvalidArgumentException( WP::l18n('The "subject" parameter must be set.') );
         } elseif ( is_array( $this->subject ) ) {
             $this->subject = count( $this->subject );
         } elseif ( is_a( $this->subject, '\WP_Query') ) {

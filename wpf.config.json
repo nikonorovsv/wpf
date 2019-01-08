@@ -1,11 +1,11 @@
 {
-  "app_dir" : "app",
-  "actions_dir" : "/app/actions",
-  "entities_dir" : "/app/entities",
-  "ajax_handlers_dir" : "/app/ajax_handlers",
-  "rest_handlers_dir" : "/app/rest_handlers",
-  "rest_namespace" : "wpf/v1",
-  "views_dir" : "app/views",
+  "app_dir": "app",
+  "actions_dir": "/app/actions",
+  "entities_dir": "/app/entities",
+  "ajax_handlers_dir": "/app/ajax_handlers",
+  "rest_handlers_dir": "/app/rest_handlers",
+  "rest_namespace": "wpf/v1",
+  "views_dir": "app/views",
   "observers": [
     "\\wpf\\app\\observers\\AdminAssetsDefiner",
     "\\wpf\\app\\observers\\LocalFieldGroupDefiner",
@@ -24,6 +24,53 @@
   "menu": {
     "item_id": "menu-item-%s",
     "active_class": "active",
-    "dropdown_class": "ui dropdown"
+    "dropdown_class": "dropdown"
+  },
+  "files": {
+    "icons_prefix": "far fa-file",
+    "icons": {
+      "default": " grey",
+      "image": {
+        "default": "-image grey"
+      },
+      "audio": {
+        "default": "-audio grey"
+      },
+      "video": {
+        "default": "-video grey"
+      },
+      "document": {
+        "default": "-alt grey",
+        "doc": "-word blue",
+        "docx": "-word blue",
+        "docm": "-word blue",
+        "pdf": "-pdf red",
+        "xps": "-pdf red"
+      },
+      "spreadsheet": {
+        "default": "-excel teal"
+      },
+      "interactive": {
+        "default": " red",
+        "ppt": "-powerpoint red",
+        "pptx": "-powerpoint red",
+        "pptm": "-powerpoint red",
+        "pps": "-powerpoint red",
+        "ppsx": "-powerpoint red",
+        "ppsm": "-powerpoint red",
+        "sldx": "-powerpoint red",
+        "sldm": "-powerpoint red"
+      },
+      "text": {
+        "default": "-alt grey",
+        "csv": "-excel teal"
+      },
+      "archive": {
+        "default": "-archive brown"
+      },
+      "code": {
+        "default": "-code grey"
+      }
+    }
   }
 }

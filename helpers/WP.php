@@ -2,6 +2,8 @@
 
 namespace wpf\helpers;
 
+use \WP_Error;
+
 /**
  * Class WP
  * @package wpf\helpers
@@ -147,4 +149,21 @@ class WP {
 
 		return wp_get_attachment_image_url( get_theme_mod('custom_logo'), 'full');
 	}
+
+    /**
+     * @param string $text
+     * @return string
+     */
+	public static function l18n( string $text ) {
+	    return __( $text, PREFIX );
+    }
+
+    /**
+     * @param string $key
+     * @param string $message
+     * @return WP_Error
+     */
+    public static function error( string $key, string $message ): WP_Error {
+	    return new WP_Error( $key, self::l18n( $message ) );
+    }
 }

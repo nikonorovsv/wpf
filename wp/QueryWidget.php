@@ -2,7 +2,6 @@
 namespace wpf\wp;
 
 use \wpf\base\Widget;
-use \wpf\base\Request;
 
 /**
  * Class QueryWidget
@@ -12,7 +11,7 @@ class QueryWidget extends Widget
 {
 	use QueryBuilder;
 
-	protected $request, $query;
+	protected $query;
 
     /**
 	 * QueryWidget constructor.
@@ -22,7 +21,6 @@ class QueryWidget extends Widget
     public function __construct( array $conf = [] ) {
         parent::__construct( $conf );
 
-        $this->request = new Request();
 	    $this->query   = $this->query();
     }
 }

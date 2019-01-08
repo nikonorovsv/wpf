@@ -1,6 +1,8 @@
 <?php
 namespace wpf\wp;
 
+use \wpf\helpers\WP;
+
 /**
  * Class Filters
  * @package wpf\wp
@@ -34,7 +36,7 @@ class Filters {
 	public static function __callStatic( string $name, $args ) {
 		if ( ! function_exists("{$name}_filter") || ! function_exists("{$name}_action") ) {
 			$class = self::class;
-			throw new InvalidArgumentException( __("Method '$class'::'$name' not found.", PREFIX ) );
+			throw new InvalidArgumentException( WP::l18n("Method '$class'::'$name' not found.") );
 		}
 		call_user_func("{$name}_filter", ...$args );
 	}

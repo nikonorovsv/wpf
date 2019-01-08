@@ -2,8 +2,8 @@
 namespace wpf\wp\facades;
 
 use \WP_Term;
-use \WP_Error;
 use \wpf\helpers\ArrayHelper;
+use \wpf\helpers\WP;
 
 /**
  * Class Term
@@ -118,15 +118,13 @@ class Term
      * @return int|WP_Error
      */
     public static function create( array $data ) {
-        $taxonomy = ArrayHelper::remove($data, 'taxonomy', NULL);
+        $taxonomy = ArrayHelper::remove($data, 'taxonomy');
         if ( is_null( $taxonomy ) ) {
-            return new WP_Error('missing_taxonomy',
-                __("The 'taxonomy' parameter can't sent.", PREFIX ) );
+            return WP::error('missing_taxonomy', "The 'taxonomy' parameter can't sent.");
         }
-        $term = ArrayHelper::remove($data, 'name', NULL);
+        $term = ArrayHelper::remove($data, 'name');
         if ( is_null( $term ) ) {
-            return new WP_Error('missing_name',
-                __("The 'name' parameter can't sent.", PREFIX ) );
+            return WP::error('missing_name', "The 'name' parameter can't sent.");
         }
 
         return wp_insert_term( $term, $taxonomy, $data );
