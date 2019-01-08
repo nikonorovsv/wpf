@@ -3,6 +3,7 @@ namespace wpf\wp\facades;
 
 use \WP_Term;
 use \WP_Error;
+use \wpf\helpers\ArrayHelper;
 
 /**
  * Class Term
@@ -110,4 +111,24 @@ class Term
 	public function parents() {
 		return get_ancestors( $this->term_id, $this->taxonomy, 'taxonomy');
 	}
+
+    /**
+     * @param array $data
+     * @param bool $error
+     * @return int|WP_Error
+     */
+    public static function create( array $data ) {
+        $taxonomy = ArrayHelper::remove($data, 'taxonomy', NULL);
+        if ( is_null( $taxonomy ) ) {
+            return new WP_Error('missing_taxonomy',
+                __("The 'taxonomy' parameter can't sent.", PREFIX ) );
+        }
+        $term = ArrayHelper::remove($data, 'name', NULL);
+        if ( is_null( $term ) ) {
+            return new WP_Error('missing_name',
+                __("The 'name' parameter can't sent.", PREFIX ) );
+        }
+
+        return wp_insert_term( $term, $taxonomy, $data );
+    }
 }

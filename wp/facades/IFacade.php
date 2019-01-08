@@ -30,4 +30,11 @@ interface IFacade {
 	 * @return mixed
 	 */
 	public function update( string $name, $value );
+
+    /**
+     * @param array $data
+     * @param bool $error
+     * @return mixed
+     */
+	public static function create( array $data );
 }

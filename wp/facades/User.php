@@ -109,4 +109,13 @@ class User
 		
 		return FALSE;
 	}
+
+    /**
+     * @param array $data
+     *
+     * @return int|\WP_Error
+     */
+	public static function create( array $data ) {
+        return wp_insert_user( $data );
+    }
 }

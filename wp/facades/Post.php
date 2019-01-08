@@ -153,6 +153,16 @@ class Post
 		
 		return FALSE;
 	}
+
+    /**
+     * @param array $data
+     * @param bool $error
+     *
+     * @return int|WP_Error
+     */
+	public static function create( array $data ) {
+        return wp_insert_post( wp_slash( $data ) );
+    }
 	
 	/**
 	 * @param $taxonomies

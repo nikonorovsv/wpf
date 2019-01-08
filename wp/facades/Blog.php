@@ -2,6 +2,7 @@
 namespace app\wp\facades;
 
 use \WP_Site;
+use \WP_Error;
 
 /**
  * Class Blog
@@ -98,4 +99,36 @@ class Blog
 		
 		return FALSE;
 	}
+
+    /**
+     * @param array $data
+     * @return int|WP_Error
+     */
+	public static function create( array $data ) {
+        if ( empty( $data['domain'] ) ) {
+            return new WP_Error('missing_domain',
+                __("The 'domain' parameter can't sent.", PREFIX ) );
+        }
+        if ( empty( $data['path'] ) ) {
+            return new WP_Error('missing_path',
+                __("The 'path' parameter can't sent.", PREFIX ) );
+        }
+        if ( empty( $data['title'] ) ) {
+            return new WP_Error('missing_title',
+                __("The 'title' parameter can't sent.", PREFIX ) );
+        }
+        if ( empty( $data['user_id'] ) ) {
+            return new WP_Error('missing_user_id',
+                __("The 'user_id' parameter can't sent.", PREFIX ) );
+        }
+
+	    return wpmu_create_blog(
+	        $data['domain'],
+            $data['path'],
+            $data['title'],
+            $data['user_id'],
+            $data['meta'] ?? [],
+            $data['network_id'] ?? 1
+        );
+    }
 }

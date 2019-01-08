@@ -170,4 +170,12 @@ class Comment
         $query = new WP_Comment_Query;
         return $query->query( $args );
     }
+
+    /**
+     * @param array $data
+     * @return false|int
+     */
+    public static function create( array $data ) {
+       return wp_insert_comment( wp_slash( $data ) );
+    }
 }
