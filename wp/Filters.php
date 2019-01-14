@@ -36,7 +36,8 @@ class Filters {
 	public static function __callStatic( string $name, $args ) {
 		if ( ! function_exists("{$name}_filter") || ! function_exists("{$name}_action") ) {
 			$class = self::class;
-			throw new InvalidArgumentException( WP::l18n("Method '$class'::'$name' not found.") );
+			throw new InvalidArgumentException(
+			    __("Method '$class'::'$name' not found.", 'wpf') );
 		}
 		call_user_func("{$name}_filter", ...$args );
 	}

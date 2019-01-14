@@ -23,7 +23,8 @@ class SidebarsDefiner
 			}
 			foreach ( $app->sidebars as $args ) {
 				if ( ! is_array( $args ) ) {
-					throw new ConfigException( __("All elements of 'sidebars' array in '*.config.json' must be objects.") );
+					throw new ConfigException(
+					    __("All elements of 'sidebars' array in '*.config.json' must be objects.", 'wpf') );
 				}
 				register_sidebar( $args );
 			}

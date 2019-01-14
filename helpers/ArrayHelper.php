@@ -522,12 +522,14 @@ class ArrayHelper {
 		if ( is_scalar( $direction ) ) {
 			$direction = array_fill( 0, $n, $direction );
 		} elseif ( count( $direction ) !== $n ) {
-			throw new Exception( 'The length of $direction parameter must be the same as that of $keys.' );
+			throw new Exception(
+			    __('The length of $direction parameter must be the same as that of $keys.', 'wpf') );
 		}
 		if ( is_scalar( $sortFlag ) ) {
 			$sortFlag = array_fill( 0, $n, $sortFlag );
 		} elseif ( count( $sortFlag ) !== $n ) {
-			throw new Exception( 'The length of $sortFlag parameter must be the same as that of $keys.' );
+			throw new Exception(
+			    __('The length of $sortFlag parameter must be the same as that of $keys.', 'wpf') );
 		}
 		$args = [];
 		foreach ( $keys as $i => $key ) {
@@ -754,7 +756,8 @@ class ArrayHelper {
 			
 			return TRUE;
 		} else {
-			throw new Exception('Argument $needles must be an array or implement Traversable');
+			throw new Exception(
+			    __('Argument $needles must be an array or implement Traversable', 'wpf') );
 		}
 	}
 	

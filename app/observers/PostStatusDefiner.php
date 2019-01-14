@@ -23,7 +23,7 @@ class PostStatusDefiner
         if ( ! $app->post_statuses ) {
             return FALSE;
         } elseif ( ! ArrayHelper::isAssociative( $app->post_statuses ) ) {
-            throw new InvalidArgumentException( __("Parameter 'post_statuses' must be an object.") );
+            throw new InvalidArgumentException( __("Parameter 'post_statuses' must be an object.", 'wpf') );
         }
         // Register all post statuses
         foreach ( $app->post_statuese as $post_status => $args ) {

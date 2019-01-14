@@ -4,6 +4,7 @@ namespace wpf\app\observers;
 use \wpf\App;
 use \wpf\app\Observer;
 use \wpf\base\ConfigException;
+use \wpf\helpers\WP;
 
 /**
  * Class LocalFieldGroupDefiner
@@ -25,7 +26,8 @@ class LocalFieldGroupDefiner
 		}
 		foreach ( $app->local_field_groups as $args ) {
 			if ( ! is_array( $args ) ) {
-				throw new ConfigException( __("All elements of 'local_field_groups' array in '*.config.json' must be objects.") );
+				throw new ConfigException(
+				    __("All elements of 'local_field_groups' array in '*.config.json' must be objects.", 'wpf') );
 			}
 			acf_add_local_field_group( $args );
 		}

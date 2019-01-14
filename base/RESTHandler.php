@@ -2,10 +2,8 @@
 
 namespace wpf\base;
 
-use \wpf\wp\QueryBuilder;
 use \WP_REST_Controller as Controller;
 use \WP_REST_Request as Request;
-use \WP_REST_Response as Response;
 use \WP_REST_Server as Server;
 use \WP_Error as Error;
 
@@ -36,7 +34,7 @@ abstract class RESTHandler extends Controller
      * @return Error
      */
     protected static function error( string $key, string $message, int $status = 404 ): Error {
-        return new Error( $key, __( $message ),  compact('status') );
+        return new Error( $key, __( $message ), compact('status') );
     }
 
     /**

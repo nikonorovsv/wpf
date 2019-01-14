@@ -46,12 +46,13 @@ final class Pagination extends Component
             'count'          => 5,
             'per_page'       => 10,
             'query_key'      => 'pg',
-            'label_to_start' => __('В начало'),
-            'label_next'     => __('Следующая >'),
+            'label_to_start' => __('В начало', 'wpf'),
+            'label_next'     => __('Следующая >', 'wpf'),
         ] );
         parent::__construct( $conf );
         if ( ! isset( $this->subject ) ) {
-            throw new InvalidArgumentException( WP::l18n('The "subject" parameter must be set.') );
+            throw new InvalidArgumentException(
+                __('The "subject" parameter must be set.', 'wpf') );
         } elseif ( is_array( $this->subject ) ) {
             $this->subject = count( $this->subject );
         } elseif ( is_a( $this->subject, '\WP_Query') ) {

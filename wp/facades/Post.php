@@ -216,7 +216,8 @@ class Post
 		$src = get_the_post_thumbnail_url( $this->ID, $size );
 		if ( ! $src && $placeholder ) {
 			$size = WP::getImageSize( $size );
-			$src  = "http://placehold.it/{$size['width']}x{$size['height']}?text=Нет+изображения";
+			$text = WP::l18n("Нет+изображения");
+			$src  = "http://placehold.it/{$size['width']}x{$size['height']}?text={$text}";
 		}
 		
 		return $src;

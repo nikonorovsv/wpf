@@ -21,7 +21,8 @@ class ConstantsDefiner
 		if ( ! $app->constants ) {
 			return FALSE;
 		} elseif ( ! is_array( $app->constants ) ) {
-			throw new ConfigException( __("Value of 'constants' property in '*.config.json' must be an object.") );
+			throw new ConfigException(
+			    __("Value of 'constants' property in '*.config.json' must be an object.", 'wpf') );
 		}
 		foreach ( $app->constants as $name => $value ) {
 			define( $name, $value );

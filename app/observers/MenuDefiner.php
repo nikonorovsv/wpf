@@ -23,7 +23,8 @@ class MenuDefiner
 				return FALSE;
 			}
 			if ( ! is_array( $app->nav_menus ) ) {
-				throw new ConfigException( __("Value of 'nav_menus' parameter in '*.config.json' must be an object.") );
+				throw new ConfigException(
+				    __("Value of 'nav_menus' parameter in '*.config.json' must be an object.", 'wpf') );
 			}
 			register_nav_menus( $app->nav_menus );
 		};

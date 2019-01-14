@@ -26,7 +26,7 @@ class OptionsPagesDefiner
 		}
 		foreach ( $app->options_pages as $args ) {
 			if ( ! is_array( $args ) ) {
-				throw new ConfigException( __("All elements of 'options_pages' array in '*.config.json' must be objects.") );
+				throw new ConfigException( __("All elements of 'options_pages' array in '*.config.json' must be objects.", 'wpf') );
 			}
 			acf_add_options_page( $args );
 		}

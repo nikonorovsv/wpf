@@ -24,7 +24,8 @@ class ActionRemover
 			}
 			foreach ( $app->remove_actions as $args ) {
 				if ( ! is_array( $args ) ) {
-					throw new ConfigException( __("All elements of 'remove_actions' property in '*.config.json' must be arrays too.") );
+					throw new ConfigException(
+					    __("All elements of 'remove_actions' property in '*.config.json' must be arrays too.", 'wpf') );
 				}
 				remove_action( ...$args );
 			}

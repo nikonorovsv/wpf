@@ -31,7 +31,7 @@ abstract class ViewContext
 		if ( ! $this->template ) {
 			$class = static::class;
 			throw new InvalidArgumentException(
-				__("Template is not defined in '$class'. If you want to render context without template, you need to redefine render() method in your child class without parent method calling.", PREFIX ) );
+				__("Template is not defined in '$class'. If you want to render context without template, you need to redefine render() method in your child class without parent method calling.", 'wpf') );
 		}
 		$html = $this->before();
 		$html .= render( $this->template, $this->getAttributes(), $this->views_dir ?? NULL );

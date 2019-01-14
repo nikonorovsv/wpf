@@ -21,6 +21,6 @@ class QueryWidget extends Widget
     public function __construct( array $conf = [] ) {
         parent::__construct( $conf );
 
-	    $this->query   = $this->query();
+	    $this->query = $this->query();
     }
 }

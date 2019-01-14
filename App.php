@@ -124,7 +124,8 @@ class App
 	public static function configure( $object, array $atts ) {
 		$class = new ReflectionClass( $object );
 		if ( ! $class->implementsInterface('\wpf\base\IConfigurable') ) {
-			throw new InvalidArgumentException( __("Class '{$class->getName()}' must implement IConfigurable interface.") );
+			throw new InvalidArgumentException(
+			    __("Class '{$class->getName()}' must implement IConfigurable interface.", 'wpf') );
 		}
 		foreach ( $atts as $name => $value ) {
 			$object->$name = $value;
@@ -141,7 +142,8 @@ class App
 	public function applyObservers( array $observers = [] ) {
 		// Only one instance
 		if ( $this->_notified ) {
-			throw new ConfigException( __("Method 'App::applyObservers' had already been called. It is only possible one time.") );
+			throw new ConfigException(
+			    __("Method 'App::applyObservers' had already been called. It is only possible one time.", 'wpf') );
 		}
 		// Add Default Observers
 		if ( $this->observers ) {
@@ -162,7 +164,8 @@ class App
 		foreach ( $observers as $observer ) {
 			$class = new ReflectionClass( $observer );
 			if ( ! $class->implementsInterface('\SplObserver') ) {
-				throw new InvalidArgumentException( __("Class '{$class->getName()}' must implement SplObserver interface.") );
+				throw new InvalidArgumentException(
+				    __("Class '{$class->getName()}' must implement SplObserver interface.", 'wpf') );
 			}
 			new $observer( $this );
 		}
@@ -208,7 +211,8 @@ class App
 		$result = [];
 		foreach ( (array) $conf as $file ) {
 			if ( ! file_exists( $file ) ) {
-				throw new FileNotFoundException("File '{$file}' not found.");
+				throw new FileNotFoundException(
+				    __("File '{$file}' not found.", 'wpf') );
 			}
 			$result = ArrayHelper::merge( $result, json_decode( file_get_contents( $file ), TRUE ) );
 		}

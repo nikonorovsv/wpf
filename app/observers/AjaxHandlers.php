@@ -1,7 +1,6 @@
 <?php
 namespace wpf\app\observers;
 
-use http\Env\Request;
 use \wpf\app\Observer;
 use \wpf\App;
 use \wpf\base\AjaxHandler;
@@ -31,17 +30,21 @@ class AjaxHandlers
 		} elseif ( ! $app->ajax_handlers ) {
 			return FALSE;
 		} elseif ( ! is_array( $app->ajax_handlers ) ) {
-			throw new InvalidArgumentException( __("The value of 'ajax_handlers' parameter must be array.") );
+			throw new InvalidArgumentException(
+			    __("The value of 'ajax_handlers' parameter must be array.", 'wpf') );
 		} elseif ( ! $app->ajax_handlers_dir ) {
-			throw new InvalidArgumentException( __("Parameter 'ajax_handlers_dir' must have been defined in '/wpf/wpf.config.json' file.") );
+			throw new InvalidArgumentException(
+			    __("Parameter 'ajax_handlers_dir' must have been defined in '/wpf/wpf.config.json' file.", 'wpf') );
 		} elseif ( ! is_dir( WP::path( $app->ajax_handlers_dir ) ) ) {
-			throw new FileNotFoundException( __("Parameter 'ajax_handlers_dir' in '/wpf/wpf.config.json' file must be correct path to folder.") );
+			throw new FileNotFoundException(
+                __("Parameter 'ajax_handlers_dir' in '/wpf/wpf.config.json' file must be correct path to folder.", 'wpf') );
 		}
 		foreach ( $app->ajax_handlers as $handler ) {
 			$class   = str_replace('/', '\\', "{$app->ajax_handlers_dir}/{$handler}");
 			$reflect = new ReflectionClass( $class );
 			if ( ! $reflect->isSubclassOf( AjaxHandler::getName() ) ) {
-				throw new ConfigException( __("Class '{$reflect->getName()}' must be inherited of AjaxHandler class.") );
+				throw new ConfigException(
+				    __("Class '{$reflect->getName()}' must be inherited of AjaxHandler class.", 'wpf') );
 			}
 			$action = $class::ACTION_NAME;
 			add_action("wp_ajax_{$action}", [ $class, 'run'] );

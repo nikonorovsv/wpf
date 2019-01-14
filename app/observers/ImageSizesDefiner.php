@@ -24,7 +24,8 @@ class ImageSizesDefiner
 			}
 			foreach ( $app->image_sizes as $name => $args ) {
 				if ( ! is_array( $args ) ) {
-					throw new ConfigException( __("All elements of 'image_sizes' property in '*.config.json' must be arrays.") );
+					throw new ConfigException(
+					    __("All elements of 'image_sizes' property in '*.config.json' must be arrays.", 'wpf') );
 				} elseif ( $name == 'default') {
 					set_post_thumbnail_size( ...$args );
 					continue;

@@ -4,6 +4,7 @@
   "entities_dir": "/app/entities",
   "ajax_handlers_dir": "/app/ajax_handlers",
   "rest_handlers_dir": "/app/rest_handlers",
+  "graphql_dir": "/app/graphql",
   "rest_namespace": "wpf/v1",
   "views_dir": "app/views",
   "observers": [
@@ -17,9 +18,7 @@
     "\\wpf\\app\\observers\\SidebarsDefiner",
     "\\wpf\\app\\observers\\ActionRemover",
     "\\wpf\\app\\observers\\AssetsDefiner",
-    "\\wpf\\app\\observers\\RendererSetter",
-    "\\wpf\\app\\observers\\AjaxHandlers",
-    "\\wpf\\app\\observers\\AddRewriteRules"
+    "\\wpf\\app\\observers\\RendererSetter"
   ],
   "menu": {
     "item_id": "menu-item-%s",

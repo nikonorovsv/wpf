@@ -1,12 +1,10 @@
 <?php
 namespace wpf\app\observers;
 
-use \ReflectionClass;
 use \wpf\App;
 use \wpf\app\Observer;
 use \wpf\base\ConfigException;
 use \wpf\helpers\ArrayHelper;
-use \wpf\helpers\WP;
 
 /**
  * Class AddRewriteRules

@@ -22,7 +22,7 @@ class Safe {
 		} else {
 			$class = self::class;
 			throw new InvalidArgumentException(
-			    __("Method '{$class}'::'{$name}()' not found.", PREFIX )
+			    __("Method '{$class}'::'{$name}()' not found.", 'wpf')
             );
 		}
 

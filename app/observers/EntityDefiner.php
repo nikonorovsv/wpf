@@ -25,9 +25,11 @@ class EntityDefiner
 		if ( ! $app->entities ) {
 			return FALSE;
 		} elseif ( ! $app->entities_dir ) {
-			throw new InvalidArgumentException( __("Parameter 'entities_dir' must have been defined in '/wpf/wpf.config.json' file.") );
+			throw new InvalidArgumentException(
+			    __("Parameter 'entities_dir' must have been defined in '/wpf/wpf.config.json' file.", 'wpf') );
 		} elseif ( ! is_dir( WP::path( $app->entities_dir ) ) ) {
-			throw new FileNotFoundException( __("Parameter 'entities_dir' in '/wpf/wpf.config.json' file must be correct path to folder.") );
+			throw new FileNotFoundException(
+                __("Parameter 'entities_dir' in '/wpf/wpf.config.json' file must be correct path to folder.", 'wpf') );
 		}
 
         $update = function () use ( $app ) {
@@ -35,7 +37,8 @@ class EntityDefiner
                 $class   = str_replace('/', '\\', "{$app->entities_dir}/{$entity}");
                 $reflect = new ReflectionClass( $class );
                 if ( ! $reflect->implementsInterface('\wpf\base\IEntity') ) {
-                    throw new ConfigException( __("Class '{$reflect->getName()}' must implement IEntity interface.") );
+                    throw new ConfigException(
+                        __("Class '{$reflect->getName()}' must implement IEntity interface.", 'wpf') );
                 }
                 $entity = new $class();
                 $entity->register();
