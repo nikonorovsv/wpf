@@ -1,12 +1,12 @@
 <?php
 namespace wpf\app\observers;
 
+use \ReflectionClass;
+use \InvalidArgumentException;
 use \wpf\App;
 use \wpf\app\Observer;
 use \wpf\base\ConfigException;
-use \wpf\helpers\ArrayHelper;
 use \wpf\helpers\WP;
-use \InvalidArgumentException;
 
 /**
  * Class PostStatusDefiner
@@ -17,17 +17,32 @@ class PostStatusDefiner
 
     /**
      * @param App $app
-     * @return bool
+     * @return mixed|void
      */
     public function doUpdate( App $app ) {
-        if ( ! $app->post_statuses ) {
-            return FALSE;
-        } elseif ( ! ArrayHelper::isAssociative( $app->post_statuses ) ) {
-            throw new InvalidArgumentException( __("Parameter 'post_statuses' must be an object.", 'wpf') );
+        if ( ! $app->statuses ) {
+            return;
+        } elseif ( ! $app->statuses_dir ) {
+            throw new InvalidArgumentException(
+                __("Parameter 'statuses_dir' must have been defined in '/wpf/wpf.config.json' file.", 'wpf') );
+        } elseif ( ! is_dir( WP::path( $app->statuses_dir ) ) ) {
+            throw new FileNotFoundException(
+                __("Parameter 'statuses_dir' in '/wpf/wpf.config.json' file must be correct path to folder.", 'wpf') );
         }
-        // Register all post statuses
-        foreach ( $app->post_statuese as $post_status => $args ) {
-            register_post_status( $post_status, $args );
-        }
+
+        $update = function () use ( $app ) {
+            foreach ( $app->statuses as $status ) {
+                $class   = str_replace('/', '\\', "{$app->statuses_dir}/{$status}");
+                $reflect = new ReflectionClass( $class );
+                if ( ! $reflect->implementsInterface('\wpf\base\IStatus') ) {
+                    throw new ConfigException(
+                        __("Class '{$reflect->getName()}' must implement IStatus interface.", 'wpf') );
+                }
+                $status = new $class();
+                $status->register();
+            }
+        };
+
+        add_action('init', $update );
     }
 }

@@ -6,14 +6,14 @@ namespace wpf\base;
  * @package wpf\base
  */
 interface IEntity {
-    
-	/**
-	 * @return mixed
-	 */
-	public function register();
-	
-	/**
-	 * @return mixed
-	 */
-	public static function getLabels();
+
+    /**
+     * @return void
+     */
+	public function register(): void;
+
+    /**
+     * @return array
+     */
+	public static function getLabels(): array;
 }

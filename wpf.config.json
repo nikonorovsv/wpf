@@ -2,6 +2,7 @@
   "app_dir": "app",
   "actions_dir": "/app/actions",
   "entities_dir": "/app/entities",
+  "statuses_dir": "/app/statuses",
   "ajax_handlers_dir": "/app/ajax_handlers",
   "rest_handlers_dir": "/app/rest_handlers",
   "graphql_dir": "/app/graphql",
