@@ -18,12 +18,12 @@ class EntityDefiner
 
     /**
      * @param App $app
-     * @return bool|mixed
+     * @return void
      * @throws FileNotFoundException
      */
 	public function doUpdate( App $app ) {
 		if ( ! $app->entities ) {
-			return FALSE;
+			return;
 		} elseif ( ! $app->entities_dir ) {
 			throw new InvalidArgumentException(
 			    __("Parameter 'entities_dir' must have been defined in '/wpf/wpf.config.json' file.", 'wpf') );

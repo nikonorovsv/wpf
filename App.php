@@ -238,7 +238,6 @@ class App
 	 */
 	public static function uri():string {
 		$server = repo('server');
-
 		$url = [
 			@( $server->HTTPS != 'on') ? 'http://' :  'https://',
 			$server->SERVER_NAME,

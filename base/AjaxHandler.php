@@ -17,7 +17,13 @@ abstract class AjaxHandler
 	 * AjaxHandler constructor.
 	 */
 	public function __construct() {
+        if ( ! defined('THEME_NONCE_KEY') ) {
+            static::response( FALSE, __('Constant "THEME_NONCE_KEY" has not defined.', 'wpf') );
+        }
 		check_ajax_referer( THEME_NONCE_KEY, static::NONCE_FIELD );
+        if ( method_exists( static::class, 'validate') ) {
+            $this->validate();
+        }
 	}
 
 	/**
@@ -39,17 +45,9 @@ abstract class AjaxHandler
      */
     protected static function response( bool $success, string $message, array $data = [] ) {
         $data['message'] = __( $message, PREFIX );
-        return $success ? wp_send_json_success( $data ) : wp_send_json_error( $data );
-    }
-
-    /**
-     * @param string $nonce
-     */
-    protected static function checkNonce( string $nonce ) {
-        if ( ! defined( THEME_NONCE_KEY ) ) {
-            self::response( false, __('Constant THEME_NONCE_KEY has not defined.', 'wpf'));
-        } elseif ( ! wp_verify_nonce( $nonce, THEME_NONCE_KEY ) ) {
-            self::response( false, __('Incorrect nonce key.', 'wpf'));
+        if ( $success ) {
+            wp_send_json_success( $data );
         }
+        wp_send_json_error( $data );
     }
 }

@@ -134,7 +134,7 @@ final class File extends Post
      * @return int|WP_Error
      */
     public static function create( array $data ) {
-        $file = ArrayHelper::remove($data, 'file');
+        $file = ArrayHelper::remove( $data, 'file');
         if ( is_null( $file ) || ! ArrayHelper::isAssociative( $file ) ) {
             return WP::error('missing_file',
                 "The 'file' parameter can't sent. It should be an array like ['name', 'type', 'tmp_name', 'error', 'size']." );

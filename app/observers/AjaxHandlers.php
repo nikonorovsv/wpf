@@ -1,13 +1,13 @@
 <?php
 namespace wpf\app\observers;
 
-use \wpf\app\Observer;
 use \wpf\App;
+use \wpf\app\Observer;
 use \wpf\base\AjaxHandler;
 use \wpf\base\ConfigException;
 use \wpf\base\FileNotFoundException;
-use \InvalidArgumentException;
 use \wpf\helpers\WP;
+use \InvalidArgumentException;
 use \ReflectionClass;
 
 /**
@@ -40,7 +40,7 @@ class AjaxHandlers
                 __("Parameter 'ajax_handlers_dir' in '/wpf/wpf.config.json' file must be correct path to folder.", 'wpf') );
 		}
 		foreach ( $app->ajax_handlers as $handler ) {
-			$class   = str_replace('/', '\\', "{$app->ajax_handlers_dir}/{$handler}");
+			$class = str_replace('/', '\\', "{$app->ajax_handlers_dir}/{$handler}");
 			$reflect = new ReflectionClass( $class );
 			if ( ! $reflect->isSubclassOf( AjaxHandler::getName() ) ) {
 				throw new ConfigException(
