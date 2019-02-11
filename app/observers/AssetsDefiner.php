@@ -55,6 +55,10 @@ class AssetsDefiner
             if ($app->register_scripts) {
                 $enqueue_scripts = [];
                 foreach ($app->register_scripts as $script) {
+                    if ( is_string( $script ) ) {
+                        $enqueue_scripts[] = ['name' => $script];
+                        continue;
+                    }
                     if (!$script['cdn']) {
                         $script['src'] = WP::uri($script['src']);
                     }
