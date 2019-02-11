@@ -29,6 +29,10 @@ class AssetsDefiner
             if ($app->register_styles) {
                 $enqueue_styles = [];
                 foreach ($app->register_styles as $style) {
+                    if ( is_string( $style ) ) {
+                        $enqueue_styles[] = $style;
+                        continue;
+                    }
                     if (!$style['cdn']) {
                         $style['src'] = WP::uri($style['src']);
                     }
