@@ -25,13 +25,13 @@ abstract class RESTHandler extends Controller
      * @param $request
      * @return mixed
      */
-    abstract public function handle( Request $request );
+    abstract public static function handle( Request $request );
 
     /**
      * @param $data
      * @return Response
      */
-    protected function response( $data ): Response {
+    protected static function response( $data ): Response {
         return rest_ensure_response( $data );
     }
 
@@ -41,7 +41,7 @@ abstract class RESTHandler extends Controller
      * @param int $status
      * @return Error
      */
-    protected function error( string $key, string $message, int $status = 404 ): Error {
+    protected static function error( string $key, string $message, int $status = 404 ): Error {
         return new Error( $key, __( $message ), compact('status') );
     }
 
@@ -50,7 +50,7 @@ abstract class RESTHandler extends Controller
      *
      * @return array
      */
-    public function validateRules(): array {
+    public static function validateRules(): array {
         return [];
     }
 
@@ -58,7 +58,7 @@ abstract class RESTHandler extends Controller
      * @param Request $request
      * @return bool
      */
-    public function can( Request $request ): bool {
+    public static function can( Request $request ): bool {
         return true;
     }
 

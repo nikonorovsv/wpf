@@ -36,7 +36,7 @@ class EntityDefiner
 
         $update = function () use ( $app ) {
             foreach ( $app->entities as $entity ) {
-                $class = $this->getClassName( $app->entities_dir, $entity. [
+                $class = $this->getClassName( $app->entities_dir, $entity, [
                     'implements' => self::BASE_ENTITY
                 ]);
                 (new $class)->register();

@@ -26,7 +26,7 @@ abstract class RESTField
      * @param Request $request
      * @return mixed
      */
-    abstract public function get( object $object, string $field_name, Request $request );
+    abstract public static function get( object $object, string $field_name, Request $request );
 
     /**
      * @param $value
@@ -34,14 +34,14 @@ abstract class RESTField
      * @param string $field_name
      * @return null
      */
-    public function update( $value, object $object, string $field_name ) {
+    public static function update( $value, object $object, string $field_name ) {
         return NULL;
     }
 
     /**
      * @return array
      */
-    public function schema(): array {
+    public static function schema(): array {
         return NULL;
     }
 

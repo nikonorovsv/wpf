@@ -58,13 +58,13 @@ abstract class Observer
             $base = call_user_func([ $options['subclass_of'], 'getName']);
             if ( ! $reflect->isSubclassOf( $base ) ) {
                 throw new ConfigException(
-                    __("Class '{$reflect->getName()}' must be inherited of {$options['subclass_of']} class.", 'wpf') );
+                    __("Class '{$reflect->getName()}' must be inherited of '{$options['subclass_of']}' class.", 'wpf') );
             }
         }
         if ( ! empty( $options['implements'] ) ) {
             if ( ! $reflect->implementsInterface( $options['implements'] ) ) {
                 throw new ConfigException(
-                    __("Class '{$reflect->getName()}' must implement {$options['implements']} interface.", 'wpf') );
+                    __("Class '{$reflect->getName()}' must implement '{$options['implements']}' interface.", 'wpf') );
             }
         }
 

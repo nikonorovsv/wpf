@@ -68,13 +68,12 @@ class RESTDefiner
                 'subclass_of' => self::BASE_HANDLER
             ]);
             $register = function () use ( $class, $app ) {
-                $h = new $class;
-                register_rest_route( $app->rest_namespace, $h::ROUTE, [
-                    'methods'  => $this->getValidMethods( $h::METHODS ),
-                    'callback' => [ $h, 'handle'],
-                    'args'     => [ $h, 'validateRules'],
-                    'permission_callback' => [ $h, 'can']
-                ], $h::OVERRIDE );
+                register_rest_route( $app->rest_namespace, $class::ROUTE, [
+                    'methods'  => $this->getValidMethods( $class::METHODS ),
+                    'callback' => [ $class, 'handle'],
+                    'args'     => [ $class, 'validateRules'],
+                    'permission_callback' => [ $class, 'can']
+                ], $class::OVERRIDE );
             };
             add_action('rest_api_init', $register );
         }
@@ -89,11 +88,10 @@ class RESTDefiner
                 'subclass_of' => self::BASE_FIELD
             ]);
             $register = function () use ( $class ) {
-                $f = new $class;
-                register_rest_field( $f::OBJECT_TYPE, $f::NAME, [
-                    'get_callback'    => [ $f, 'get'],
-                    'update_callback' => [ $f, 'update'],
-                    'schema'          => [ $f, 'schema']
+                register_rest_field( $class::OBJECT_TYPE, $class::NAME, [
+                    'get_callback'    => [ $class, 'get'],
+                    'update_callback' => [ $class, 'update'],
+                    'schema'          => [ $class, 'schema']
                 ] );
             };
             add_action('rest_api_init', $register );
