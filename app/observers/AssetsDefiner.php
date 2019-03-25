@@ -29,6 +29,10 @@ class AssetsDefiner
             if ($app->register_styles) {
                 $enqueue_styles = [];
                 foreach ($app->register_styles as $style) {
+                    if ( is_string( $style ) ) {
+                        $enqueue_styles[] = $style;
+                        continue;
+                    }
                     if (!$style['cdn']) {
                         $style['src'] = WP::uri($style['src']);
                     }
@@ -55,6 +59,10 @@ class AssetsDefiner
             if ($app->register_scripts) {
                 $enqueue_scripts = [];
                 foreach ($app->register_scripts as $script) {
+                    if ( is_string( $script ) ) {
+                        $enqueue_scripts[] = ['name' => $script];
+                        continue;
+                    }
                     if (!$script['cdn']) {
                         $script['src'] = WP::uri($script['src']);
                     }
