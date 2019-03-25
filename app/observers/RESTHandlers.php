@@ -52,7 +52,7 @@ class RESTHandlers
                 register_rest_route( $app->rest_namespace, $class::ROUTE, [
                     'methods'  => $this->getValidMethods( $class::METHODS ),
                     'callback' => [ $class, 'response'],
-                    'args'     => $class::validateRules(),
+                    'args'     => [ $class, 'validateRules'],
                     'permission_callback' => [ $class, 'can']
                 ], $class::OVERRIDE );
             });

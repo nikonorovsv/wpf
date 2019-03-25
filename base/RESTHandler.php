@@ -46,10 +46,10 @@ abstract class RESTHandler extends Controller
     }
 
     /**
-     * @param $args
+     * @param Request $request
      * @return bool
      */
-    public static function can(): bool {
+    public static function can( Request $request ): bool {
         return true;
     }
 
