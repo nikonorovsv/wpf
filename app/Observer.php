@@ -56,7 +56,7 @@ abstract class Observer
         if ( ! empty( $options['subclass_of'] ) ) {
             // ToDo: Check if method exists
             $base = call_user_func([ $options['subclass_of'], 'getName']);
-            if ( $reflect->isSubclassOf( $base ) ) {
+            if ( ! $reflect->isSubclassOf( $base ) ) {
                 throw new ConfigException(
                     __("Class '{$reflect->getName()}' must be inherited of {$options['subclass_of']} class.", 'wpf') );
             }
