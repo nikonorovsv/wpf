@@ -4,7 +4,6 @@ namespace wpf\base;
 
 use \WP_REST_Controller as Controller;
 use \WP_REST_Request as Request;
-use \WP_REST_Server as Server;
 use \WP_Error as Error;
 
 /**
@@ -61,22 +60,5 @@ abstract class RESTHandler extends Controller
      */
     public static function getName() {
         return static::class;
-    }
-
-    /**
-     * @param string $type
-     * @return bool|mixed
-     */
-    public static function methods() {
-        $available = [
-            'all'    => Server::ALLMETHODS,
-            'read'   => Server::READABLE,
-            'create' => Server::CREATABLE,
-            'edit'   => Server::EDITABLE,
-            'delete' => Server::DELETABLE
-        ];
-        $type = array_key_exists( self::METHODS, $available ) ? self::METHODS : 'read';
-
-        return $available[ $type ];
     }
 }
