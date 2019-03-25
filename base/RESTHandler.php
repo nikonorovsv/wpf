@@ -69,6 +69,7 @@ abstract class RESTHandler extends Controller
      */
     public static function methods() {
         $available = [
+            'all'    => Server::ALLMETHODS,
             'read'   => Server::READABLE,
             'create' => Server::CREATABLE,
             'edit'   => Server::EDITABLE,
