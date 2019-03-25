@@ -16,6 +16,8 @@ use \wpf\helpers\WP;
 class EntityDefiner
 	extends Observer {
 
+    const BASE_ENTITY = '\wpf\base\IEntity';
+
     /**
      * @param App $app
      * @return void
@@ -34,14 +36,10 @@ class EntityDefiner
 
         $update = function () use ( $app ) {
             foreach ( $app->entities as $entity ) {
-                $class   = str_replace('/', '\\', "{$app->entities_dir}/{$entity}");
-                $reflect = new ReflectionClass( $class );
-                if ( ! $reflect->implementsInterface('\wpf\base\IEntity') ) {
-                    throw new ConfigException(
-                        __("Class '{$reflect->getName()}' must implement IEntity interface.", 'wpf') );
-                }
-                $entity = new $class();
-                $entity->register();
+                $class = $this->getClassName( $app->entities_dir, $entity. [
+                    'implements' => self::BASE_ENTITY
+                ]);
+                (new $class)->register();
             }
         };
 

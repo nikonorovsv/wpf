@@ -15,6 +15,8 @@ use \wpf\helpers\WP;
 class PostStatusDefiner
     extends Observer {
 
+    const BASE_STATUS = '\wpf\base\IStatus';
+
     /**
      * @param App $app
      * @return mixed|void
@@ -32,14 +34,10 @@ class PostStatusDefiner
 
         $update = function () use ( $app ) {
             foreach ( $app->statuses as $status ) {
-                $class   = str_replace('/', '\\', "{$app->statuses_dir}/{$status}");
-                $reflect = new ReflectionClass( $class );
-                if ( ! $reflect->implementsInterface('\wpf\base\IStatus') ) {
-                    throw new ConfigException(
-                        __("Class '{$reflect->getName()}' must implement IStatus interface.", 'wpf') );
-                }
-                $status = new $class();
-                $status->register();
+                $class = $this->getClassName( $app->statuses_dir, $status, [
+                    'implements' => self::BASE_STATUS
+                ]);
+                (new $class)->register();
             }
         };
 

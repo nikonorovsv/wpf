@@ -4,7 +4,7 @@
   "entities_dir": "/app/entities",
   "statuses_dir": "/app/statuses",
   "ajax_handlers_dir": "/app/ajax_handlers",
-  "rest_handlers_dir": "/app/rest_handlers",
+  "rest_dir": "/app/rest",
   "graphql_dir": "/app/graphql",
   "rest_namespace": "wpf/v1",
   "views_dir": "app/views",

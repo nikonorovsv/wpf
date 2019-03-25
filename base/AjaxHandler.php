@@ -31,13 +31,6 @@ abstract class AjaxHandler
 	 */
 	abstract public static function run();
 
-	/**
-	 * @return string
-	 */
-	public static function getName() {
-		return static::class;
-	}
-
     /**
      * @param bool $success
      * @param string $message
@@ -49,5 +42,12 @@ abstract class AjaxHandler
             wp_send_json_success( $data );
         }
         wp_send_json_error( $data );
+    }
+
+    /**
+     * @return string
+     */
+    public static function getName() {
+        return static::class;
     }
 }

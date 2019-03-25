@@ -3,12 +3,9 @@ namespace wpf\app\observers;
 
 use \wpf\App;
 use \wpf\app\Observer;
-use \wpf\base\AjaxHandler;
-use \wpf\base\ConfigException;
 use \wpf\base\FileNotFoundException;
 use \wpf\helpers\WP;
 use \InvalidArgumentException;
-use \ReflectionClass;
 
 /**
  * Class AjaxHandlers
@@ -17,18 +14,17 @@ use \ReflectionClass;
 class AjaxHandlers
 	extends Observer {
 
+    const BASE_HANDLER = '\wpf\base\AjaxHandler';
+
     /**
      * @param App $app
-     * @return bool|mixed
-     * @throws ConfigException
      * @throws FileNotFoundException
-     * @throws \ReflectionException
      */
-	public function doUpdate( App $app ) {
+	public function doUpdate( App $app ): void {
 		if ( ! wp_doing_ajax() ) {
-			return FALSE;
+			return;
 		} elseif ( ! $app->ajax_handlers ) {
-			return FALSE;
+			return;
 		} elseif ( ! is_array( $app->ajax_handlers ) ) {
 			throw new InvalidArgumentException(
 			    __("The value of 'ajax_handlers' parameter must be array.", 'wpf') );
@@ -39,16 +35,21 @@ class AjaxHandlers
 			throw new FileNotFoundException(
                 __("Parameter 'ajax_handlers_dir' in '/wpf/wpf.config.json' file must be correct path to folder.", 'wpf') );
 		}
-		foreach ( $app->ajax_handlers as $handler ) {
-			$class = str_replace('/', '\\', "{$app->ajax_handlers_dir}/{$handler}");
-			$reflect = new ReflectionClass( $class );
-			if ( ! $reflect->isSubclassOf( AjaxHandler::getName() ) ) {
-				throw new ConfigException(
-				    __("Class '{$reflect->getName()}' must be inherited of AjaxHandler class.", 'wpf') );
-			}
-			$action = $class::ACTION_NAME;
-			add_action("wp_ajax_{$action}", [ $class, 'run'] );
-			add_action("wp_ajax_nopriv_{$action}", [ $class, 'run'] );
-		}
+
+		$this->registerHandlers( $app );
 	}
+
+    /**
+     * @param App $app
+     */
+	public function registerHandlers( App $app ) {
+        foreach ( $app->ajax_handlers as $handler ) {
+            $class = $this->getClassName( $app->ajax_handlers_dir, $handler, [
+                'subclass_of' => self::BASE_HANDLER
+            ]);
+            $action = $class::ACTION_NAME;
+            add_action("wp_ajax_{$action}", [ $class, 'run'] );
+            add_action("wp_ajax_nopriv_{$action}", [ $class, 'run'] );
+        }
+    }
 }

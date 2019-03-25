@@ -4,6 +4,7 @@ namespace wpf\base;
 
 use \WP_REST_Controller as Controller;
 use \WP_REST_Request as Request;
+use \WP_REST_Response as Response;
 use \WP_Error as Error;
 
 /**
@@ -24,7 +25,15 @@ abstract class RESTHandler extends Controller
      * @param $request
      * @return mixed
      */
-    abstract public static function response( Request $request );
+    abstract public function handle( Request $request );
+
+    /**
+     * @param $data
+     * @return Response
+     */
+    protected function response( $data ): Response {
+        return rest_ensure_response( $data );
+    }
 
     /**
      * @param string $key
@@ -32,7 +41,7 @@ abstract class RESTHandler extends Controller
      * @param int $status
      * @return Error
      */
-    protected static function error( string $key, string $message, int $status = 404 ): Error {
+    protected function error( string $key, string $message, int $status = 404 ): Error {
         return new Error( $key, __( $message ), compact('status') );
     }
 
@@ -41,7 +50,7 @@ abstract class RESTHandler extends Controller
      *
      * @return array
      */
-    public static function validateRules(): array {
+    public function validateRules(): array {
         return [];
     }
 
@@ -49,7 +58,7 @@ abstract class RESTHandler extends Controller
      * @param Request $request
      * @return bool
      */
-    public static function can( Request $request ): bool {
+    public function can( Request $request ): bool {
         return true;
     }
 
