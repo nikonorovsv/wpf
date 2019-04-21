@@ -19,12 +19,16 @@ class Icon
      */
     public static $prefixes
         = [
-            'fa' => 'fa fa-',
-            'gi' => 'glyphicon glyphicon-',
-            'ui' => 'icon ',
-            'wp' => 'dashicons dashicons-',
-            'md' => 'material-icons',
-            'uk' => 'icon: '
+            'fa'  => 'fa fa-',
+            'fas' => 'fas fa-',
+            'far' => 'far fa-',
+            'fal' => 'fal fa-',
+            'fab' => 'fab fa-',
+            'gi'  => 'glyphicon glyphicon-',
+            'ui'  => 'icon ',
+            'wp'  => 'dashicons dashicons-',
+            'md'  => 'material-icons',
+            'uk'  => 'icon: '
         ];
 
     /**
