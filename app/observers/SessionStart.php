@@ -10,17 +10,19 @@ use \wpf\App;
  * @package wpf\app\observers
  */
 class SessionStart
-	extends Observer {
-	/**
-	 * @param App $app
-	 */
-	public function doUpdate( App $app ) {
-		$update = function () {
-			if ( ! session_id() ) {
-				session_start();
-			}
-		};
+  extends Observer
+{
+  /**
+   * @param App $app
+   */
+  public function doUpdate(App $app)
+  {
+    $update = function () {
+      if (!session_id()) {
+        session_start();
+      }
+    };
 
-		add_action('init', $update );
-	}
+    add_action('init', $update);
+  }
 }

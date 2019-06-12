@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\base;
 
 use \wpf\wp\Filters;
@@ -8,20 +9,22 @@ use \wpf\wp\Filters;
  * @package wpf\base
  */
 abstract class Widget
-	extends ViewContext {
+  extends ViewContext
+{
 
-    /**
-	 * @param string $tag
-	 * @param int $priority
-	 *
-	 * @return true
-	 */
-	public function printOnTag( string $tag, int $priority = 10) {
-		$html = $this->render();
-		$function_to_add = function () use ( $html ) {
-			echo $html;
-		};
-		
-		return Filters::add( $tag, $function_to_add, $priority, 0);
-	}
+  /**
+   * @param string $tag
+   * @param int $priority
+   *
+   * @return true
+   */
+  public function printOnTag(string $tag, int $priority = 10)
+  {
+    $html = $this->render();
+    $function_to_add = function () use ($html) {
+      echo $html;
+    };
+
+    return Filters::add($tag, $function_to_add, $priority, 0);
+  }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\base;
 
 use \Exception;
@@ -8,5 +9,6 @@ use \Exception;
  * @package wpf\base
  */
 class ConfigException
-	extends Exception {
+  extends Exception
+{
 }

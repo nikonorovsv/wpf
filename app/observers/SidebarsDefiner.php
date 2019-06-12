@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\app\observers;
 
 use \wpf\app\Observer;
@@ -10,25 +11,27 @@ use \wpf\base\ConfigException;
  * @package wpf\app\observers
  */
 class SidebarsDefiner
-	extends Observer {
+  extends Observer
+{
 
-    /**
-     * @param App $app
-     * @return mixed|void
-     */
-	public function doUpdate( App $app ) {
-		$update = function () use ( $app ) {
-			if ( ! $app->sidebars ) {
-				return FALSE;
-			}
-			foreach ( $app->sidebars as $args ) {
-				if ( ! is_array( $args ) ) {
-					throw new ConfigException(
-					    __("All elements of 'sidebars' array in '*.config.json' must be objects.", 'wpf') );
-				}
-				register_sidebar( $args );
-			}
-		};
-		add_action('after_setup_theme', $update );
-	}
+  /**
+   * @param App $app
+   * @return mixed|void
+   */
+  public function doUpdate(App $app)
+  {
+    $update = function () use ($app) {
+      if (!$app->sidebars) {
+        return FALSE;
+      }
+      foreach ($app->sidebars as $args) {
+        if (!is_array($args)) {
+          throw new ConfigException(
+            __("All elements of 'sidebars' array in '*.config.json' must be objects.", 'wpf'));
+        }
+        register_sidebar($args);
+      }
+    };
+    add_action('after_setup_theme', $update);
+  }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\base;
 
 /**
@@ -7,6 +8,7 @@ namespace wpf\base;
  */
 abstract class Entity implements IEntity
 {
-	abstract public function register(): void;
-	abstract public static function getLabels(): array;
+  abstract public function register(): void;
+
+  abstract public static function getLabels(): array;
 }

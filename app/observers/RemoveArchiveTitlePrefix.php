@@ -10,15 +10,17 @@ use \wpf\App;
  * @package wpf\app\observers
  */
 class RemoveArchiveTitlePrefix
-    extends Observer {
-    /**
-     * @param App $app
-     *
-     * @return bool
-     */
-    public function doUpdate( App $app ) {
-        add_filter('get_the_archive_title', function( $title ) {
-            return preg_replace('~^[^:]+: ~', '', $title );
-        });
-    }
+  extends Observer
+{
+  /**
+   * @param App $app
+   *
+   * @return bool
+   */
+  public function doUpdate(App $app)
+  {
+    add_filter('get_the_archive_title', function ($title) {
+      return preg_replace('~^[^:]+: ~', '', $title);
+    });
+  }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\app\observers;
 
 use \wpf\App;
@@ -10,25 +11,27 @@ use \wpf\base\ConfigException;
  * @package wpf\app\observers
  */
 class OptionsPagesDefiner
-	extends Observer {
+  extends Observer
+{
 
-    /**
-	 * @param App $app
-	 *
-	 * @return bool
-	 * @throws ConfigException
-	 */
-	public function doUpdate( App $app ) {
-		if ( ! $app->options_pages ) {
-			return FALSE;
-		} elseif ( ! function_exists('acf_add_options_page') ) {
-			return FALSE;
-		}
-		foreach ( $app->options_pages as $args ) {
-			if ( ! is_array( $args ) ) {
-				throw new ConfigException( __("All elements of 'options_pages' array in '*.config.json' must be objects.", 'wpf') );
-			}
-			acf_add_options_page( $args );
-		}
-	}
+  /**
+   * @param App $app
+   *
+   * @return bool
+   * @throws ConfigException
+   */
+  public function doUpdate(App $app)
+  {
+    if (!$app->options_pages) {
+      return FALSE;
+    } elseif (!function_exists('acf_add_options_page')) {
+      return FALSE;
+    }
+    foreach ($app->options_pages as $args) {
+      if (!is_array($args)) {
+        throw new ConfigException(__("All elements of 'options_pages' array in '*.config.json' must be objects.", 'wpf'));
+      }
+      acf_add_options_page($args);
+    }
+  }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\base;
 
 /**
@@ -6,5 +7,6 @@ namespace wpf\base;
  * @package wpf\base
  */
 abstract class Action
-	extends ViewContext {
+  extends ViewContext
+{
 }

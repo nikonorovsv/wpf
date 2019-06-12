@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\app\observers;
 
 use \wpf\app\Observer;
@@ -10,22 +11,24 @@ use \wpf\base\ConfigException;
  * @package wpf\app\observers
  */
 class ConstantsDefiner
-	extends Observer {
-	/**
-	 * @param App $app
-	 *
-	 * @return bool
-	 * @throws ConfigException
-	 */
-	public function doUpdate( App $app ) {
-		if ( ! $app->constants ) {
-			return FALSE;
-		} elseif ( ! is_array( $app->constants ) ) {
-			throw new ConfigException(
-			    __("Value of 'constants' property in '*.config.json' must be an object.", 'wpf') );
-		}
-		foreach ( $app->constants as $name => $value ) {
-			define( $name, $value );
-		}
-	}
+  extends Observer
+{
+  /**
+   * @param App $app
+   *
+   * @return bool
+   * @throws ConfigException
+   */
+  public function doUpdate(App $app)
+  {
+    if (!$app->constants) {
+      return FALSE;
+    } elseif (!is_array($app->constants)) {
+      throw new ConfigException(
+        __("Value of 'constants' property in '*.config.json' must be an object.", 'wpf'));
+    }
+    foreach ($app->constants as $name => $value) {
+      define($name, $value);
+    }
+  }
 }

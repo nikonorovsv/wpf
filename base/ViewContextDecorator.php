@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\base;
 
 /**
@@ -7,17 +8,18 @@ namespace wpf\base;
  */
 abstract class ViewContextDecorator
 {
-	/**
-	 * @var IViewContext
-	 */
-	protected $wrapped;
-	
-	/**
-	 * ViewContextDecorator constructor.
-	 *
-	 * @param IViewContext $renderer
-	 */
-	public function __construct( IViewContext $renderer ) {
-		$this->wrapped = $renderer;
-	}
+  /**
+   * @var IViewContext
+   */
+  protected $wrapped;
+
+  /**
+   * ViewContextDecorator constructor.
+   *
+   * @param IViewContext $renderer
+   */
+  public function __construct(IViewContext $renderer)
+  {
+    $this->wrapped = $renderer;
+  }
 }

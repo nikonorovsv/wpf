@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\base;
 
 /**
@@ -7,5 +8,5 @@ namespace wpf\base;
  */
 abstract class Status implements IStatus
 {
-    abstract public function register(): void;
+  abstract public function register(): void;
 }

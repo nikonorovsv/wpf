@@ -1,4 +1,5 @@
 <?php
+
 namespace wpf\wp;
 
 use \wpf\base\Widget;
@@ -9,18 +10,19 @@ use \wpf\base\Widget;
  */
 class QueryWidget extends Widget
 {
-	use QueryBuilder;
+  use QueryBuilder;
 
-	protected $query;
+  protected $query;
 
-    /**
-	 * QueryWidget constructor.
-	 *
-	 * @param array $conf
-	 */
-    public function __construct( array $conf = [] ) {
-        parent::__construct( $conf );
+  /**
+   * QueryWidget constructor.
+   *
+   * @param array $conf
+   */
+  public function __construct(array $conf = [])
+  {
+    parent::__construct($conf);
 
-	    $this->query = $this->query();
-    }
+    $this->query = $this->query();
+  }
 }

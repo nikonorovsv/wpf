@@ -1,19 +1,21 @@
 <?php
+
 namespace wpf\base;
 
 /**
  * Interface IEntity
  * @package wpf\base
  */
-interface IEntity {
+interface IEntity
+{
 
-    /**
-     * @return void
-     */
-	public function register(): void;
+  /**
+   * @return void
+   */
+  public function register(): void;
 
-    /**
-     * @return array
-     */
-	public static function getLabels(): array;
+  /**
+   * @return array
+   */
+  public static function getLabels(): array;
 }
