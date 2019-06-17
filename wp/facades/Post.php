@@ -7,6 +7,7 @@ use \WP_Error;
 use \wpf\helpers\Html;
 use \wpf\helpers\Date;
 use \wpf\helpers\WP;
+use \Exception;
 
 /**
  * Class Post
@@ -83,7 +84,8 @@ class Post
   }
 
   /**
-   * @return \DateTime|false
+   * @return Date
+   * @throws Exception
    */
   public function pubDate()
   {
