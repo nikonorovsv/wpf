@@ -62,17 +62,16 @@ class WP
 
   /**
    * @param array $args
-   * @param string|null $url
-   *
-   * @return mixed
+   * @param string|null $request_uri
+   * @return string
    */
-  public static function url(array $args = [], string $url = null)
+  public static function url(array $args = [], string $request_uri = null)
   {
-    if (is_null($url)) {
-      $url = $_SERVER['REQUEST_URI'];
+    if (is_null($request_uri)) {
+      $request_uri = $_SERVER['REQUEST_URI'];
     }
 
-    return add_query_arg($args, $url);
+    return add_query_arg($args, home_url( $request_uri ));
   }
 
   /**
