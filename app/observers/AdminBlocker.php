@@ -19,12 +19,13 @@ class AdminBlocker
   public function doUpdate(App $app)
   {
     $update = function () use ($app) {
-      if (!current_user_can('administrator')) {
-        header('HTTP/1.0 404 Not Found');
+      if ( is_admin() && !current_user_can('administrator') ) {
+        // header('HTTP/1.0 404 Not Found');
+        wp_redirect( home_url() );
         exit();
       }
     };
 
-    add_action('admin_menu', $update);
+    add_action('init', $update);
   }
 }
