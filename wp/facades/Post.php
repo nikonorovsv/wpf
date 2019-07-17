@@ -238,7 +238,7 @@ class Post
     if (!$src && $placeholder) {
       $size = WP::getImageSize($size);
       $text = WP::l18n("Нет+изображения");
-      $src = "http://placehold.it/{$size['width']}x{$size['height']}?text={$text}";
+      $src = "//placehold.it/{$size['width']}x{$size['height']}?text={$text}";
     }
 
     return $src;
