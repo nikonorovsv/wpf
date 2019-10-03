@@ -22,9 +22,11 @@ trait Cache
    *
    * @return mixed
    */
-  protected final static function cache(Closure $fallback, string $key = 'single')
+  protected final static function cache(Closure $fallback, string $key = null)
   {
     global $wp_object_cache;
+
+    $key = $key ?? 'single';
 
     $d_bt = debug_backtrace()[1];
     $class = $d_bt['class'];
