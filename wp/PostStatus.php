@@ -2,28 +2,26 @@
 
 namespace wpf\wp;
 
-use \wpf\base\Status;
-use \wpf\helpers\ArrayHelper;
-use \InvalidArgumentException;
+use wpf\base\Status;
+use wpf\helpers\ArrayHelper;
+use InvalidArgumentException;
 
 /**
- * Class PostStatus
+ * Class PostStatus.
+ *
  * @package wpf\wp
  */
 abstract class PostStatus extends Status
 {
-  protected $args = [];
+    protected $args = [];
 
-  /**
-   * @return void
-   */
-  public function register(): void
-  {
-    if (!$this->args || !ArrayHelper::isAssociative($this->args)) {
-      throw new InvalidArgumentException(
+    public function register(): void
+    {
+        if (!$this->args || !ArrayHelper::isAssociative($this->args)) {
+            throw new InvalidArgumentException(
         __('The "args" property of Status class inheritors needs to be associative array.', 'wpf'));
-    }
+        }
 
-    register_post_status(static::NAME, $this->args);
-  }
+        register_post_status(static::NAME, $this->args);
+    }
 }

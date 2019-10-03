@@ -3,14 +3,11 @@
 namespace wpf\base;
 
 /**
- * Interface IStatus
+ * Interface IStatus.
+ *
  * @package wpf\base
  */
 interface IStatus
 {
-
-  /**
-   * @return void
-   */
-  public function register(): void;
+    public function register(): void;
 }

@@ -3,19 +3,16 @@
 namespace wpf\base;
 
 /**
- * Interface IEntity
+ * Interface IEntity.
+ *
  * @package wpf\base
  */
 interface IEntity
 {
+    public function register(): void;
 
-  /**
-   * @return void
-   */
-  public function register(): void;
-
-  /**
-   * @return array
-   */
-  public static function getLabels(): array;
+    /**
+     * @return array
+     */
+    public static function getLabels(): array;
 }
