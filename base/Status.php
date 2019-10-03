@@ -3,10 +3,11 @@
 namespace wpf\base;
 
 /**
- * Class Status
+ * Class Status.
+ *
  * @package wpf\wp
  */
 abstract class Status implements IStatus
 {
-  abstract public function register(): void;
+    abstract public function register(): void;
 }

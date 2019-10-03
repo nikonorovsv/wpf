@@ -3,14 +3,14 @@
 namespace wpf\base;
 
 /**
- * Interface IBuilder
+ * Interface IBuilder.
+ *
  * @package wpf\base
  */
 interface IBuilder
 {
-
-  /**
-   * @return null,object
-   */
-  public function build();
+    /**
+     * @return null,object
+     */
+    public function build();
 }

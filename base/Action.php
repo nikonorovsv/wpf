@@ -3,10 +3,10 @@
 namespace wpf\base;
 
 /**
- * Class Action
+ * Class Action.
+ *
  * @package wpf\base
  */
-abstract class Action
-  extends ViewContext
+abstract class Action extends ViewContext
 {
 }

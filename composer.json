@@ -20,5 +20,8 @@
     "psr-4": {
       "wpf\\": "vendor/nikonorovsv/wpf/"
     }
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.15"
   }
 }

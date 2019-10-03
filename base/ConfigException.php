@@ -2,13 +2,13 @@
 
 namespace wpf\base;
 
-use \Exception;
+use Exception;
 
 /**
- * Class ConfigException
+ * Class ConfigException.
+ *
  * @package wpf\base
  */
-class ConfigException
-  extends Exception
+class ConfigException extends Exception
 {
 }

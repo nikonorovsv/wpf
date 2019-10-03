@@ -2,42 +2,40 @@
 
 namespace wpf\wp;
 
-use \wpf\helpers\ArrayHelper;
-use \wpf\helpers\Html;
-use \wpf\helpers\IfTTT;
-use \wpf\helpers\Cache;
+use wpf\helpers\IfTTT;
+use wpf\helpers\Cache;
 
 /**
- * Class Crumbs
+ * Class Crumbs.
+ *
  * @package wpf\wp
  */
 class Crumbs
-
 {
-  use Cache;
+    use Cache;
 
-  const PREFIX = 'wpf-crumbs';
+    const PREFIX = 'wpf-crumbs';
 
-  private $_post;
-  private $_items = [];
+    private $_post;
+    private $_items = [];
 
-  /**
-   * Crumbs constructor.
-   */
-  public function __construct()
-  {
-    global $post;
-    $this->_post = $post;
-  }
+    /**
+     * Crumbs constructor.
+     */
+    public function __construct()
+    {
+        global $post;
+        $this->_post = $post;
+    }
 
-  /**
-   * Initialize items
-   */
-  private function init()
-  {
-    $this->home();
-    $this->applyRules();
-    IfTTT::runArray([
+    /**
+     * Initialize items.
+     */
+    private function init()
+    {
+        $this->home();
+        $this->applyRules();
+        IfTTT::runArray([
       'is_404' => [$this, 'notFound'],
       'is_search' => [$this, 'search'],
       'is_tax' => [$this, 'tax'],
@@ -49,375 +47,371 @@ class Crumbs
       'is_day' => [$this, 'day'],
       'is_month' => [$this, 'month'],
       'is_year' => [$this, 'year'],
-      'is_post_type_archive' => [$this, 'postTypeArchive']
+      'is_post_type_archive' => [$this, 'postTypeArchive'],
     ]);
-  }
-
-  /**
-   * @return array
-   */
-  public function items(): array
-  {
-
-    $fallback = function () {
-      // Generate crumbs array
-      $this->init();
-
-      return $this->_items;
-    };
-
-    return static::cache($fallback);
-  }
-
-  /**
-   * @return void
-   */
-  private function applyRules()
-  {
-    if (is_front_page() || is_page()) {
-      return;
-    } elseif (is_home() && !get_query_var('pagename')) {
-      return;
-    } elseif (is_category()) {
-      $tax = get_taxonomy('category');
-      if (count($tax->object_type) != 1 || $tax->object_type[0] != 'post') {
-        return;
-      }
-    } elseif (is_tag()) {
-      $tax = get_taxonomy('post_tag');
-      if (count($tax->object_type) != 1 || $tax->object_type[0] != 'post') {
-        return;
-      }
-    } elseif (is_tax()) {
-      $tax = get_taxonomy(get_query_var('taxonomy'));
-      if (count($tax->object_type) != 1 || $tax->object_type[0] != 'post') {
-        return;
-      }
-    } else {
-      $post_type = get_query_var('post_type') ?: 'post';
-      if ($post_type != 'post') {
-        return;
-      }
     }
-    if (get_option('show_on_front') == 'page' && $post_id = get_option('page_for_posts')) {
-      $post = get_post($post_id);
-      $this->addCrumb($post->post_title, get_permalink($post));
+
+    /**
+     * @return array
+     */
+    public function items(): array
+    {
+        $fallback = function () {
+            // Generate crumbs array
+            $this->init();
+
+            return $this->_items;
+        };
+
+        return static::cache($fallback);
     }
-  }
 
-  /**
-   * Add Home Crumb
-   */
-  public function home()
-  {
-    $this->addCrumb($this->label('home'), home_url('/'));
-  }
-
-  /**
-   * Add 404 Crumb
-   */
-  public function notFound()
-  {
-    $this->addCrumb($this->label('404'));
-  }
-
-  /**
-   * Add Search Result Crumb
-   */
-  public function search()
-  {
-    $this->addCrumb($this->label('search', get_search_query()));
-  }
-
-  /**
-   * Add Tax Crumb
-   */
-  public function tax()
-  {
-    $tax = get_query_var('taxonomy');
-    $term = get_term_by('slug', get_query_var('term'), $tax);
-    if (is_taxonomy_hierarchical($tax) && $term->parent != 0) {
-      $ancestors = array_reverse(get_ancestors($term->term_id, $tax));
-      foreach ($ancestors as $ancestor_id) {
-        $ancestor = get_term($ancestor_id, $tax);
-        $this->addCrumb($ancestor->name, get_term_link($ancestor, $tax));
-      }
+    private function applyRules()
+    {
+        if (is_front_page() || is_page()) {
+            return;
+        } elseif (is_home() && !get_query_var('pagename')) {
+            return;
+        } elseif (is_category()) {
+            $tax = get_taxonomy('category');
+            if (count($tax->object_type) != 1 || $tax->object_type[0] != 'post') {
+                return;
+            }
+        } elseif (is_tag()) {
+            $tax = get_taxonomy('post_tag');
+            if (count($tax->object_type) != 1 || $tax->object_type[0] != 'post') {
+                return;
+            }
+        } elseif (is_tax()) {
+            $tax = get_taxonomy(get_query_var('taxonomy'));
+            if (count($tax->object_type) != 1 || $tax->object_type[0] != 'post') {
+                return;
+            }
+        } else {
+            $post_type = get_query_var('post_type') ?: 'post';
+            if ($post_type != 'post') {
+                return;
+            }
+        }
+        if (get_option('show_on_front') == 'page' && $post_id = get_option('page_for_posts')) {
+            $post = get_post($post_id);
+            $this->addCrumb($post->post_title, get_permalink($post));
+        }
     }
-    $this->addCrumb(
+
+    /**
+     * Add Home Crumb.
+     */
+    public function home()
+    {
+        $this->addCrumb($this->label('home'), home_url('/'));
+    }
+
+    /**
+     * Add 404 Crumb.
+     */
+    public function notFound()
+    {
+        $this->addCrumb($this->label('404'));
+    }
+
+    /**
+     * Add Search Result Crumb.
+     */
+    public function search()
+    {
+        $this->addCrumb($this->label('search', get_search_query()));
+    }
+
+    /**
+     * Add Tax Crumb.
+     */
+    public function tax()
+    {
+        $tax = get_query_var('taxonomy');
+        $term = get_term_by('slug', get_query_var('term'), $tax);
+        if (is_taxonomy_hierarchical($tax) && $term->parent != 0) {
+            $ancestors = array_reverse(get_ancestors($term->term_id, $tax));
+            foreach ($ancestors as $ancestor_id) {
+                $ancestor = get_term($ancestor_id, $tax);
+                $this->addCrumb($ancestor->name, get_term_link($ancestor, $tax));
+            }
+        }
+        $this->addCrumb(
       $this->label('taxonomy', $term->name),
       get_term_link($term->term_id, $tax)
     );
-  }
+    }
 
-  /**
-   * Add Attachment Crumbs
-   */
-  public function attachment()
-  {
-    if ($this->_post->post_parent) {
-      if ($parent_post = get_post($this->_post->post_parent)) {
-        $this->addHierarchyOfSingularCrumbs($parent_post);
-        $this->addCrumb(
+    /**
+     * Add Attachment Crumbs.
+     */
+    public function attachment()
+    {
+        if ($this->_post->post_parent) {
+            if ($parent_post = get_post($this->_post->post_parent)) {
+                $this->addHierarchyOfSingularCrumbs($parent_post);
+                $this->addCrumb(
           get_the_title($parent_post),
           get_permalink($parent_post)
         );
-      }
-    }
-    $this->addCrumb(
+            }
+        }
+        $this->addCrumb(
       $this->label('attachment', get_the_title($this->_post)),
       get_permalink($this->_post)
     );
-  }
-
-  /**
-   * Add Singular Crumbs
-   */
-  public function singular()
-  {
-    if (is_front_page()) {
-      return;
     }
-    $this->addHierarchyOfSingularCrumbs($this->_post);
-    $this->addCrumb(
+
+    /**
+     * Add Singular Crumbs.
+     */
+    public function singular()
+    {
+        if (is_front_page()) {
+            return;
+        }
+        $this->addHierarchyOfSingularCrumbs($this->_post);
+        $this->addCrumb(
       get_the_title($this->_post),
       get_permalink($this->_post)
     );
-  }
-
-  /**
-   * Add Category Crumb
-   */
-  public function category()
-  {
-    global $cat;
-
-    $category = get_category($cat);
-    if ($category->parent != 0) {
-      $ancestors = array_reverse(get_ancestors($category->term_id, 'category'));
-      foreach ($ancestors as $ancestor_id) {
-        $ancestor = get_category($ancestor_id);
-        $this->addCrumb($ancestor->name, get_category_link($ancestor->term_id));
-      }
     }
-    $this->addCrumb($this->label('category', $category->name), get_category_link($cat));
-  }
 
-  /**
-   * Add Tag Crumb
-   */
-  public function tag()
-  {
-    global $tag_id;
-    $tag = get_tag($tag_id);
+    /**
+     * Add Category Crumb.
+     */
+    public function category()
+    {
+        global $cat;
 
-    $this->addCrumb(
+        $category = get_category($cat);
+        if ($category->parent != 0) {
+            $ancestors = array_reverse(get_ancestors($category->term_id, 'category'));
+            foreach ($ancestors as $ancestor_id) {
+                $ancestor = get_category($ancestor_id);
+                $this->addCrumb($ancestor->name, get_category_link($ancestor->term_id));
+            }
+        }
+        $this->addCrumb($this->label('category', $category->name), get_category_link($cat));
+    }
+
+    /**
+     * Add Tag Crumb.
+     */
+    public function tag()
+    {
+        global $tag_id;
+        $tag = get_tag($tag_id);
+
+        $this->addCrumb(
       $this->label('tag', $tag->name),
       get_tag_link($tag_id)
     );
-  }
+    }
 
-  /**
-   * Add Author Crumb
-   */
-  public function author()
-  {
-    $author = get_query_var('author');
-    $author_name = get_the_author_meta('display_name', $author);
+    /**
+     * Add Author Crumb.
+     */
+    public function author()
+    {
+        $author = get_query_var('author');
+        $author_name = get_the_author_meta('display_name', $author);
 
-    $this->addCrumb(
+        $this->addCrumb(
       $this->label($author_name),
       get_author_posts_url($author)
     );
-  }
-
-  /**
-   * Add Day Crumb
-   */
-  public function day()
-  {
-    if ($m = get_query_var('m')) {
-      $year = substr($m, 0, 4);
-      $month = substr($m, 4, 2);
-      $day = substr($m, 6, 2);
-    } else {
-      $year = get_query_var('year');
-      $month = get_query_var('monthnum');
-      $day = get_query_var('day');
     }
-    $month_title = $this->getMonthTitle($month);
 
-    $this->addCrumb($this->label('year', $year), get_year_link($year));
-    $this->addCrumb($this->label('month', $month_title), get_month_link($year, $month));
-    $this->addCrumb($this->label('day', $day), get_day_link($year, $month, $day));
-  }
+    /**
+     * Add Day Crumb.
+     */
+    public function day()
+    {
+        if ($m = get_query_var('m')) {
+            $year = substr($m, 0, 4);
+            $month = substr($m, 4, 2);
+            $day = substr($m, 6, 2);
+        } else {
+            $year = get_query_var('year');
+            $month = get_query_var('monthnum');
+            $day = get_query_var('day');
+        }
+        $month_title = $this->getMonthTitle($month);
 
-  /**
-   * Add Month Crumb
-   */
-  public function month()
-  {
-    if ($m = get_query_var('m')) {
-      $year = substr($m, 0, 4);
-      $month = substr($m, 4, 2);
-    } else {
-      $year = get_query_var('year');
-      $month = get_query_var('monthnum');
+        $this->addCrumb($this->label('year', $year), get_year_link($year));
+        $this->addCrumb($this->label('month', $month_title), get_month_link($year, $month));
+        $this->addCrumb($this->label('day', $day), get_day_link($year, $month, $day));
     }
-    $month_title = $this->getMonthTitle($month);
 
-    $this->addCrumb($this->label('year', $year), get_year_link($year));
-    $this->addCrumb($this->label('month', $month_title), get_month_link($year, $month));
-  }
+    /**
+     * Add Month Crumb.
+     */
+    public function month()
+    {
+        if ($m = get_query_var('m')) {
+            $year = substr($m, 0, 4);
+            $month = substr($m, 4, 2);
+        } else {
+            $year = get_query_var('year');
+            $month = get_query_var('monthnum');
+        }
+        $month_title = $this->getMonthTitle($month);
 
-  /**
-   * ADd Year Crumb
-   */
-  public function year()
-  {
-    if ($m = get_query_var('m')) {
-      $year = substr($m, 0, 4);
-    } else {
-      $year = get_query_var('year');
+        $this->addCrumb($this->label('year', $year), get_year_link($year));
+        $this->addCrumb($this->label('month', $month_title), get_month_link($year, $month));
     }
-    $this->addCrumb($this->label('year', $year), get_year_link($year));
-  }
 
-  /**
-   * Add Post Type Archive Crumb
-   */
-  public function postTypeArchive()
-  {
-    $post_type = get_post_type_object(get_query_var('post_type'));
+    /**
+     * ADd Year Crumb.
+     */
+    public function year()
+    {
+        if ($m = get_query_var('m')) {
+            $year = substr($m, 0, 4);
+        } else {
+            $year = get_query_var('year');
+        }
+        $this->addCrumb($this->label('year', $year), get_year_link($year));
+    }
 
-    $this->addCrumb(
+    /**
+     * Add Post Type Archive Crumb.
+     */
+    public function postTypeArchive()
+    {
+        $post_type = get_post_type_object(get_query_var('post_type'));
+
+        $this->addCrumb(
       $this->label('post_type', $post_type->label),
       get_post_type_archive_link($post_type->name)
     );
-  }
+    }
 
-  /**
-   * @param string $label
-   * @param string|null $url
-   */
-  public function addCrumb(string $label, string $url = null)
-  {
-    $this->_items[] = compact('label', 'url');
-  }
+    /**
+     * @param string      $label
+     * @param string|null $url
+     */
+    public function addCrumb(string $label, string $url = null)
+    {
+        $this->_items[] = compact('label', 'url');
+    }
 
-  /**
-   * Add Singular Hierarchy Crumbs
-   *
-   * @param $post
-   *
-   * @return array
-   */
-  private function addHierarchyOfSingularCrumbs($post)
-  {
-    $post_type = get_post_type_object($post->post_type);
-    if ($post_type && $post_type->has_archive) {
-      $this->addCrumb(
+    /**
+     * Add Singular Hierarchy Crumbs.
+     *
+     * @param $post
+     *
+     * @return array
+     */
+    private function addHierarchyOfSingularCrumbs($post)
+    {
+        $post_type = get_post_type_object($post->post_type);
+        if ($post_type && $post_type->has_archive) {
+            $this->addCrumb(
         $this->label('post_type', $post_type->label),
         get_post_type_archive_link($post_type->name)
       );
-    }
-    if (is_post_type_hierarchical($post_type->name)) {
-      $ancestors = array_reverse(get_post_ancestors($post));
-      if ($ancestors) {
-        $ancestor_posts = get_posts([
+        }
+        if (is_post_type_hierarchical($post_type->name)) {
+            $ancestors = array_reverse(get_post_ancestors($post));
+            if ($ancestors) {
+                $ancestor_posts = get_posts([
           'post_type' => $post_type->name,
-          'include' => join(',', $ancestors)
+          'include' => join(',', $ancestors),
         ]);
-        foreach ($ancestors as $ancestor) {
-          foreach ($ancestor_posts as $ancestor_post) {
-            if ($ancestor == $ancestor_post->ID) {
-              $this->addCrumb($ancestor_post->post_title, get_permalink($ancestor_post));
-            }
-          }
-        }
-      }
-    } else {
-      $post_type_taxonomies = get_object_taxonomies($post_type->name, false);
-      if (is_array($post_type_taxonomies) && count($post_type_taxonomies)) {
-        foreach ($post_type_taxonomies as $tax_slug => $taxonomy) {
-          if ($taxonomy->hierarchical) {
-            $terms = get_the_terms($post->ID, $tax_slug);
-            if ($terms) {
-              $term = array_shift($terms);
-              if ($term->parent != 0) {
-                $ancestors = array_reverse(get_ancestors($term->term_id, $tax_slug));
-                foreach ($ancestors as $ancestor_id) {
-                  $ancestor = get_term($ancestor_id, $tax_slug);
-                  $this->addCrumb($ancestor->name, get_term_link($ancestor, $tax_slug));
+                foreach ($ancestors as $ancestor) {
+                    foreach ($ancestor_posts as $ancestor_post) {
+                        if ($ancestor == $ancestor_post->ID) {
+                            $this->addCrumb($ancestor_post->post_title, get_permalink($ancestor_post));
+                        }
+                    }
                 }
-              }
-              $this->addCrumb($term->name, get_term_link($term, $tax_slug));
-              break;
             }
-          }
+        } else {
+            $post_type_taxonomies = get_object_taxonomies($post_type->name, false);
+            if (is_array($post_type_taxonomies) && count($post_type_taxonomies)) {
+                foreach ($post_type_taxonomies as $tax_slug => $taxonomy) {
+                    if ($taxonomy->hierarchical) {
+                        $terms = get_the_terms($post->ID, $tax_slug);
+                        if ($terms) {
+                            $term = array_shift($terms);
+                            if ($term->parent != 0) {
+                                $ancestors = array_reverse(get_ancestors($term->term_id, $tax_slug));
+                                foreach ($ancestors as $ancestor_id) {
+                                    $ancestor = get_term($ancestor_id, $tax_slug);
+                                    $this->addCrumb($ancestor->name, get_term_link($ancestor, $tax_slug));
+                                }
+                            }
+                            $this->addCrumb($term->name, get_term_link($term, $tax_slug));
+                            break;
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
 
-  /**
-   * @param int $monthnum
-   *
-   * @return int
-   */
-  private function getMonthTitle(int $monthnum = 0)
-  {
-    global $wp_locale;
-    $date_format = get_option('date_format');
-    if (in_array($date_format, [
+    /**
+     * @param int $monthnum
+     *
+     * @return int
+     */
+    private function getMonthTitle(int $monthnum = 0)
+    {
+        global $wp_locale;
+        $date_format = get_option('date_format');
+        if (in_array($date_format, [
       'DATE_COOKIE',
       'DATE_RFC822',
       'DATE_RFC850',
       'DATE_RFC1036',
       'DATE_RFC1123',
       'DATE_RFC2822',
-      'DATE_RSS'
+      'DATE_RSS',
     ])) {
-      $month_format = 'M';
-    } elseif (in_array($date_format, [
+            $month_format = 'M';
+        } elseif (in_array($date_format, [
       'DATE_ATOM',
       'DATE_ISO8601',
       'DATE_RFC3339',
-      'DATE_W3C'
+      'DATE_W3C',
     ])) {
-      $month_format = 'm';
-    } else {
-      preg_match('/(^|[^\\\\]+)(F|m|M|n)/', str_replace('\\\\', '', $date_format), $m);
-      if (isset($m[2])) {
-        $month_format = $m[2];
-      } else {
-        $month_format = 'F';
-      }
-    }
+            $month_format = 'm';
+        } else {
+            preg_match('/(^|[^\\\\]+)(F|m|M|n)/', str_replace('\\\\', '', $date_format), $m);
+            if (isset($m[2])) {
+                $month_format = $m[2];
+            } else {
+                $month_format = 'F';
+            }
+        }
 
-    switch ($month_format) {
-      case 'F' :
+        switch ($month_format) {
+      case 'F':
         $month = $wp_locale->get_month($monthnum);
         break;
-      case 'M' :
+      case 'M':
         $month = $wp_locale->get_month_abbrev($wp_locale->get_month($monthnum));
         break;
-      default :
+      default:
         $month = $monthnum;
         break;
     }
 
-    return $month;
-  }
+        return $month;
+    }
 
-  /**
-   * @param string $name
-   * @param string|null $value
-   *
-   * @return bool|mixed
-   */
-  private function label(string $name, string $value = null)
-  {
-    $labels = [
+    /**
+     * @param string      $name
+     * @param string|null $value
+     *
+     * @return bool|mixed
+     */
+    private function label(string $name, string $value = null)
+    {
+        $labels = [
       'home' => __('Главная', self::PREFIX),
       'search' => __('Результаты поиска по запросу: "%s"', self::PREFIX),
       '404' => __('404. Страница не найдена', self::PREFIX),
@@ -429,17 +423,17 @@ class Crumbs
       'year' => _x('%s', 'year label', self::PREFIX),
       'month' => _x('%s', 'month label', self::PREFIX),
       'day' => _x('%s', 'day label', self::PREFIX),
-      'post_type' => _x('%s', 'post type label', self::PREFIX)
+      'post_type' => _x('%s', 'post type label', self::PREFIX),
     ];
 
-    if (array_key_exists($name, $labels)) {
-      if (!is_null($value)) {
-        return sprintf($labels[$name], $value);
-      }
+        if (array_key_exists($name, $labels)) {
+            if (!is_null($value)) {
+                return sprintf($labels[$name], $value);
+            }
 
-      return $labels[$name];
+            return $labels[$name];
+        }
+
+        return false;
     }
-
-    return false;
-  }
 }

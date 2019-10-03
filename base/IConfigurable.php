@@ -3,7 +3,8 @@
 namespace wpf\base;
 
 /**
- * Interface IConfigurable
+ * Interface IConfigurable.
+ *
  * @package wpf\base
  */
 interface IConfigurable

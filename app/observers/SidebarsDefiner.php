@@ -2,36 +2,36 @@
 
 namespace wpf\app\observers;
 
-use \wpf\app\Observer;
-use \wpf\App;
-use \wpf\base\ConfigException;
+use wpf\app\Observer;
+use wpf\App;
+use wpf\base\ConfigException;
 
 /**
- * Class SidebarsDefiner
+ * Class SidebarsDefiner.
+ *
  * @package wpf\app\observers
  */
-class SidebarsDefiner
-  extends Observer
+class SidebarsDefiner extends Observer
 {
-
-  /**
-   * @param App $app
-   * @return mixed|void
-   */
-  public function doUpdate(App $app)
-  {
-    $update = function () use ($app) {
-      if (!$app->sidebars) {
-        return FALSE;
-      }
-      foreach ($app->sidebars as $args) {
-        if (!is_array($args)) {
-          throw new ConfigException(
+    /**
+     * @param App $app
+     *
+     * @return mixed|void
+     */
+    public function doUpdate(App $app)
+    {
+        $update = function () use ($app) {
+            if (!$app->sidebars) {
+                return false;
+            }
+            foreach ($app->sidebars as $args) {
+                if (!is_array($args)) {
+                    throw new ConfigException(
             __("All elements of 'sidebars' array in '*.config.json' must be objects.", 'wpf'));
-        }
-        register_sidebar($args);
-      }
-    };
-    add_action('after_setup_theme', $update);
-  }
+                }
+                register_sidebar($args);
+            }
+        };
+        add_action('after_setup_theme', $update);
+    }
 }

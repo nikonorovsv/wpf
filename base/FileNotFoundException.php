@@ -2,13 +2,13 @@
 
 namespace wpf\base;
 
-use \Exception;
+use Exception;
 
 /**
- * Class FileNotFoundException
+ * Class FileNotFoundException.
+ *
  * @package wpf\base
  */
-class FileNotFoundException
-  extends Exception
+class FileNotFoundException extends Exception
 {
 }
