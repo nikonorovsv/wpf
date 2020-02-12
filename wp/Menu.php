@@ -91,7 +91,7 @@ class Menu
       if (array_key_exists($item->ID, $this->_items)) {
         $item->classes[] = app()->menu['dropdown_class'];
         $_item['items'] = $this->walk($this->_items[$item->ID]);
-        unset($_item['url']);
+        // unset($_item['url']);
       }
 
       $_item['options'] = [
