@@ -68,14 +68,18 @@ class App
     $this->_renderer = $renderer;
   }
 
-  /**
-   * @param $name
-   *
-   * @return null
-   */
-  public function __get(string $name)
+    /**
+     * @param string $name
+     *
+     * @param mixed   $default
+     *
+     * @return mixed|null
+     */
+  public function __get(string $name, $default = null)
   {
-    return $this->_attributes[$name] ?? NULL;
+    return array_key_exists($name, $this->_attributes)
+        ? $this->_attributes[$name]
+        : $default;
   }
 
   /**
@@ -102,7 +106,7 @@ class App
    */
   public function __unset(string $name)
   {
-    if ($this->_attributes[$name]) {
+    if (array_key_exists($name, $this->_attributes)) {
       unset($this->_attributes[$name]);
     } elseif ($this->$name) {
       unset($this->$name);
@@ -118,11 +122,11 @@ class App
   }
 
   /**
-   * @param array $atts
+   * @param array $attributes
    */
-  public function loadAttributes(array $atts)
+  public function loadAttributes(array $attributes)
   {
-    foreach ($atts as $name => $value) {
+    foreach ($attributes as $name => $value) {
       $this->$name = $value;
     }
   }
