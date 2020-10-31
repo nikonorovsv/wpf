@@ -17,14 +17,16 @@ trait Cache
    * It's final method because we get information about
    * call chain from debug_backtrace() PHP function.
    *
-   * @param string $key
+   * @param string|null $key
    * @param Closure $fallback
    *
    * @return mixed
    */
-  protected final static function cache(Closure $fallback, string $key = 'single')
+  protected final static function cache(Closure $fallback, string $key = null)
   {
     global $wp_object_cache;
+
+    $key = $key ?? 'single';
 
     $d_bt = debug_backtrace()[1];
     $class = $d_bt['class'];
