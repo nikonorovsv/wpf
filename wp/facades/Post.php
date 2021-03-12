@@ -279,6 +279,22 @@ class Post
   {
     return get_post_ancestors($this->ID);
   }
+  
+  /**
+  * @return int
+  */
+  public function depth(): int
+  {
+      $parent_id  = $this->post_parent;
+      $depth = 0;
+      while ($parent_id > 0) {
+          $page = get_post($parent_id);
+          $parent_id = $page->post_parent;
+          $depth++;
+      }
+
+      return $depth;
+  }
 
   /**
    * @param array $args
