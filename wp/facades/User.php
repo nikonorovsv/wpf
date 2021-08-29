@@ -127,6 +127,7 @@ class User
    */
   public static function create(array $data)
   {
+      // ToDo Change with  wp_create_user()
     return wp_insert_user($data);
   }
 }
