@@ -35,6 +35,18 @@ if (!function_exists('log_it')) {
   }
 }
 /**
+ * @param $msg
+ * @param string $title
+ *
+ * @return bool
+ */
+if (!function_exists('log_this')) {
+  function log_this($msg, $title = '')
+  {
+    return Debug::logIt($msg, $title, 'debug.log');
+  }
+}
+/**
  * @param $data
  *
  * @return string
