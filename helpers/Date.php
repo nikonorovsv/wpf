@@ -209,4 +209,12 @@ class Date extends DateTime
 
     return strtr($datetime, $rus_date_array);
   }
+  
+  /**
+   *
+   */
+  public static function eq(DateTime $dataTime) 
+  {
+    return $this === $dateTime;
+  }
 }
