@@ -6,7 +6,7 @@ use \wpf\helpers\Cache;
 use \WP_Query;
 
 /**
- * Class QueryBuilder
+ * Trait QueryBuilder
  * @package wpf\wp
  */
 trait QueryBuilder

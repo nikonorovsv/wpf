@@ -18,10 +18,12 @@ class AjaxHandlers
 
   const BASE_HANDLER = '\wpf\base\AjaxHandler';
 
-  /**
-   * @param App $app
-   * @throws FileNotFoundException
-   */
+    /**
+     * @param App $app
+     * @throws FileNotFoundException
+     * @throws \ReflectionException
+     * @throws \wpf\base\ConfigException
+     */
   public function doUpdate(App $app): void
   {
     if (!wp_doing_ajax()) {
@@ -42,9 +44,11 @@ class AjaxHandlers
     $this->registerHandlers($app);
   }
 
-  /**
-   * @param App $app
-   */
+    /**
+     * @param App $app
+     * @throws \ReflectionException
+     * @throws \wpf\base\ConfigException
+     */
   public function registerHandlers(App $app)
   {
     foreach ($app->ajax_handlers as $handler) {
