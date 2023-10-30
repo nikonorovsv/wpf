@@ -2,10 +2,10 @@
 
 namespace wpf\base;
 
-use \WP_REST_Controller as Controller;
-use \WP_REST_Request as Request;
-use \WP_REST_Response as Response;
-use \WP_Error as Error;
+use WP_REST_Controller as Controller;
+use WP_REST_Request as Request;
+use WP_REST_Response as Response;
+use WP_Error as Error;
 
 /**
  * Class RESTHandler

@@ -2,25 +2,25 @@
 
 namespace wpf;
 
-use \ReflectionClass;
-use \SplSubject;
-use \SplObjectStorage;
-use \SplObserver;
-use \InvalidArgumentException;
-use \wpf\base\IConfigurable;
-use \wpf\base\View;
-use \wpf\base\Action;
-use \wpf\base\FileNotFoundException;
-use \wpf\base\ConfigException;
-use \wpf\helpers\ArrayHelper;
-use \wpf\helpers\WP;
+use ReflectionClass;
+use ReflectionException;
+use SplSubject;
+use SplObjectStorage;
+use SplObserver;
+use InvalidArgumentException;
+use wpf\base\IConfigurable;
+use wpf\base\View;
+use wpf\base\Action;
+use wpf\base\FileNotFoundException;
+use wpf\base\ConfigException;
+use wpf\helpers\ArrayHelper;
+use wpf\helpers\WP;
 
 /**
  * Class App
  * @package wpf
  */
-class App
-  implements SplSubject, IConfigurable
+class App implements SplSubject, IConfigurable
 {
   private static $_instance;
   /**
@@ -135,7 +135,7 @@ class App
    * @param $object
    * @param array $atts
    * @return mixed
-   * @throws \ReflectionException
+   * @throws ReflectionException
    */
   public static function configure($object, array $atts)
   {
@@ -154,7 +154,7 @@ class App
   /**
    * @param array $observers
    * @throws ConfigException
-   * @throws \ReflectionException
+   * @throws ReflectionException
    */
   public function applyObservers(array $observers = [])
   {
@@ -176,7 +176,7 @@ class App
 
   /**
    * @param array $observers
-   * @throws \ReflectionException
+   * @throws ReflectionException
    */
   public function attachArray(array $observers)
   {

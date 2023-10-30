@@ -2,9 +2,9 @@
 
 namespace wpf\base;
 
-use \wpf\App;
-use \IteratorAggregate;
-use \Generator;
+use wpf\App;
+use IteratorAggregate;
+use Generator;
 
 /**
  * Class Component

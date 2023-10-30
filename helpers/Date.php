@@ -2,9 +2,10 @@
 
 namespace wpf\helpers;
 
-use \DateTime;
-use \DateTimeZone;
-use \wpf\helpers\Cache;
+use DateTime;
+use DateTimeZone;
+use Exception;
+use wpf\helpers\Cache;
 
 /**
  * Class Date
@@ -21,7 +22,7 @@ class Date extends DateTime
    * Date constructor.
    * @param string $time
    * @param DateTimeZone|NULL $timezone
-   * @throws \Exception
+   * @throws Exception
    */
   public function __construct($time = 'now', DateTimeZone $timezone = NULL)
   {

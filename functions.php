@@ -1,8 +1,15 @@
 <?php
 
-use \wpf\helpers\WP;
-use \wpf\helpers\Debug;
-use \wpf\helpers\Repo;
+use wpf\App;
+use wpf\base\Component;
+use wpf\base\View;
+use wpf\helpers\Date;
+use wpf\helpers\Icon;
+use wpf\helpers\WP;
+use wpf\helpers\Debug;
+use wpf\helpers\Repo;
+use wpf\wp\Crumbs;
+use wpf\wp\Menu;
 
 /**
  * @param $object
@@ -78,7 +85,7 @@ if (!function_exists('run_on_blog')) {
 if (!function_exists('icon')) {
   function icon(...$args)
   {
-    return \wpf\helpers\Icon::ui(...$args);
+    return Icon::ui(...$args);
   }
 }
 
@@ -90,7 +97,7 @@ if (!function_exists('icon')) {
 if (!function_exists('__rd')) {
   function __rd(string $datetime)
   {
-    return \wpf\helpers\Date::rd($datetime);
+    return Date::rd($datetime);
   }
 }
 
@@ -100,20 +107,20 @@ if (!function_exists('__rd')) {
 if (!function_exists('app')) {
   function app()
   {
-    return \wpf\App::instance();
+    return App::instance();
   }
 }
 
 /**
  * @param string|null $dir
  *
- * @return \wpf\base\View
+ * @return View
  */
 if (!function_exists('view')) {
   function view(string $dir = NULL)
   {
     if ($dir) {
-      return new \wpf\base\View($dir);
+      return new View($dir);
     }
 
     return app()->getRenderer();
@@ -137,12 +144,12 @@ if (!function_exists('render')) {
 /**
  * @param array $conf
  *
- * @return \wpf\base\Component
+ * @return Component
  */
 if (!function_exists('get_component')) {
   function get_component(array $conf = [])
   {
-    return new \wpf\base\Component($conf);
+    return new Component($conf);
   }
 }
 
@@ -166,7 +173,7 @@ if (!function_exists('repo')) {
 if (!function_exists('wp_menu_items')) {
   function wp_menu_items(string $name)
   {
-    return (new \wpf\wp\Menu($name))->items();
+    return (new Menu($name))->items();
   }
 }
 
@@ -177,7 +184,7 @@ if (!function_exists('wp_menu_items')) {
 if (!function_exists('wp_breadcrumbs')) {
   function wp_breadcrumbs()
   {
-    return (new \wpf\wp\Crumbs())->items();
+    return (new Crumbs())->items();
   }
 }
 

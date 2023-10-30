@@ -2,11 +2,11 @@
 
 namespace wpf\app\observers;
 
-use \wpf\App;
-use \wpf\app\Observer;
-use \wpf\base\FileNotFoundException;
-use \wpf\helpers\WP;
-use \InvalidArgumentException;
+use wpf\App;
+use wpf\app\Observer;
+use wpf\base\FileNotFoundException;
+use wpf\helpers\WP;
+use InvalidArgumentException;
 
 /**
  * Class AjaxHandlers

@@ -2,7 +2,7 @@
 
 namespace wpf\wp;
 
-use \wpf\base\Widget;
+use wpf\base\Widget;
 
 /**
  * Class QueryWidget

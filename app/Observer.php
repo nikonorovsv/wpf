@@ -2,11 +2,12 @@
 
 namespace wpf\app;
 
-use \ReflectionClass;
-use \SplObserver;
-use \SplSubject;
-use \wpf\App;
-use \wpf\base\ConfigException;
+use ReflectionClass;
+use ReflectionException;
+use SplObserver;
+use SplSubject;
+use wpf\App;
+use wpf\base\ConfigException;
 
 /**
  * Class Observer
@@ -51,7 +52,7 @@ abstract class Observer
    * @param array $options
    * @return mixed
    * @throws ConfigException
-   * @throws \ReflectionException
+   * @throws ReflectionException
    */
   protected function getClassName(string $dir, string $name, array $options = [])
   {

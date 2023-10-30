@@ -2,9 +2,9 @@
 
 namespace wpf\app\observers;
 
-use \wpf\App;
-use \wpf\app\Observer;
-use \wpf\base\ConfigException;
+use wpf\App;
+use wpf\app\Observer;
+use wpf\base\ConfigException;
 
 /**
  * Class OptionsPagesDefiner

@@ -2,7 +2,7 @@
 
 namespace wpf\base;
 
-use \WP_REST_Request as Request;
+use WP_REST_Request as Request;
 
 /**
  * Class RESTField

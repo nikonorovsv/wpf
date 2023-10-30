@@ -2,12 +2,12 @@
 
 namespace wpf\app\observers;
 
-use \InvalidArgumentException;
-use \wpf\App;
-use \wpf\app\Observer;
-use \wpf\base\FileNotFoundException;
-use \wpf\base\View;
-use \wpf\helpers\WP;
+use InvalidArgumentException;
+use wpf\App;
+use wpf\app\Observer;
+use wpf\base\FileNotFoundException;
+use wpf\base\View;
+use wpf\helpers\WP;
 
 /**
  * Class RendererSetter

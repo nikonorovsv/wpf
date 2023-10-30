@@ -2,8 +2,8 @@
 
 namespace wpf\wp\facades;
 
-use \WP_Comment_Query;
-use \wpf\helpers\Date;
+use WP_Comment_Query;
+use wpf\helpers\Date;
 
 /**
  * Class Comment

@@ -2,7 +2,7 @@
 
 namespace wpf\wp;
 
-use \wpf\helpers\WP;
+use wpf\helpers\WP;
 
 /**
  * Class Filters

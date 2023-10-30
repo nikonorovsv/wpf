@@ -2,9 +2,9 @@
 
 namespace wpf\wp;
 
-use \wpf\helpers\Cache;
-use \wpf\helpers\WP;
-use \wpf\helpers\Html;
+use wpf\helpers\Cache;
+use wpf\helpers\WP;
+use wpf\helpers\Html;
 
 /**
  * Class Menu

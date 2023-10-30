@@ -2,12 +2,12 @@
 
 namespace wpf\app\observers;
 
-use \wpf\App;
-use \wpf\app\Observer;
-use \wpf\base\FileNotFoundException;
-use \wpf\helpers\WP;
-use \InvalidArgumentException;
-use \WP_REST_Server as Server;
+use wpf\App;
+use wpf\app\Observer;
+use wpf\base\FileNotFoundException;
+use wpf\helpers\WP;
+use InvalidArgumentException;
+use WP_REST_Server as Server;
 
 /**
  * Class RESTDefiner

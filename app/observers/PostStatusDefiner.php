@@ -2,12 +2,12 @@
 
 namespace wpf\app\observers;
 
-use \ReflectionClass;
-use \InvalidArgumentException;
-use \wpf\App;
-use \wpf\app\Observer;
-use \wpf\base\ConfigException;
-use \wpf\helpers\WP;
+use ReflectionClass;
+use InvalidArgumentException;
+use wpf\App;
+use wpf\app\Observer;
+use wpf\base\ConfigException;
+use wpf\helpers\WP;
 
 /**
  * Class PostStatusDefiner

@@ -2,6 +2,9 @@
 
 namespace wpf\helpers;
 
+use Closure;
+use Traversable;
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -170,7 +173,7 @@ class ArrayHelper
    * ```
    *
    * @param array|object $array array or object to extract value from
-   * @param string|\Closure|array $key key name of the array element, an array of keys or property name of the object,
+   * @param string|Closure|array $key key name of the array element, an array of keys or property name of the object,
    * or an anonymous function returning the value. The anonymous function signature should be:
    * `function($array, $defaultValue)`.
    * The possibility to pass an array of keys is available since version 2.0.4.
@@ -182,7 +185,7 @@ class ArrayHelper
    */
   public static function getValue($array, $key, $default = NULL)
   {
-    if ($key instanceof \Closure) {
+    if ($key instanceof Closure) {
       return $key($array, $default);
     }
     if (is_array($key)) {
@@ -336,9 +339,9 @@ class ArrayHelper
    * ```
    *
    * @param array $array the array that needs to be indexed or grouped
-   * @param string|\Closure|null $key the column name or anonymous function which result will be used to index the
+   * @param string|Closure|null $key the column name or anonymous function which result will be used to index the
    *     array
-   * @param string|string[]|\Closure[]|null $groups the array of keys, that will be used to group the input array
+   * @param string|string[]|Closure[]|null $groups the array of keys, that will be used to group the input array
    * by one or more keys. If the $key attribute or its value for the particular element is null and $groups is not
    * defined, the array element will be discarded. Otherwise, if $groups is specified, array element will be added
    * to the result array without any key. This parameter is available since version 2.0.8.
@@ -398,7 +401,7 @@ class ArrayHelper
    * ```
    *
    * @param array $array
-   * @param string|\Closure $name
+   * @param string|Closure $name
    * @param boolean $keepKeys whether to maintain the array keys. If false, the resulting array
    * will be re-indexed with integers.
    *
@@ -456,9 +459,9 @@ class ArrayHelper
    * ```
    *
    * @param array $array
-   * @param string|\Closure $from
-   * @param string|\Closure $to
-   * @param string|\Closure $group
+   * @param string|Closure $from
+   * @param string|Closure $to
+   * @param string|Closure $group
    *
    * @return array
    */
@@ -510,7 +513,7 @@ class ArrayHelper
    * Sorts an array of objects or arrays (with the same structure) by one or several keys.
    *
    * @param array $array the array to be sorted. The array will be modified after calling this method.
-   * @param string|\Closure|array $key the key(s) to be sorted by. This refers to a key name of the sub-array
+   * @param string|Closure|array $key the key(s) to be sorted by. This refers to a key name of the sub-array
    * elements, a property name of the objects, or an anonymous function returning the values for comparison
    * purpose. The anonymous function signature should be: `function($item)`.
    * To sort by multiple keys, provide an array of keys here.
@@ -708,7 +711,7 @@ class ArrayHelper
    * but additionally works for objects that implement the [[\Traversable]] interface.
    *
    * @param mixed $needle The value to look for.
-   * @param array|\Traversable $haystack The set of values to search.
+   * @param array|Traversable $haystack The set of values to search.
    * @param boolean $strict Whether to enable strict (`===`) comparison.
    *
    * @return boolean `true` if `$needle` was found in `$haystack`, `false` otherwise.
@@ -718,7 +721,7 @@ class ArrayHelper
    */
   public static function isIn($needle, $haystack, $strict = FALSE)
   {
-    if ($haystack instanceof \Traversable) {
+    if ($haystack instanceof Traversable) {
       foreach ($haystack as $value) {
         if ($needle == $value && (!$strict || $needle === $value)) {
           return TRUE;
@@ -747,7 +750,7 @@ class ArrayHelper
    */
   public static function isTraversable($var)
   {
-    return is_array($var) || $var instanceof \Traversable;
+    return is_array($var) || $var instanceof Traversable;
   }
 
   /**
@@ -756,8 +759,8 @@ class ArrayHelper
    * This method will return `true`, if all elements of `$needles` are contained in
    * `$haystack`. If at least one element is missing, `false` will be returned.
    *
-   * @param array|\Traversable $needles The values that must **all** be in `$haystack`.
-   * @param array|\Traversable $haystack The set of value to search.
+   * @param array|Traversable $needles The values that must **all** be in `$haystack`.
+   * @param array|Traversable $haystack The set of value to search.
    * @param boolean $strict Whether to enable strict (`===`) comparison.
    *
    * @return boolean `true` if `$needles` is a subset of `$haystack`, `false` otherwise.
@@ -766,7 +769,7 @@ class ArrayHelper
    */
   public static function isSubset($needles, $haystack, $strict = FALSE)
   {
-    if (is_array($needles) || $needles instanceof \Traversable) {
+    if (is_array($needles) || $needles instanceof Traversable) {
       foreach ($needles as $needle) {
         if (!static::isIn($needle, $haystack, $strict)) {
           return FALSE;
