@@ -2,7 +2,7 @@
 
 namespace wpf\base;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Class ViewContext

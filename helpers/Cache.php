@@ -2,7 +2,7 @@
 
 namespace wpf\helpers;
 
-use \Closure;
+use Closure;
 
 /**
  * Trait Cache

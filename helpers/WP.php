@@ -2,7 +2,7 @@
 
 namespace wpf\helpers;
 
-use \WP_Error;
+use WP_Error;
 
 /**
  * Class WP

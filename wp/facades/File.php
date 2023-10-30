@@ -2,9 +2,9 @@
 
 namespace wpf\wp\facades;
 
-use \wpf\helpers\ArrayHelper;
-use \wpf\helpers\Date;
-use \wpf\helpers\WP;
+use wpf\helpers\ArrayHelper;
+use wpf\helpers\Date;
+use wpf\helpers\WP;
 
 
 /**

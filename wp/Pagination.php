@@ -2,9 +2,9 @@
 
 namespace wpf\wp;
 
-use \wpf\base\Component;
-use \wpf\helpers\WP;
-use \InvalidArgumentException;
+use wpf\base\Component;
+use wpf\helpers\WP;
+use InvalidArgumentException;
 
 
 /**

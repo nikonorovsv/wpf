@@ -2,12 +2,12 @@
 
 namespace wpf\wp\facades;
 
-use \WP_Post;
-use \WP_Error;
-use \wpf\helpers\Html;
-use \wpf\helpers\Date;
-use \wpf\helpers\WP;
-use \Exception;
+use WP_Post;
+use WP_Error;
+use wpf\helpers\Html;
+use wpf\helpers\Date;
+use wpf\helpers\WP;
+use Exception;
 
 /**
  * Class Post

@@ -2,8 +2,8 @@
 
 namespace app\wp\facades;
 
-use \WP_Site;
-use \wpf\helpers\WP;
+use WP_Site;
+use wpf\helpers\WP;
 
 /**
  * Class Blog

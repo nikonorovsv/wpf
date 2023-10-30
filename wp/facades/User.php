@@ -2,8 +2,9 @@
 
 namespace wpf\wp\facades;
 
-use \WP_User;
-use \wpf\helpers\WP;
+use WP_Error;
+use WP_User;
+use wpf\helpers\WP;
 
 /**
  * Class User
@@ -104,7 +105,7 @@ class User
    * @param string $name
    * @param $value
    *
-   * @return bool|int|\WP_Error
+   * @return bool|int|WP_Error
    */
   public function update(string $name, $value)
   {
@@ -123,7 +124,7 @@ class User
   /**
    * @param array $data
    *
-   * @return int|\WP_Error
+   * @return int|WP_Error
    */
   public static function create(array $data)
   {

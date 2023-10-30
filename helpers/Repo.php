@@ -2,8 +2,8 @@
 
 namespace wpf\helpers;
 
-use \wpf\base\IConfigurable;
-use \IteratorAggregate;
+use wpf\base\IConfigurable;
+use IteratorAggregate;
 
 /**
  * Class Repo

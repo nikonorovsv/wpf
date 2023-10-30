@@ -2,8 +2,8 @@
 
 namespace wpf\app\observers;
 
-use \wpf\app\Observer;
-use \wpf\App;
+use wpf\app\Observer;
+use wpf\App;
 
 /**
  * Class AdminBlocker

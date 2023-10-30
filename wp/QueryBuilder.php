@@ -2,8 +2,8 @@
 
 namespace wpf\wp;
 
-use \wpf\helpers\Cache;
-use \WP_Query;
+use wpf\helpers\Cache;
+use WP_Query;
 
 /**
  * Trait QueryBuilder

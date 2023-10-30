@@ -2,9 +2,9 @@
 
 namespace wpf\wp\facades;
 
-use \WP_Term;
-use \wpf\helpers\ArrayHelper;
-use \wpf\helpers\WP;
+use WP_Term;
+use wpf\helpers\ArrayHelper;
+use wpf\helpers\WP;
 
 /**
  * Class Term

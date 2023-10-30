@@ -2,7 +2,7 @@
 
 namespace wpf\base;
 
-use \Exception;
+use Exception;
 
 /**
  * Class FileNotFoundException

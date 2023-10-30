@@ -2,7 +2,7 @@
 
 namespace wpf\helpers;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Class Safe

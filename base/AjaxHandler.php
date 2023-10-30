@@ -2,7 +2,7 @@
 
 namespace wpf\base;
 
-use \wpf\helpers\WP;
+use wpf\helpers\WP;
 
 /**
  * Class AjaxHandler

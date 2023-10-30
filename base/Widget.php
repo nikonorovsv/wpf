@@ -2,7 +2,7 @@
 
 namespace wpf\base;
 
-use \wpf\wp\Filters;
+use wpf\wp\Filters;
 
 /**
  * Class Widget

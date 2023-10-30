@@ -2,9 +2,9 @@
 
 namespace wpf\app\observers;
 
-use \wpf\app\Observer;
-use \wpf\App;
-use \InvalidArgumentException;
+use wpf\app\Observer;
+use wpf\App;
+use InvalidArgumentException;
 
 /**
  * Class EntityUrls

@@ -2,8 +2,8 @@
 
 namespace wpf\app\observers;
 
-use \wpf\App;
-use \InvalidArgumentException;
+use wpf\App;
+use InvalidArgumentException;
 
 /**
  * Class EntityUrlsWhiteList

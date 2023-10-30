@@ -2,9 +2,9 @@
 
 namespace wpf\wp;
 
-use \wpf\base\Entity;
-use \wpf\helpers\ArrayHelper;
-use \InvalidArgumentException;
+use wpf\base\Entity;
+use wpf\helpers\ArrayHelper;
+use InvalidArgumentException;
 
 /**
  * Class PostType

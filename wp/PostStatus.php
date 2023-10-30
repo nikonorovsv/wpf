@@ -2,9 +2,9 @@
 
 namespace wpf\wp;
 
-use \wpf\base\Status;
-use \wpf\helpers\ArrayHelper;
-use \InvalidArgumentException;
+use wpf\base\Status;
+use wpf\helpers\ArrayHelper;
+use InvalidArgumentException;
 
 /**
  * Class PostStatus
