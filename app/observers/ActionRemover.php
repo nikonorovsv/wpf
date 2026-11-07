@@ -16,14 +16,14 @@ class ActionRemover
 
     /**
      * @param App $app
-     *
+     * @return void
      * @throws ConfigException
      */
-    public function doUpdate(App $app)
+    public function doUpdate(App $app): void
     {
         $update = function () use ($app) {
             if (!$app->remove_actions) {
-                return FALSE;
+                return;
             }
             foreach ($app->remove_actions as $args) {
                 if (!is_array($args)) {
