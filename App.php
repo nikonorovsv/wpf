@@ -181,7 +181,7 @@ class App
     {
         foreach ($observers as $observer) {
             $class = new ReflectionClass($observer);
-            if (!$class->implementsInterface('\SplObserver')) {
+            if (!$class->implementsInterface(SplObserver::class)) {
                 throw new InvalidArgumentException(
                     __("Class '{$class->getName()}' must implement SplObserver interface.", 'wpf'));
             }
