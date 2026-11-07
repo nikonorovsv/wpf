@@ -13,11 +13,11 @@ class Icon
   /**
    * @var string
    */
-  public static $tag_name = 'i';
+  public static string $tag_name = 'i';
   /**
    * @var array
    */
-  public static $prefixes
+  public static array $prefixes
     = [
       'fa' => 'fa fa-',
       'fas' => 'fas fa-',

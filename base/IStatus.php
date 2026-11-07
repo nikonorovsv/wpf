@@ -9,8 +9,8 @@ namespace wpf\base;
 interface IStatus
 {
 
-  /**
-   * @return void
-   */
-  public function register(): void;
+    /**
+     * @return void
+     */
+    public function register(): void;
 }

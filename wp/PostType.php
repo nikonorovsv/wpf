@@ -2,9 +2,9 @@
 
 namespace wpf\wp;
 
-use \wpf\base\Entity;
-use \wpf\helpers\ArrayHelper;
-use \InvalidArgumentException;
+use wpf\base\Entity;
+use wpf\helpers\ArrayHelper;
+use InvalidArgumentException;
 
 /**
  * Class PostType
@@ -12,17 +12,17 @@ use \InvalidArgumentException;
  */
 abstract class PostType extends Entity
 {
-  protected $args = [];
+    protected array $args = [];
 
-  /**
-   * @return void
-   */
-  public function register(): void
-  {
-    if (!$this->args || !ArrayHelper::isAssociative($this->args)) {
-      throw new InvalidArgumentException(
-        __('The "args" property of Entity class inheritors needs to be associative array.', 'wpf'));
+    /**
+     * @return void
+     */
+    public function register(): void
+    {
+        if (!$this->args || !ArrayHelper::isAssociative($this->args)) {
+            throw new InvalidArgumentException(
+                __('The "args" property of Entity class inheritors needs to be associative array.', 'wpf'));
+        }
+        register_post_type(static::NAME, $this->args);
     }
-    register_post_type(static::NAME, $this->args);
-  }
 }

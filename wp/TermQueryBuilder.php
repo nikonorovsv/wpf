@@ -2,8 +2,8 @@
 
 namespace wpf\wp;
 
-use \wpf\helpers\Cache;
-use \WP_Term_Query;
+use wpf\helpers\Cache;
+use WP_Term_Query;
 
 /**
  * Trait TermQueryBuilder

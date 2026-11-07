@@ -2,34 +2,35 @@
 
 namespace wpf\app\observers;
 
-use \wpf\app\Observer;
-use \wpf\App;
+use wpf\app\Observer;
+use wpf\App;
 
 /**
  * Class AdminBlocker
  * @package \app\observers
  */
 class AdminBlocker
-  extends Observer
+    extends Observer
 {
 
-  /**
-   * @param App $app
-   */
-  public function doUpdate(App $app)
-  {
-    $update = function () use ($app) {
-      if (
-          is_admin()
-          && ! wp_doing_ajax()
-          && ! current_user_can('administrator')
-      ) {
-        // header('HTTP/1.0 404 Not Found');
-        wp_redirect( home_url() );
-        exit();
-      }
-    };
+    /**
+     * @param App $app
+     * @return void
+     */
+    public function doUpdate(App $app): void
+    {
+        $update = function () use ($app) {
+            if (
+                is_admin()
+                && !wp_doing_ajax()
+                && !current_user_can('administrator')
+            ) {
+                // header('HTTP/1.0 404 Not Found');
+                wp_redirect(home_url());
+                exit();
+            }
+        };
 
-    add_action('init', $update);
-  }
+        add_action('init', $update);
+    }
 }

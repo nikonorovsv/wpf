@@ -2,37 +2,36 @@
 
 namespace wpf\app\observers;
 
-use \wpf\App;
-use \wpf\app\Observer;
-use \wpf\base\ConfigException;
-use \wpf\helpers\WP;
+use wpf\App;
+use wpf\app\Observer;
+use wpf\base\ConfigException;
 
 /**
  * Class LocalFieldGroupDefiner
  * @package wpf\app\observers
  */
 class LocalFieldGroupDefiner
-  extends Observer
+    extends Observer
 {
 
-  /**
-   * @param App $app
-   * @return bool|mixed
-   * @throws ConfigException
-   */
-  public function doUpdate(App $app)
-  {
-    if (!$app->local_field_groups) {
-      return FALSE;
-    } elseif (!function_exists('acf_add_local_field_group')) {
-      return FALSE;
+    /**
+     * @param App $app
+     * @return void
+     * @throws ConfigException
+     */
+    public function doUpdate(App $app): void
+    {
+        if (!$app->local_field_groups) {
+            return;
+        } elseif (!function_exists('acf_add_local_field_group')) {
+            return;
+        }
+        foreach ($app->local_field_groups as $args) {
+            if (!is_array($args)) {
+                throw new ConfigException(
+                    __("All elements of 'local_field_groups' array in '*.config.json' must be objects.", 'wpf'));
+            }
+            acf_add_local_field_group($args);
+        }
     }
-    foreach ($app->local_field_groups as $args) {
-      if (!is_array($args)) {
-        throw new ConfigException(
-          __("All elements of 'local_field_groups' array in '*.config.json' must be objects.", 'wpf'));
-      }
-      acf_add_local_field_group($args);
-    }
-  }
 }

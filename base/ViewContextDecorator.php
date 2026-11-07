@@ -8,18 +8,18 @@ namespace wpf\base;
  */
 abstract class ViewContextDecorator
 {
-  /**
-   * @var IViewContext
-   */
-  protected $wrapped;
+    /**
+     * @var IViewContext
+     */
+    protected IViewContext $wrapped;
 
-  /**
-   * ViewContextDecorator constructor.
-   *
-   * @param IViewContext $renderer
-   */
-  public function __construct(IViewContext $renderer)
-  {
-    $this->wrapped = $renderer;
-  }
+    /**
+     * ViewContextDecorator constructor.
+     *
+     * @param IViewContext $renderer
+     */
+    public function __construct(IViewContext $renderer)
+    {
+        $this->wrapped = $renderer;
+    }
 }

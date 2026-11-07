@@ -2,8 +2,10 @@
 
 namespace wpf\wp\facades;
 
-use \WP_Comment_Query;
-use \wpf\helpers\Date;
+use Exception;
+use WP_Comment;
+use WP_Comment_Query;
+use wpf\helpers\Date;
 
 /**
  * Class Comment
@@ -13,9 +15,9 @@ class Comment
   implements IFacade
 {
   /**
-   * @var array object
+   * @var WP_Comment|array|null object
    */
-  private $comment;
+  private WP_Comment|array|null $comment;
 
   /**
    * Post constructor.
@@ -23,17 +25,18 @@ class Comment
    * @param int|WP_Comment|null $comment Optional.
    * Comment ID or comment object.
    * Defaults to global $comment.
+
    */
   public function __construct($comment = NULL)
   {
     $this->comment = get_comment($comment);
   }
 
-  /**
-   * @param $name
-   *
-   * @return mixed|bool
-   */
+    /**
+     * @param string $name
+     *
+     * @return mixed|bool
+     */
   public function __get(string $name)
   {
     if ($_name = strstr($name, '_object', TRUE)) {
@@ -47,11 +50,11 @@ class Comment
     return $this->comment->$name || NULL;
   }
 
-  /**
-   * @param $name
-   *
-   * @return bool
-   */
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
   public function __isset(string $name)
   {
     return isset($this->$name);
@@ -60,19 +63,19 @@ class Comment
   /**
    * @param string $name
    *
-   * @return bool
+   * @return string
    */
-  public function label(string $name)
+  public function label(string $name): string
   {
-    return $this->$name ? get_field_object($name, $this->comment)['label'] : FALSE;
+    return $this->$name ? get_field_object($name, $this->comment)['label'] : '';
   }
 
   /**
    * @param array $args
    *
-   * @return mixed
+   * @return string
    */
-  public function url(array $args = [])
+  public function url(array $args = []): string
   {
     $url = get_comments_link($this->post_ID);
     if ($args) {
@@ -82,10 +85,11 @@ class Comment
     return $url;
   }
 
-  /**
-   * @return Date
-   */
-  public function pubDate()
+    /**
+     * @return Date
+     * @throws Exception
+     */
+  public function pubDate(): Date
   {
     return new Date($this->date);
   }
@@ -93,7 +97,7 @@ class Comment
   /**
    * @return array
    */
-  public function author()
+  public function author(): array
   {
     return array_combine(
       ['name', 'email', 'site', 'IP'],
@@ -109,15 +113,15 @@ class Comment
   /**
    * @return mixed
    */
-  public function content()
+  public function content(): mixed
   {
     return $this->content;
   }
 
   /**
-   * @return mixed
+   * @return string
    */
-  public function editUrl()
+  public function editUrl(): string
   {
     return get_edit_comment_link($this->ID);
   }
@@ -128,7 +132,7 @@ class Comment
    *
    * @return bool|int|WP_Error
    */
-  public function update(string $name, $value)
+  public function update(string $name, $value): WP_Error|bool|int
   {
     if ($this->comment->$name) {
       return wp_update_comment([
@@ -147,7 +151,7 @@ class Comment
    *
    * @return bool|false|string
    */
-  public function avatarUrl(int $size = 96)
+  public function avatarUrl(int $size = 96): bool|string
   {
     return get_avatar_url($this->author_email, ['size' => $size]);
   }
@@ -155,7 +159,7 @@ class Comment
   /**
    * @return mixed
    */
-  public function status()
+  public function status(): mixed
   {
     return $this->approved;
   }
@@ -163,7 +167,7 @@ class Comment
   /**
    * @return array
    */
-  public function parent()
+  public function parent(): array
   {
     return $this->parent;
   }
@@ -173,7 +177,7 @@ class Comment
    *
    * @return array
    */
-  public function children(array $args = [])
+  public function children(array $args = []): array
   {
     $args = wp_parse_args($args, [
       'parent' => $this->ID,
@@ -190,7 +194,7 @@ class Comment
    * @param array $data
    * @return false|int
    */
-  public static function create(array $data)
+  public static function create(array $data): false|int
   {
     return wp_insert_comment(wp_slash($data));
   }

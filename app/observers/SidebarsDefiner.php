@@ -2,9 +2,9 @@
 
 namespace wpf\app\observers;
 
-use \wpf\app\Observer;
-use \wpf\App;
-use \wpf\base\ConfigException;
+use wpf\app\Observer;
+use wpf\App;
+use wpf\base\ConfigException;
 
 /**
  * Class SidebarsDefiner
@@ -16,13 +16,13 @@ class SidebarsDefiner
 
   /**
    * @param App $app
-   * @return mixed|void
+   * @return void
    */
-  public function doUpdate(App $app)
+  public function doUpdate(App $app): void
   {
     $update = function () use ($app) {
       if (!$app->sidebars) {
-        return FALSE;
+        return;
       }
       foreach ($app->sidebars as $args) {
         if (!is_array($args)) {

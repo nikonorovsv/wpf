@@ -2,7 +2,8 @@
 
 namespace wpf\wp;
 
-use \wpf\base\Widget;
+use WP_Query;
+use wpf\base\Widget;
 
 /**
  * Class QueryWidget
@@ -12,7 +13,7 @@ class QueryWidget extends Widget
 {
   use QueryBuilder;
 
-  protected $query;
+  protected WP_Query $query;
 
   /**
    * QueryWidget constructor.

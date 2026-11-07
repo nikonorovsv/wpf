@@ -8,7 +8,7 @@ namespace wpf\base;
  */
 abstract class Entity implements IEntity
 {
-  abstract public function register(): void;
+    abstract public function register(): void;
 
-  abstract public static function getLabels(): array;
+    abstract public static function getLabels(): array;
 }

@@ -2,8 +2,8 @@
 
 namespace wpf\wp;
 
-use \wpf\helpers\Cache;
-use \WP_Query;
+use wpf\helpers\Cache;
+use WP_Query;
 
 /**
  * Trait QueryBuilder
@@ -11,48 +11,48 @@ use \WP_Query;
  */
 trait QueryBuilder
 {
+    use Cache;
 
-  use Cache;
+    /**
+     * @return WP_Query
+     */
+    final public function query(): WP_Query
+    {
+        $args = $this->queryArgs();
+        $fallback = function () use ($args) {
+            return new WP_Query($args);
+        };
 
-  /**
-   * @return WP_Query
-   */
-  final public function query(): WP_Query
-  {
-    $args = $this->queryArgs();
-    $fallback = function () use ($args) {
-      return new WP_Query($args);
-    };
+        return static::cache($fallback, serialize($args));
+    }
 
-    return static::cache($fallback, serialize($args));
-  }
+    /**
+     * @return array
+     */
+    protected function queryArgs(): array
+    {
+        return [];
+    }
 
-  /**
-   * @return array
-   */
-  protected function queryArgs(): array
-  {
-    return [];
-  }
+    /**
+     * The passed object will be set as global $wp_query
+     *
+     * @param WP_Query $query
+     * @return void
+     */
+    public static function setGlobalQuery(WP_Query $query): void
+    {
+        global $wp_query;
+        $wp_query = $query;
 
-  /**
-   * The passed object will be set as global $wp_query
-   *
-   * @param WP_Query $query
-   */
-  public static function setGlobalQuery(WP_Query $query)
-  {
-    global $wp_query;
-    $wp_query = $query;
+        return;
+    }
 
-    return;
-  }
-
-  /**
-   * @return array
-   */
-  final public function posts(): array
-  {
-    return $this->query()->posts;
-  }
+    /**
+     * @return array
+     */
+    final public function posts(): array
+    {
+        return $this->query()->posts;
+    }
 }

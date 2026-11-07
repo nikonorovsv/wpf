@@ -9,13 +9,13 @@ namespace wpf\base;
 interface IEntity
 {
 
-  /**
-   * @return void
-   */
-  public function register(): void;
+    /**
+     * @return void
+     */
+    public function register(): void;
 
-  /**
-   * @return array
-   */
-  public static function getLabels(): array;
+    /**
+     * @return array
+     */
+    public static function getLabels(): array;
 }

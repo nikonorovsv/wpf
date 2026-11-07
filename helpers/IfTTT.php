@@ -12,7 +12,7 @@ class IfTTT
    * @param callable $ask
    * @param callable $question
    */
-  public static function run(callable $ask, callable $question)
+  public static function run(callable $ask, callable $question): void
   {
     if (call_user_func($ask)) {
       call_user_func($question);
@@ -22,7 +22,7 @@ class IfTTT
   /**
    * @param array $faq
    */
-  public static function runArray(array $faq = [])
+  public static function runArray(array $faq = []): void
   {
     if (ArrayHelper::isAssociative($faq)) {
       foreach ($faq as $ask => $question) {

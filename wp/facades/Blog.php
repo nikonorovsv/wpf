@@ -1,9 +1,10 @@
 <?php
 
-namespace app\wp\facades;
+namespace wpf\wp\facades;
 
-use \WP_Site;
-use \wpf\helpers\WP;
+use WP_Site;
+use WP_Error;
+use wpf\helpers\WP;
 
 /**
  * Class Blog
@@ -28,11 +29,11 @@ class Blog
     $this->blog = WP_Site::get_instance($blog);
   }
 
-  /**
-   * @param $name
-   *
-   * @return bool|false|mixed|null|string
-   */
+    /**
+     * @param string $name
+     *
+     * @return bool|false|mixed|null|string
+     */
   public function __get(string $name)
   {
     $value = NULL;
@@ -59,9 +60,9 @@ class Blog
   /**
    * @param string $name
    *
-   * @return bool
+   * @return string
    */
-  public function label(string $name)
+  public function label(string $name): string
   {
     return $this->blogname;
   }
@@ -69,9 +70,9 @@ class Blog
   /**
    * @param array $args
    *
-   * @return mixed
+   * @return string
    */
-  public function url(array $args = [])
+  public function url(array $args = []): string
   {
     $url = $this->siteurl;
     if ($args) {
@@ -85,9 +86,9 @@ class Blog
    * @param string $path
    * @param string $scheme
    *
-   * @return mixed
+   * @return string
    */
-  public function editUrl($path = '', $scheme = 'admin')
+  public function editUrl(string $path = '', string $scheme = 'admin'): string
   {
     return get_admin_url($this->id, $path, $scheme);
   }
@@ -98,7 +99,7 @@ class Blog
    *
    * @return bool|int|WP_Error
    */
-  public function update(string $name, $value)
+  public function update(string $name, $value): WP_Error|bool|int
   {
     if (get_field($name, 'option')) {
       return update_field($name, $value, 'option');
@@ -113,7 +114,7 @@ class Blog
    * @param array $data
    * @return int|WP_Error
    */
-  public static function create(array $data)
+  public static function create(array $data): WP_Error|int
   {
     if (!isset($data['domain'])) {
       return WP::error('missing_domain', "The 'domain' parameter can't sent.");

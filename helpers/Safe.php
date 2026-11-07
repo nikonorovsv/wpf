@@ -2,7 +2,7 @@
 
 namespace wpf\helpers;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Class Safe
@@ -11,23 +11,23 @@ use \InvalidArgumentException;
 class Safe
 {
 
-  /**
-   * @param string $name
-   * @param array $args
-   */
-  public static function __callStatic(string $name, $args)
-  {
-    if (function_exists("filter_{$name}")) {
-      $name = "filter_{$name}";
-    } elseif (function_exists("ctype_{$name}")) {
-      $name = "ctype_{$name}";
-    } else {
-      $class = self::class;
-      throw new InvalidArgumentException(
-        __("Method '{$class}'::'{$name}()' not found.", 'wpf')
-      );
-    }
+    /**
+     * @param string $name
+     * @param array $args
+     */
+    public static function __callStatic(string $name, array $args)
+    {
+        if (function_exists("filter_$name")) {
+            $name = "filter_{$name}";
+        } elseif (function_exists("ctype_$name")) {
+            $name = "ctype_$name";
+        } else {
+            $class = self::class;
+            throw new InvalidArgumentException(
+                __("Method '$class'::'$name()' not found.", 'wpf')
+            );
+        }
 
-    call_user_func($name, ...$args);
-  }
+        call_user_func($name, ...$args);
+    }
 }

@@ -2,9 +2,9 @@
 
 namespace wpf\app\observers;
 
-use \wpf\app\Observer;
-use \wpf\App;
-use \wpf\base\ConfigException;
+use wpf\app\Observer;
+use wpf\App;
+use wpf\base\ConfigException;
 
 /**
  * Class ThemeSupportsDefiner
@@ -14,10 +14,12 @@ class ThemeSupportsDefiner
   extends Observer
 {
 
-  /**
-   * @param App $app
-   */
-  public function doUpdate(App $app)
+    /**
+     * @param App $app
+     * @return void
+     * @throws ConfigException
+     */
+  public function doUpdate(App $app): void
   {
     $update = function () use ($app) {
       if (!$app->supports) {
