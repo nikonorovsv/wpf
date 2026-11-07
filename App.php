@@ -21,12 +21,12 @@ use wpf\helpers\ArrayHelper;
 class App
     implements SplSubject, IConfigurable
 {
-    private static ?self $_instance;
+    private static ?self $_instance = null;
     /**
      * @var array
      */
     private array $_attributes = [];
-    private bool $_notified = FALSE;
+    private bool $_notified = false;
     private SplObjectStorage $_storage;
     private View $_renderer;
 
