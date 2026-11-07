@@ -2,7 +2,7 @@
 WPF is a WordPress Framework to make your creating of theme easy.
 
 ## Requires
-* PHP v7.*
+* PHP v8.2
 * Wordpress
 * Advanced Custom Fields (ACF) Wordpress Plugin
 
