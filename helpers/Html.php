@@ -90,9 +90,9 @@ class Html
     /**
      * Generates a complete HTML tag.
      *
-     * @param boolean|string|null $name the tag name. If $name is `null` or `false`, the corresponding content will be
+     * @param string|null|false $name the tag name. If $name is `null` or `false`, the corresponding content will be
      *     rendered without any tag.
-     * @param string $content the content to be enclosed between the start and end tags. It will not be HTML-encoded.
+     * @param string|null $content the content to be enclosed between the start and end tags. It will not be HTML-encoded.
      * If this is coming from end users, you should consider [[encode()]] it to prevent XSS attacks.
      * @param array $options the HTML tag attributes (HTML options) in terms of name-value pairs.
      * These will be rendered as the attributes of the resulting tag. The values will be HTML-encoded using
@@ -107,9 +107,9 @@ class Html
      * @see beginTag()
      * @see endTag()
      */
-    public static function tag(bool|string|null $name, string $content = '', array $options = []): string
+    public static function tag(string|null|false $name, ?string $content = null, array $options = []): string
     {
-        if ($name === NULL || $name === FALSE) {
+        if ($name === null || $name === false) {
             return $content;
         }
         $html = "<$name" . static::renderTagAttributes($options) . '>';
@@ -372,7 +372,7 @@ class Html
             $options['src'] = $src;
         }
 
-        return static::tag('img', '', $options);
+        return static::tag('img', null, $options);
     }
 
     /**
