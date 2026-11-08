@@ -4,6 +4,7 @@ namespace wpf\base;
 
 use IteratorAggregate;
 use Generator;
+use Traversable;
 
 /**
  * Class Component
@@ -86,9 +87,9 @@ class Component
     }
 
     /**
-     * @return Generator
+     * @return Traversable
      */
-    public function getIterator(): Generator
+    public function getIterator(): Traversable
     {
         foreach ($this->_attributes as $name => $value) {
             yield $name => $value;
