@@ -372,7 +372,7 @@ class Html
             $options['src'] = $src;
         }
 
-        return static::tag('img', NULL, $options);
+        return static::tag('img', '', $options);
     }
 
     /**
