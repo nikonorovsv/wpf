@@ -2,7 +2,7 @@
 
 namespace wpf\base;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Class ViewContext
@@ -12,7 +12,7 @@ abstract class ViewContext
     extends Component
     implements IViewContext
 {
-    protected string|null $template = NULL;
+    protected ?string $template = NULL;
 
     /**
      * ViewContext constructor.
