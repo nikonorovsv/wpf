@@ -2,6 +2,7 @@
 
 use wpf\App;
 use wpf\base\Component;
+use wpf\base\FileNotFoundException;
 use wpf\base\View;
 use wpf\helpers\Date;
 use wpf\helpers\Icon;
@@ -105,31 +106,104 @@ if (!function_exists('app')) {
 
 if (!function_exists('view')) {
     /**
+     * Возвращает новый рендерер.
+     * Может потребоваться для использования шаблонов не из директории по-умолчанию
+     * см. /functions.php
+     *
+     * $app = app();
+     * $app->loadAttributes( require_once get_theme_file_path( 'app/config.php' ) );
+     *
+     * // Установим View объект для функций рендера
+     * $app->setRenderer( 'modules' );
+     *
      * @param string|null $dir
      *
      * @return View
      */
-    function view(string $dir = NULL): View
+    function view(?string $dir = null): View
     {
-        if ($dir) {
-            return new View($dir);
+        if (is_null($dir)) {
+            return app()->getRenderer();
         }
 
-        return app()->getRenderer();
+        return new View($dir);
     }
 }
 
 if (!function_exists('render')) {
     /**
-     * @param $tpl
-     * @param array $vars
+     * Возвращает отрендеренный шаблон
+     *
+     * @param $template
+     * @param array|null $props
      * @param string|null $dir
+     * @return string
+     */
+    function render($template, ?array $props = [], ?string $dir = null): string
+    {
+        if (is_null($props)) {
+            return '';
+        }
+        $view = view($dir);
+
+        $template_name = null;
+        if (is_string($template)) {
+            $template_name = trim($template, '/\\');
+        } elseif (is_array($template)) {
+            $template_name = join('-', $template);
+        }
+
+        if (!$template_name) {
+            do_action('template/error', json_encode($template));
+
+            return '';
+        }
+
+        /**
+         * Хуки для виджетов. Использование в других местах не исследовано.
+         * Может привести к каше в коде.
+         *
+         * Но, когда виджет реализовывает свой метод рендер, можно удобно накинуть
+         * настройки прямо из виджета, в конструкторе, например.
+         */
+        do_action("template/$template_name/view", $view, $dir);
+        do_action("template/$template_name/filter", $props);
+
+        try {
+            $rendered = $view->render($template, $props);
+
+            do_action("template/$template_name/rendered", $rendered);
+
+            return $rendered;
+        } catch (FileNotFoundException $e) {
+            error_log($e->getMessage());
+        }
+
+        return '';
+    }
+}
+
+if (function_exists('render_cache')) {
+    /**
+     * Include template with parameters of context
+     * Function can have some arguments
+     *
+     * @param string $template
+     * @param array $props
      *
      * @return string
      */
-    function render($tpl, array $vars = [], string $dir = NULL): string
+    function render_cache(string $template, array $props = []): string
     {
-        return view($dir)->render($tpl, $vars);
+        $cache_key = 'tpl_' . md5($template . serialize($props));
+        if (!$output = get_transient($cache_key)) {
+
+            $output = render($template, $props);
+
+            set_transient($cache_key, $output, HOUR_IN_SECONDS);
+        }
+
+        return $output;
     }
 }
 

@@ -2,41 +2,44 @@
 
 namespace wpf\base;
 
+defined('ABSPATH') || exit;
+
 /**
  * Class View
  * @package wpf\base
  */
-class View
-    implements IView
+class View implements IView
 {
-    public string $dir;
+
+    protected string $dir;
 
     /**
      * View constructor.
      *
-     * @param string $dir
+     * @param string $dir From theme directory
      */
     public function __construct(string $dir = '')
     {
-        $this->dir = $dir;
+        $this->dir = get_theme_file_path($dir);
     }
 
     /**
      * @param $tpl
-     * @param array $vars
+     * @param array $props
      *
      * @return string
+     * @throws FileNotFoundException
      */
-    public function render($tpl, array $vars = []): string
+    public function render($tpl, array $props = []): string
     {
-        $name = NULL;
+        $name = null;
         $slug = $tpl;
         if (is_array($tpl)) {
             $slug = array_shift($tpl);
             $name = array_shift($tpl);
         }
         self::begin();
-        $this->part($slug, $name, $vars);
+        $this->part($slug, $name, $props);
 
         return self::end();
     }
@@ -47,43 +50,49 @@ class View
     public static function begin(): void
     {
         ob_start();
-        ob_implicit_flush(FALSE);
+        ob_implicit_flush(false);
     }
 
     /**
      * Закрывает буфер и возвращает содержимое
      *
-     * @return string|false
+     * @return string
      */
-    public static function end(): string|false
+    public static function end(): string
     {
         return ob_get_clean();
     }
 
     /**
      * @param string $slug
-     * @param string|NULL $name
-     * @param array $vars
+     * @param string|null $name
+     * @param array $props
+     *
      * @return void
+     * @throws FileNotFoundException
      */
-    public function part(string $slug, string $name = NULL, array $vars = []): void
+    public function part(string $slug, string $name = null, array $props = []): void
     {
         $templates = [];
         if ($name) {
             $templates[] = "$slug-$name.php";
         }
         $templates[] = "$slug.php";
-        extract($vars, EXTR_OVERWRITE);
-        require $this->locate($templates);
+        extract($props, EXTR_OVERWRITE);
+        $locate = $this->locate($templates);
+        if (!empty($locate)) {
+            require $locate;
+        }
     }
 
     /**
      * @param string $slug
      * @param array $files
+     * @return string
      *
-     * @return mixed
+     * @throws FileNotFoundException
      */
-    public function template(string $slug, array $files = []): mixed
+    public function template(string $slug, array $files = []): string
     {
         $files = $files ?: (array)"$slug.php";
 
@@ -96,14 +105,17 @@ class View
      * @param bool $once
      *
      * @return string
+     * @throws FileNotFoundException
      */
-    private function locate(array $files, bool $load = FALSE, bool $once = TRUE): string
+    private function locate(array $files, bool $load = false, bool $once = true): string
     {
         $located = '';
         foreach ($files as $file) {
             if ($file && $this->exists($file)) {
                 $located = $this->path($file);
                 break;
+            } else {
+                throw new FileNotFoundException("Template $file not found!");
             }
         }
         if ($load && $located) {
@@ -116,11 +128,14 @@ class View
     /**
      * @param string $file
      * @param bool $once
+     *
      * @return void
      */
-    private function load(string $file, bool $once = TRUE): void
+    private function load(string $file, bool $once = true): void
     {
+        // Доступ внутри шаблонов к глобальным переменным
         global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
+
         if (is_array($wp_query->query_vars)) {
             extract($wp_query->query_vars, EXTR_SKIP);
         }
@@ -147,18 +162,18 @@ class View
     }
 
     /**
-     * @param string $chunk
-     * @param array $data
+     * @param $chunk
+     * @param array $props
      *
      * @return string
      */
-    public function renderChunk(string $chunk, array $data = []): string
+    public function renderChunk($chunk, array $props = []): string
     {
-        foreach ($data as $key => $value) {
-            $data['{' . strtoupper($key) . '}'] = $value;
+        foreach ($props as $key => $value) {
+            $props['{' . strtoupper($key) . '}'] = $value;
         }
 
-        return strtr($chunk, $data);
+        return strtr($chunk, $props);
     }
 
     /**

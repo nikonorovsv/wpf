@@ -9,6 +9,6 @@ use Exception;
  * @package wpf\base
  */
 class FileNotFoundException
-  extends Exception
+    extends Exception
 {
 }

@@ -2,6 +2,8 @@
 
 namespace wpf\base;
 
+defined('ABSPATH') || exit;
+
 /**
  * Interface IViewContext
  * @package wpf\base
