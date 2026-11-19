@@ -24,10 +24,11 @@ class View implements IView
     }
 
     /**
-     * @param $tpl
+     * @param string|array $tpl
      * @param array $props
      *
      * @return string
+     *
      * @throws FileNotFoundException
      */
     public function render($tpl, array $props = []): string
