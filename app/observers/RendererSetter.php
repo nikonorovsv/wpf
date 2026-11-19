@@ -35,6 +35,6 @@ class RendererSetter
             throw new FileNotFoundException(
                 __("Parameter 'views_dir' in '/wpf/config.json' file must be correct path to folder.", 'wpf'));
         }
-        $app->setRenderer(new View($dir));
+        $app->setRenderer($dir);
     }
 }
