@@ -11,8 +11,6 @@ use wpf\wp\Filters;
 abstract class Widget
     extends ViewContext
 {
-    public string $content;
-
     /**
      * @param string $tag
      * @param int $priority
