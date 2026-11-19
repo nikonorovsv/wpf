@@ -60,12 +60,12 @@ class App
     }
 
     /**
-     * @param View $renderer
+     * @param string $path
      * @return void
      */
-    public function setRenderer(View $renderer): void
+    public function setRenderer(string $path): void
     {
-        $this->_renderer = $renderer;
+        $this->_renderer = new View($path);
     }
 
     /**
